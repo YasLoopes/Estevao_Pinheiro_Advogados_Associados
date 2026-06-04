@@ -8,7 +8,7 @@
 <style>
 :root{--bx:#6B1C2E;--bxd:#4a1220;--gold:#c9a84c;--bg:#faf8f5;--wh:#fff;--tx:#1a1a1a;--mu:#6b6b6b;--bd:#e0d9d4;--gn:#2d7d46;--or:#c07000;--bl:#1a5276}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.6}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:1rem;line-height:1.6;overflow-x:hidden}
 
 /* ─── NAV ─── */
 .top-nav{background:var(--bxd);padding:10px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
@@ -215,8 +215,83 @@ p.body-text{color:#3a3a3a;line-height:1.7;margin-bottom:12px}
   .steps-timeline{break-inside:avoid}
 }
 
-/* RESPONSIVE */
-@media(max-width:720px){.pain-grid,.pricing-grid,.ph-body{grid-template-columns:1fr}.mk-kpi-row{grid-template-columns:1fr 1fr}.mk-grid{grid-template-columns:1fr}.capa-meta{grid-template-columns:1fr 1fr}.timeline{flex-direction:column;gap:20px}.timeline::before{display:none}}
+/* ── RESPONSIVE — mobile first ──────────────────────────── */
+
+/* Nav: esconde links em telas pequenas, reduz padding */
+@media(max-width:640px){
+  .top-nav{padding:10px 16px}
+  .nav-links{display:none}
+}
+
+/* Capa: tipografia e padding fluidos */
+@media(max-width:640px){
+  .capa{padding:clamp(1.5rem,5vw,2rem) clamp(1rem,4vw,1.5rem);margin:16px 0;border-radius:12px}
+  .capa-title{font-size:clamp(1.5rem,6vw,2.25rem)}
+  .capa-sub{font-size:clamp(.9rem,2.5vw,.9375rem)}
+  .demo-btn{font-size:.875rem;padding:10px 16px}
+}
+.capa-meta{grid-template-columns:1fr}
+@media(min-width:480px){.capa-meta{grid-template-columns:1fr 1fr}}
+@media(min-width:760px){.capa-meta{grid-template-columns:1fr 1fr 1fr}}
+
+/* Seções: padding menor */
+@media(max-width:640px){
+  .doc{padding:0 clamp(.75rem,4vw,1.5rem) clamp(2rem,6vw,3.75rem)}
+  section{margin-bottom:clamp(1.5rem,5vw,2.75rem)}
+  .section-title{font-size:clamp(1.125rem,4vw,1.375rem)}
+}
+
+/* Grids: colapso no mobile */
+.pain-grid,.pricing-grid{grid-template-columns:1fr}
+@media(min-width:540px){.pain-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:820px){.pricing-grid{grid-template-columns:1fr 1fr 1fr}}
+
+/* Timeline: vertical no mobile */
+@media(max-width:640px){
+  .timeline{flex-direction:column;gap:0;align-items:flex-start;padding-left:1.5rem;border-left:2px solid var(--bd)}
+  .timeline::before{display:none}
+  .tl-step{flex-direction:row;align-items:center;gap:1rem;text-align:left;width:100%;padding:12px 0;border-bottom:1px solid var(--bd)}
+  .tl-step:last-child{border-bottom:none}
+  .tl-num{margin-bottom:0;flex-shrink:0;width:44px;height:44px}
+  .tl-sub{max-width:none}
+}
+
+/* Phase detail: stack no mobile */
+.ph-body{grid-template-columns:1fr}
+@media(min-width:700px){.ph-body{grid-template-columns:1fr 1.1fr}}
+@media(max-width:700px){
+  .ph-desc{border-right:none;border-bottom:1px solid var(--bd)}
+  .ph-mockup{border-radius:0 0 14px 14px}
+  .ph-header{flex-direction:column;align-items:flex-start;gap:8px}
+}
+
+/* Mockup: grids internos */
+@media(max-width:540px){
+  .mk-kpi-row{grid-template-columns:1fr 1fr}
+  .mk-grid{grid-template-columns:1fr}
+  .mk-charts{grid-template-columns:1fr}
+  .mk-p3-grid{grid-template-columns:1fr}
+}
+
+/* Tabelas: scroll horizontal */
+@media(max-width:700px){
+  .tech-table,.q-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px}
+}
+
+/* About card: stack no mobile */
+.about-card{grid-template-columns:1fr}
+@media(min-width:600px){.about-card{grid-template-columns:auto 1fr}}
+
+/* Steps timeline */
+@media(max-width:540px){
+  .st-step{padding-left:12px;gap:10px}
+  .st-week{min-width:70px;font-size:.5625rem}
+}
+
+/* Pricing: highlight badge */
+@media(max-width:480px){
+  .price-card.highlight::before{font-size:.5625rem;padding:2px 10px}
+}
 </style>
 </head>
 <body>

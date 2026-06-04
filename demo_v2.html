@@ -10,7 +10,7 @@
 <style>
 :root{--bx:#6B1C2E;--bxd:#4a1220;--bxl:#8b2a40;--gold:#c9a84c;--bg:#e4dfd9;--wh:#fff;--tx:#1a1a1a;--mu:#6b6b6b;--bd:#e0d9d4;--gn:#2c5940;--gnb:#deeae3;--or:#b36a00;--orb:#f8eed6;--rd:#c0392b;--rdb:#fdecea;--bl:#1e4272;--blb:#dde8f4}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden}
 
 /* HEADER */
 header{background:#fff;border-bottom:1px solid var(--bd);padding:12px 28px;display:flex;align-items:center;justify-content:space-between}
@@ -662,6 +662,15 @@ footer span{color:var(--bx);font-weight:600}
   .pipe-grid{grid-template-columns:1fr}
   .ofx-filter-tabs{flex-wrap:wrap}
   .ofx-filter-tabs button{flex:1}
+}
+
+/* ─ Ajustes adicionais de acessibilidade e legibilidade ─ */
+@media(max-width:420px){
+  .kpi-val{font-size:clamp(1.25rem,6vw,1.625rem)}
+  .cv-big{font-size:clamp(1.125rem,5vw,1.375rem)}
+  .calc-val{font-size:clamp(.9375rem,4vw,1.0625rem)}
+  .rh-kpi-val{font-size:clamp(1rem,5vw,1.25rem)}
+  .inad-mini-total-val{font-size:clamp(.875rem,4vw,1rem)}
 }
 </style>
 </head>
