@@ -47,4 +47,4 @@ saidas/            documentos e relatórios gerados
 
 ---
 
-**Desenvolvido por** Yasmin G. Lopes · [mazzeoia.com.br](https://mazzeoia.com.br)
+**Desenvolvido por** Yasmin G. Lopes
