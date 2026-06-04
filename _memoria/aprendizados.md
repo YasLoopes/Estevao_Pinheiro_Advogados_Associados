@@ -99,7 +99,17 @@ As 10 regras foram formalizadas e entram em vigor a partir da próxima sessão.
 
 **Regra aprendida:** Commit = foto do estado atual dos arquivos, com uma mensagem descrevendo o que mudou. O fluxo completo é sempre: `add` (seleciona o que entra na foto) → `commit` (tira a foto com mensagem) → `push` (envia para o GitHub). `/salvar` executa os três passos automaticamente.
 
-**Exemplo concreto:** `jornada-sistema.html` e os arquivos de diagnóstico foram selecionados, registrados com a mensagem "Adiciona jornada do sistema, contexto da 2ª reunião e atualiza memória do projeto" e enviados para github.com/YasLoopes/MazyOS.
+**Exemplo concreto:** `jornada-sistema.html` e os arquivos de diagnóstico foram selecionados, registrados com a mensagem "Adiciona jornada do sistema, contexto da 2ª reunião e atualiza memória do projeto" e enviados para github.com/YasLoopes/Estevao_Pinheiro_Advogados_Associados.
+
+---
+
+## O que é um fork e por que não usar para projeto de cliente — 04/06/2026
+
+**Gap:** Não sabia o que significa um fork no GitHub nem por que ele é problemático para um projeto dedicado a um cliente.
+
+**Regra aprendida:** Fork = cópia conectada a um repositório de terceiro. Aparece publicamente como "forked from [conta]", herda o histórico de commits da origem e não é profissional para um projeto de cliente. A solução é criar um repositório novo do zero (sem fork), com histórico limpo iniciando no primeiro commit do projeto.
+
+**Exemplo concreto:** o repositório `YasLoopes/MazyOS` era um fork de `mazzeoia/MazyOS`. Foi criado `YasLoopes/Estevao_Pinheiro_Advogados_Associados` do zero via branch órfã — sem conexão com nenhum terceiro, histórico iniciando em "Configuração inicial — Estevão & Pinheiro Advogados Associados".
 
 ---
 
