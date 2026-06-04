@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estevão & Pinheiro — Jornada do Sistema Financeiro</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── VARIÁVEIS ─────────────────────────────────────────────── */
+  :root {
+    --bx:#6B1C2E; --bxd:#4a1220; --gold:#c9a84c; --goldb:#f5edd8;
+    --bg:#f7f4f1; --wh:#ffffff; --tx:#1a1a1a; --mu:#6b6b6b; --bd:#e0d9d4;
+    --gn:#2c5940; --gnb:#e8f2ec; --bl:#1e4272; --blb:#e8eef7;
+  }
+
+  /* ── RESET ─────────────────────────────────────────────────── */
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
+
+  /* ── BASE — mobile first (320px+) ─────────────────────────── */
+  body {
+    font-family:'DM Sans',system-ui,sans-serif;
+    background:var(--bg); color:var(--tx);
+    font-size:1rem;        /* 16px base no mobile */
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* ── CAPA ──────────────────────────────────────────────────── */
+  .capa {
+    background:var(--bxd); color:#fff;
+    padding: clamp(1.75rem,5vw,3.25rem) clamp(1.25rem,5vw,3rem) clamp(1.5rem,4vw,2.75rem);
+    position:relative; overflow:hidden;
+  }
+  .capa::after {
+    content:''; position:absolute; bottom:-40px; right:-40px;
+    width:min(240px,40vw); height:min(240px,40vw);
+    border-radius:50%; background:rgba(201,168,76,.07);
+  }
+  .capa-logo {
+    font-family:'DM Serif Display',serif;
+    font-size:clamp(1rem,3vw,1.3125rem);
+    letter-spacing:-.2px; text-transform:uppercase;
+    margin-bottom:clamp(1.5rem,4vw,2.25rem); opacity:.8;
+  }
+  .capa-logo em { color:var(--gold); font-style:italic }
+  .capa-label {
+    font-family:'DM Mono',monospace;
+    font-size:clamp(0.5rem,1.5vw,0.625rem);
+    letter-spacing:.18em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:.625rem;
+  }
+  .capa-titulo {
+    font-family:'DM Serif Display',serif;
+    font-size:clamp(1.5rem,5vw,2rem);
+    line-height:1.15; font-weight:400;
+    max-width:min(31.25rem,100%); margin-bottom:1rem;
+  }
+  .capa-sub {
+    font-size:clamp(0.875rem,2vw,0.9375rem);
+    color:rgba(255,255,255,.6); max-width:min(28.75rem,100%); line-height:1.65;
+  }
+  .capa-meta {
+    margin-top:clamp(1.5rem,4vw,2.25rem);
+    display:flex; flex-wrap:wrap; gap:clamp(.75rem,3vw,2rem);
+    font-size:.6875rem; color:rgba(255,255,255,.4); font-family:'DM Mono',monospace;
+  }
+  .capa-meta strong { color:rgba(255,255,255,.65); display:block; font-size:.625rem; margin-bottom:2px }
+
+  /* ── DOCUMENTO ─────────────────────────────────────────────── */
+  .doc {
+    max-width:53.75rem; margin:0 auto;
+    padding: clamp(1.75rem,5vw,3rem) clamp(1rem,4vw,2.5rem) clamp(3rem,8vw,5rem);
+  }
+  .secao { margin-bottom:clamp(2rem,5vw,3.25rem) }
+  .secao-label {
+    font-family:'DM Mono',monospace; font-size:.5625rem; font-weight:600;
+    text-transform:uppercase; letter-spacing:.2em; color:var(--gold); margin-bottom:.5rem;
+  }
+  .secao-titulo {
+    font-family:'DM Serif Display',serif;
+    font-size:clamp(1.25rem,4vw,1.5rem);
+    font-weight:400; color:var(--bxd); margin-bottom:.875rem; line-height:1.2;
+  }
+  .secao-desc {
+    font-size:clamp(0.875rem,2vw,0.9375rem);
+    color:var(--mu); max-width:40rem; line-height:1.7; margin-bottom:1.375rem;
+  }
+  hr.div { border:none; border-top:1px solid var(--bd); margin:clamp(2rem,5vw,3rem) 0 }
+
+  /* ── PERFIS ────────────────────────────────────────────────── */
+  .perfis { display:grid; grid-template-columns:1fr; gap:.875rem }
+  @media(min-width:480px){ .perfis { grid-template-columns:repeat(2,1fr) } }
+  @media(min-width:768px){ .perfis { grid-template-columns:repeat(3,1fr) } }
+
+  .perfil-card {
+    background:var(--wh); border:1px solid var(--bd); border-radius:10px;
+    padding:clamp(1rem,3vw,1.375rem) clamp(.875rem,2.5vw,1.125rem);
+  }
+  .perfil-icon { width:38px; height:38px; background:var(--bx); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:17px; margin-bottom:.75rem }
+  .perfil-nome { font-weight:700; font-size:clamp(.875rem,2vw,.9375rem); color:var(--bxd); margin-bottom:2px }
+  .perfil-cargo { font-size:.625rem; color:var(--mu); font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.06em; margin-bottom:.625rem }
+  .perfil-desc { font-size:clamp(.8125rem,2vw,.875rem); color:var(--mu); line-height:1.55 }
+
+  /* ── POR QUE BUILD CUSTOMIZADO ─────────────────────────────── */
+  .custom-lista { list-style:none; display:flex; flex-direction:column; gap:0 }
+  .custom-li { display:flex; gap:1rem; align-items:flex-start; padding:.9375rem 0; border-bottom:1px solid var(--bd) }
+  .custom-li:last-child { border-bottom:none }
+  .custom-marker { width:5px; height:5px; min-width:5px; background:var(--bx); border-radius:1px; margin-top:.45rem; flex-shrink:0 }
+  .custom-titulo { font-weight:600; font-size:clamp(.875rem,2vw,.9375rem); color:var(--bxd); margin-bottom:3px }
+  .custom-desc { font-size:clamp(.8125rem,1.8vw,.875rem); color:var(--mu); line-height:1.6 }
+  .custom-conclusao { margin-top:1.125rem; padding:.875rem 1rem; background:var(--wh); border:1px solid var(--bd); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; font-size:clamp(.8125rem,1.8vw,.875rem); color:var(--mu); line-height:1.6 }
+  .custom-conclusao strong { color:var(--bxd) }
+
+  /* ── JORNADA ───────────────────────────────────────────────── */
+  .jornada { display:flex; flex-direction:column; gap:0 }
+  .step { display:flex; gap:clamp(.75rem,2vw,1.125rem); position:relative }
+  .step:not(:last-child) .step-line {
+    position:absolute; left:clamp(14px,2vw,18px); top:40px; bottom:0;
+    width:2px; background:var(--bd); z-index:0;
+  }
+  .step-num {
+    width:clamp(30px,4vw,36px); height:clamp(30px,4vw,36px); min-width:clamp(30px,4vw,36px);
+    border-radius:50%; background:var(--bx); color:#fff; font-weight:700;
+    font-size:clamp(.6875rem,2vw,.8125rem); display:flex; align-items:center; justify-content:center;
+    position:relative; z-index:1; margin-top:2px; flex-shrink:0;
+  }
+  .step-num.verde { background:var(--gn) }
+  .step-body { padding-bottom:clamp(1rem,3vw,1.625rem); flex:1; min-width:0 }
+  .step-acao { font-weight:600; font-size:clamp(.875rem,2vw,.9375rem); color:var(--tx); margin-bottom:4px; line-height:1.4 }
+  .step-detalhe { font-size:clamp(.8125rem,1.8vw,.875rem); color:var(--mu); line-height:1.6 }
+  .step-badge {
+    display:inline-flex; align-items:center; gap:4px;
+    font-family:'DM Mono',monospace; font-size:.5625rem; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; padding:3px 8px;
+    border-radius:4px; margin-bottom:7px; white-space:nowrap;
+  }
+  .bw { background:rgba(107,28,46,.08); color:var(--bx); border:1px solid rgba(107,28,46,.2) }
+  .ba { background:var(--gnb); color:var(--gn); border:1px solid rgba(44,89,64,.2) }
+
+  /* ── TABELAS — wrapper scroll horizontal no mobile ─────────── */
+  .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:8px }
+
+  .tabela-comp { width:100%; border-collapse:collapse; font-size:clamp(.8125rem,1.8vw,.875rem); min-width:480px }
+  .tabela-comp thead th { padding:.625rem 1rem; text-align:left; font-size:.625rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#fff }
+  .th-antes { background:#9e4a4a } .th-depois { background:var(--gn) }
+  .tabela-comp tbody tr { border-bottom:1px solid var(--bd) }
+  .tabela-comp tbody tr:last-child { border-bottom:none }
+  .tabela-comp td { padding:.75rem 1rem; vertical-align:top; line-height:1.55 }
+  .td-antes { background:#fdf5f5; color:#6b2a2a } .td-depois { background:var(--gnb); color:#1e4a32 }
+  .tabela-comp tr:nth-child(even) .td-antes { background:#faeaea }
+  .tabela-comp tr:nth-child(even) .td-depois { background:#dff0e6 }
+
+  /* ── FASES ─────────────────────────────────────────────────── */
+  .fases { display:grid; grid-template-columns:1fr; gap:.875rem; align-items:stretch }
+  @media(min-width:768px){ .fases { grid-template-columns:repeat(3,1fr) } }
+
+  .fase-card { border-radius:10px; overflow:hidden; border:1px solid var(--bd); display:flex; flex-direction:column }
+  .fase-header { padding:clamp(.875rem,2.5vw,1rem) clamp(1rem,2.5vw,1.0625rem); flex-shrink:0 }
+  .fase-header.f1 { background:var(--bx) } .fase-header.f2 { background:var(--bl) } .fase-header.f3 { background:var(--gn) }
+  .fase-num { font-family:'DM Mono',monospace; font-size:.5625rem; text-transform:uppercase; letter-spacing:.15em; color:rgba(255,255,255,.55); margin-bottom:3px }
+  .fase-titulo { font-weight:700; font-size:clamp(.875rem,2vw,.9375rem); color:#fff; margin-bottom:2px }
+  .fase-prazo { font-size:.6875rem; color:rgba(255,255,255,.55) }
+  .fase-body { background:var(--wh); padding:clamp(.875rem,2vw,.9375rem) clamp(1rem,2.5vw,1.0625rem); flex:1; display:flex; flex-direction:column }
+  .fase-item { font-size:clamp(.75rem,1.8vw,.8125rem); color:var(--tx); padding:5px 0; border-bottom:1px solid var(--bd); line-height:1.45; display:flex; gap:7px; align-items:flex-start }
+  .fase-item:last-child { border-bottom:none }
+  .fase-check { color:var(--gn); font-size:.6875rem; margin-top:3px; flex-shrink:0 }
+  .fase-entrega { margin-top:.875rem; padding:.625rem .6875rem; background:var(--bg); border-radius:6px; font-size:.75rem; color:var(--mu); font-style:italic; line-height:1.5 }
+
+  /* ── PLUS / ASSISTENTE IA ──────────────────────────────────── */
+  .plus-banner {
+    background:var(--goldb); border:1px solid rgba(201,168,76,.4); border-radius:10px;
+    padding:clamp(1rem,3vw,1.125rem) clamp(1rem,3vw,1.375rem);
+    margin-bottom:1.25rem; display:flex; gap:.875rem; align-items:flex-start;
+  }
+  .plus-icon { font-size:clamp(1.125rem,3vw,1.375rem); flex-shrink:0 }
+  .plus-titulo { font-weight:700; font-size:clamp(.875rem,2vw,.9375rem); color:#7a5c0a; margin-bottom:4px }
+  .plus-desc { font-size:clamp(.8125rem,1.8vw,.875rem); color:#8a6a0a; line-height:1.55 }
+
+  .chat-demo { background:var(--wh); border:1px solid var(--bd); border-radius:12px; overflow:hidden }
+  .chat-header { background:var(--bxd); padding:.75rem 1.0625rem; display:flex; align-items:center; gap:9px }
+  .chat-dot { width:7px; height:7px; border-radius:50%; background:var(--gold) }
+  .chat-header-txt { font-size:.75rem; color:rgba(255,255,255,.75); font-weight:500 }
+  .chat-msgs { padding:1rem; display:flex; flex-direction:column; gap:.6875rem }
+  .msg-user {
+    align-self:flex-end; background:var(--bx); color:#fff;
+    padding:9px 13px; border-radius:12px 12px 2px 12px;
+    font-size:clamp(.8125rem,2vw,.875rem); max-width:80%;
+  }
+  .msg-ia {
+    align-self:flex-start; background:var(--bg); border:1px solid var(--bd);
+    padding:9px 13px; border-radius:2px 12px 12px 12px;
+    font-size:clamp(.8125rem,2vw,.875rem); max-width:90%; line-height:1.55; color:var(--tx);
+  }
+  .msg-label { font-family:'DM Mono',monospace; font-size:.5625rem; text-transform:uppercase; letter-spacing:.08em; color:var(--mu); margin-bottom:3px }
+
+  /* ── FERRAMENTAS ───────────────────────────────────────────── */
+  .ferr-table { width:100%; border-collapse:collapse; font-size:clamp(.8125rem,1.8vw,.875rem); min-width:500px }
+  .ferr-table thead th { padding:.625rem .875rem; text-align:left; font-size:.625rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--mu); background:#faf8f6; border-bottom:2px solid var(--bd) }
+  .ferr-table tbody tr { border-bottom:1px solid var(--bd) }
+  .ferr-table tbody tr:last-child { border-bottom:none }
+  .ferr-table tbody tr:hover { background:#faf8f6 }
+  .ferr-table td { padding:.75rem .875rem; vertical-align:top; line-height:1.5 }
+  .ferr-nome { font-weight:600; font-size:clamp(.8125rem,1.8vw,.875rem); color:var(--bxd) }
+  .ferr-sub { font-size:.6875rem; color:var(--mu); font-family:'DM Mono',monospace; margin-top:1px }
+  .ferr-desc { font-size:clamp(.8125rem,1.8vw,.875rem); color:var(--mu) }
+  .ferr-custo { font-family:'DM Mono',monospace; font-size:.75rem; font-weight:600; color:var(--mu); white-space:nowrap }
+  .ferr-custo.gratis { color:var(--gn) }
+  .fase-pill { display:inline-block; font-family:'DM Mono',monospace; font-size:.5625rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:2px 7px; border-radius:3px; white-space:nowrap }
+  .fp1 { background:rgba(107,28,46,.1); color:var(--bx) }
+  .fp2 { background:var(--blb); color:var(--bl) }
+  .fp3 { background:var(--gnb); color:var(--gn) }
+
+  /* ── SEGURANÇA ─────────────────────────────────────────────── */
+  .seg-grid { display:grid; grid-template-columns:1fr; gap:.625rem }
+  @media(min-width:600px){ .seg-grid { grid-template-columns:1fr 1fr } }
+
+  .seg-item { background:var(--wh); border:1px solid var(--bd); border-radius:8px; padding:clamp(.875rem,2.5vw,.9375rem) 1rem; display:flex; gap:.75rem; align-items:flex-start }
+  .seg-icon { font-size:clamp(1rem,2.5vw,1.125rem); flex-shrink:0; margin-top:1px }
+  .seg-titulo { font-weight:600; font-size:clamp(.8125rem,1.8vw,.875rem); margin-bottom:3px; color:var(--tx) }
+  .seg-desc { font-size:clamp(.75rem,1.6vw,.8125rem); color:var(--mu); line-height:1.5 }
+
+  /* ── ARQUITETURA / FLUXO ───────────────────────────────────── */
+  .fluxo-wrap { display:flex; flex-direction:column; gap:6px }
+  .fluxo-row { display:grid; gap:8px; align-items:center }
+  .fluxo-row.r3 { grid-template-columns:1fr }
+  @media(min-width:600px){ .fluxo-row.r3 { grid-template-columns:repeat(3,1fr) } }
+  .fluxo-row.r1 { grid-template-columns:1fr }
+
+  .fluxo-box { background:var(--wh); border:1px solid var(--bd); border-radius:8px; padding:clamp(.625rem,2vw,.75rem) clamp(.75rem,2vw,.875rem); text-align:center }
+  .fluxo-box.destaque { border-color:var(--bx); border-width:2px }
+  .fluxo-box.verde { border-color:var(--gn); background:var(--gnb) }
+  .fluxo-box.azul { border-color:var(--bl); background:var(--blb) }
+  .fluxo-titulo { font-weight:700; font-size:clamp(.6875rem,1.8vw,.75rem); color:var(--tx); margin-bottom:2px }
+  .fluxo-sub { font-size:clamp(.625rem,1.5vw,.6875rem); color:var(--mu); line-height:1.4 }
+  .fluxo-seta { text-align:center; font-size:clamp(1rem,3vw,1.125rem); color:var(--mu); line-height:1; padding:2px 0 }
+
+  /* ── IDENTIFICAÇÃO ─────────────────────────────────────────── */
+  .ident-lista { display:flex; flex-direction:column; gap:.625rem }
+  .ident-item {
+    background:var(--wh); border:1px solid var(--bd); border-radius:8px;
+    padding:clamp(.875rem,2.5vw,.9375rem) 1rem;
+    display:grid; grid-template-columns:1fr; gap:.5rem;
+  }
+  @media(min-width:540px){ .ident-item { grid-template-columns:9.375rem 1fr; gap:1rem; align-items:start } }
+
+  .ident-tipo { font-weight:700; font-size:.75rem; color:var(--bxd) }
+  .ident-tipo-sub { font-size:.6875rem; color:var(--mu); margin-top:2px; font-family:'DM Mono',monospace }
+  .ident-fluxo { font-size:clamp(.8125rem,1.8vw,.875rem); color:var(--mu); line-height:1.55 }
+  .ident-fluxo strong { color:var(--tx) }
+
+  /* ── NOTA FINAL ────────────────────────────────────────────── */
+  .nota-final { background:var(--wh); border:1px solid var(--bd); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:clamp(1rem,3vw,1.25rem) clamp(1rem,3vw,1.375rem) }
+  .nota-final-titulo { font-weight:700; font-size:clamp(.875rem,2vw,.9375rem); color:var(--bxd); margin-bottom:7px }
+  .nota-final-txt { font-size:clamp(.8125rem,1.8vw,.875rem); color:var(--mu); line-height:1.7 }
+
+  /* ── RODAPÉ ────────────────────────────────────────────────── */
+  .rodape { background:var(--bxd); color:rgba(255,255,255,.45); text-align:center; font-size:.6875rem; padding:clamp(.875rem,2vw,1.125rem); font-family:'DM Mono',monospace }
+  .rodape strong { color:rgba(255,255,255,.7) }
+
+  /* ── PRINT ─────────────────────────────────────────────────── */
+  @media print {
+    body { background:#fff }
+    .capa { padding:2.25rem }
+    .doc { padding:1.75rem 0 }
+    .fase-card, .perfil-card, .seg-item, .custom-item { break-inside:avoid }
+    .table-wrap { overflow:visible }
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="capa">
+  <div class="capa-logo">Estevão <em>&</em> Pinheiro</div>
+  <div class="capa-label">Sistema Financeiro · Documento de Validação</div>
+  <h1 class="capa-titulo">Como o sistema vai funcionar no dia a dia</h1>
+  <p class="capa-sub">Jornada completa de uso — do extrato bancário ao relatório para a direção — com o mapa das ferramentas, segurança e arquitetura de integração.</p>
+  <div class="capa-meta">
+    <div><strong>Preparado por</strong>Yasmin G. Lopes</div>
+    <div><strong>Data</strong>Junho de 2026</div>
+    <div><strong>Status</strong>Aguardando validação</div>
+  </div>
+</div>
+
+<div class="doc">
+
+  <!-- ① POR QUE BUILD CUSTOMIZADO -->
+  <div class="secao">
+    <div class="secao-label">Diagnóstico de mercado</div>
+    <h2 class="secao-titulo">Por que não existe uma solução pronta</h2>
+    <p class="secao-desc">Foram avaliadas 8 plataformas financeiras e jurídicas: Asaas, Computar, Astrea, MaisJurídico, Projuris, ContaAzul, Omie e Nibo. Algumas cobrem honorários básicos e rateio manual entre advogados — especialmente Computar e Astrea. Nenhuma cobre simultaneamente os três requisitos que definem o fluxo do escritório: reconhecimento de transações por padrão, cruzamento de beneficiários de processos coletivos e integração com ADV Box. A lógica de negócio é construída sob medida porque a combinação é única.</p>
+    <ul class="custom-lista">
+      <li class="custom-li">
+        <span class="custom-marker"></span>
+        <div>
+          <div class="custom-titulo">Reconhecimento de transações por padrão</div>
+          <div class="custom-desc">Pattern learning por escritório — na primeira ocorrência pede confirmação; nas seguintes, categoriza automaticamente. O sistema aprende com o uso do E&P, não de outro escritório.</div>
+        </div>
+      </li>
+      <li class="custom-li">
+        <span class="custom-marker"></span>
+        <div>
+          <div class="custom-titulo">Cruzamento de beneficiários de processos coletivos</div>
+          <div class="custom-desc">FUNDEF, IPCEP, Bom Jardim e Sirinhaém — beneficiários pagos em lotes precisam ser cruzados com o extrato por nome, CPF e número de processo. Não existe ferramenta no mercado que faça essa ponte.</div>
+        </div>
+      </li>
+      <li class="custom-li">
+        <span class="custom-marker"></span>
+        <div>
+          <div class="custom-titulo">Regras de honorários configuráveis por sindicato</div>
+          <div class="custom-desc">Percentuais diferentes por sindicato (10%, 20%, 30%) e por advogado responsável. Ferramentas prontas operam com tabelas fixas que não refletem a estrutura do escritório.</div>
+        </div>
+      </li>
+      <li class="custom-li">
+        <span class="custom-marker"></span>
+        <div>
+          <div class="custom-titulo">Integração com ADV Box</div>
+          <div class="custom-desc">Cruzamento direto entre transações bancárias e os 572 processos jurídicos ativos no ADV Box. Nenhum SaaS financeiro ou jurídico disponível no mercado faz essa integração.</div>
+        </div>
+      </li>
+    </ul>
+    <div class="custom-conclusao"><strong>Abordagem:</strong> construído em Python, aproveitando componentes prontos onde possível — sem reescrever o que já existe no mercado.</div>
+  </div>
+
+  <hr class="div">
+
+  <!-- ② PERFIS -->
+  <div class="secao">
+    <div class="secao-label">Quem usa</div>
+    <h2 class="secao-titulo">Três perfis, uma ferramenta</h2>
+    <p class="secao-desc">O login é feito com o e-mail do Google Workspace que cada pessoa já usa hoje — sem criar nova conta ou nova senha.</p>
+    <div class="perfis">
+      <div class="perfil-card">
+        <div class="perfil-icon">💼</div>
+        <div class="perfil-nome">Waldir</div>
+        <div class="perfil-cargo">Gestão Financeira</div>
+        <div class="perfil-desc">Usa o sistema no dia a dia: importa extratos, confirma lançamentos, acompanha inadimplência e consulta o painel financeiro.</div>
+      </div>
+      <div class="perfil-card">
+        <div class="perfil-icon">⚖️</div>
+        <div class="perfil-nome">Andriely</div>
+        <div class="perfil-cargo">Jurídico · Base de dados</div>
+        <div class="perfil-desc">Fornece periodicamente a base de processos e beneficiários (FUNDEF, IPCEP, Bom Jardim, Sirinhaém) para o sistema cruzar com os pagamentos recebidos.</div>
+      </div>
+      <div class="perfil-card">
+        <div class="perfil-icon">📋</div>
+        <div class="perfil-nome">Ricardo</div>
+        <div class="perfil-cargo">Direção</div>
+        <div class="perfil-desc">Recebe o relatório semanal por e-mail com resumo de entradas, saídas e distribuição. Pode acessar o painel quando quiser.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- ③ ANTES / DEPOIS -->
+  <div class="secao">
+    <div class="secao-label">Impacto</div>
+    <h2 class="secao-titulo">O que muda no dia a dia</h2>
+    <div class="table-wrap">
+    <table class="tabela-comp">
+      <thead>
+        <tr>
+          <th class="th-antes" style="width:50%">Como é hoje</th>
+          <th class="th-depois" style="width:50%">Como fica com o sistema</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-antes">Waldir checa BB e Caixa manualmente 2–3 vezes por semana para ver quem pagou</td>
+          <td class="td-depois">Importa o extrato 1 vez por semana (2 min) — sistema identifica e registra tudo automaticamente</td>
+        </tr>
+        <tr>
+          <td class="td-antes">Para cada depósito judicial do BB: copiar protocolo, abrir outra plataforma, buscar o processo</td>
+          <td class="td-depois">Sistema consulta o portal público do BB automaticamente — processo já aparece identificado no painel</td>
+        </tr>
+        <tr>
+          <td class="td-antes">Waldir envia e-mail para Tiago solicitando comprovante da Caixa — manualmente</td>
+          <td class="td-depois">E-mail enviado automaticamente; resposta de Tiago processada pela IA sem nenhuma ação de Waldir</td>
+        </tr>
+        <tr>
+          <td class="td-antes">Relatório para Ricardo montado manualmente na planilha e enviado por WhatsApp</td>
+          <td class="td-depois">Gerado e enviado por e-mail automaticamente toda sexta, no mesmo formato</td>
+        </tr>
+        <tr>
+          <td class="td-antes">Cobrança de sindicatos inadimplentes feita por WhatsApp e telefone, manualmente</td>
+          <td class="td-depois">Sistema alerta automaticamente quais estão em atraso e pode enviar cobrança com texto padrão</td>
+        </tr>
+        <tr>
+          <td class="td-antes">Cálculo de honorários e tributos feito em planilha separada para cada lançamento</td>
+          <td class="td-depois">Cálculo automático no momento do registro — percentuais por sindicato já configurados</td>
+        </tr>
+        <tr>
+          <td class="td-antes">3 planilhas separadas para controlar entradas, despesas e mensalidades</td>
+          <td class="td-depois">Um painel único atualizado em tempo real — receita, custo, saldo, inadimplência, distribuição por banco</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- ④ JORNADA WALDIR -->
+  <div class="secao">
+    <div class="secao-label">Jornada — Waldir</div>
+    <h2 class="secao-titulo">Como é a semana com o sistema</h2>
+    <p class="secao-desc">Ações de Waldir em <strong style="color:var(--bx)">vinho</strong>. O que o sistema faz sozinho em <strong style="color:var(--gn)">verde</strong>.</p>
+
+    <div class="jornada">
+
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-badge bw">Waldir faz — início da semana</div>
+          <div class="step-acao">Acessa o sistema e importa os extratos bancários</div>
+          <div class="step-detalhe">Login com o e-mail Google Workspace → exporta o extrato do BB e da Caixa no app dos bancos (arquivo OFX ou CSV — os próprios bancos já geram esse arquivo) → arrasta para o sistema. Leva menos de 2 minutos por banco.<br><br>
+          <em style="color:var(--mu)">A base de processos do ADV Box é importada uma vez ao mês, ou quando Andriely adicionar novos casos. Se a API do ADV Box já estiver inclusa no plano atual, esse passo passa a ser automático.</em></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-num verde">↻</div>
+        <div class="step-body">
+          <div class="step-badge ba">Sistema faz automaticamente</div>
+          <div class="step-acao">Lê os arquivos, identifica tudo que já conhece e calcula</div>
+          <div class="step-detalhe">Mensalidade do SINTEP Passira → reconhecida. Depósito judicial processo 356 → identificado no portal público do Banco do Brasil. TEV/depósito da Caixa → e-mail automático enviado para Tiago solicitando comprovante. Honorários e tributos calculados para cada lançamento identificado.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-badge bw">Waldir confirma</div>
+          <div class="step-acao">Revisa apenas os lançamentos que precisam de atenção</div>
+          <div class="step-detalhe">O sistema sinaliza somente o que não conseguiu identificar sozinho. Exemplo: "PIX de R$630 — parece ser beneficiário do FUNDEF Passira. Confirmar?" → Waldir clica em confirmar ou corrige. Da segunda vez em diante, o sistema reconhece automaticamente — sem precisar confirmar de novo.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num verde">↻</div>
+        <div class="step-body">
+          <div class="step-badge ba">Sistema faz automaticamente — toda sexta</div>
+          <div class="step-acao">Relatório semanal enviado por e-mail para Ricardo Estevam</div>
+          <div class="step-detalhe">O sistema gera e envia automaticamente o resumo da semana para Ricardo — total recebido, distribuído, inadimplência, alertas — no mesmo formato que Waldir já entrega hoje. Waldir não precisa fazer nada.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- ⑤ FASES -->
+  <div class="secao">
+    <div class="secao-label">Cronograma</div>
+    <h2 class="secao-titulo">O que fica pronto em cada fase</h2>
+    <p class="secao-desc">O sistema é entregue em etapas para que o escritório comece a ganhar tempo o mais rápido possível.</p>
+    <div class="fases">
+
+      <div class="fase-card">
+        <div class="fase-header f1">
+          <div class="fase-num">Fase 1 · MVP</div>
+          <div class="fase-titulo">Operacional</div>
+          <div class="fase-prazo">6–8 semanas</div>
+        </div>
+        <div class="fase-body">
+          <div class="fase-item"><span class="fase-check">✓</span>Login com Google Workspace</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Importação de extrato OFX/CSV do BB e Caixa</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Reconhecimento automático de lançamentos (aprende com o uso)</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Cadastro dos sindicatos com regras de repasse</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Cálculo automático de honorários e tributos</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Painel financeiro em tempo real</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Alerta de inadimplência de sindicatos</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Identificação automática — depósitos judiciais BB (portal público) e Caixa (e-mail automático para Tiago + IA processa resposta)</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Relatório semanal por e-mail para Ricardo</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Base de processos via ADV Box (CSV exportado ou API direta se inclusa no plano atual)</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Exportação para Excel a qualquer momento</div>
+          <div class="fase-entrega">Waldir para de usar as 3 planilhas.</div>
+        </div>
+      </div>
+
+      <div class="fase-card">
+        <div class="fase-header f2">
+          <div class="fase-num">Fase 2</div>
+          <div class="fase-titulo">Automação bancária</div>
+          <div class="fase-prazo">+4–6 semanas</div>
+        </div>
+        <div class="fase-body">
+          <div class="fase-item"><span class="fase-check">✓</span>Open Finance: BB e Caixa conectados diretamente — sem upload manual de extrato</div>
+          <div class="fase-item"><span class="fase-check">✓</span>API ADV Box em tempo real (se não inclusa na Fase 1)</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Identificação de beneficiários FUNDEF/IPCEP com sugestão por IA</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Assistente com IA dentro do sistema — Waldir pergunta, sistema responde com dados reais (ver detalhes abaixo)</div>
+          <div class="fase-entrega">Waldir não precisa mais abrir os apps dos bancos.</div>
+        </div>
+      </div>
+
+      <div class="fase-card">
+        <div class="fase-header f3">
+          <div class="fase-num">Fase 3</div>
+          <div class="fase-titulo">Documentos automáticos</div>
+          <div class="fase-prazo">+3–4 semanas</div>
+        </div>
+        <div class="fase-body">
+          <div class="fase-item"><span class="fase-check">✓</span>Recibos de honorários com assinatura digital (ZapSign)</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Cobrança automática para sindicatos inadimplentes</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Relatório para Ricardo via WhatsApp (se preferirem ao e-mail)</div>
+          <div class="fase-entrega">Ciclo financeiro completo sem documentos manuais.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- ⑥ FERRAMENTAS -->
+  <div class="secao">
+    <div class="secao-label">Infraestrutura</div>
+    <h2 class="secao-titulo">Ferramentas que compõem o sistema</h2>
+    <p class="secao-desc">Todas operam integradas por baixo dos panos. Waldir e Ricardo interagem apenas com o sistema — não com nenhuma ferramenta diretamente.</p>
+
+    <div class="table-wrap">
+    <table class="ferr-table">
+      <thead>
+        <tr>
+          <th style="width:165px">Ferramenta</th>
+          <th>Para que serve</th>
+          <th style="width:80px">Fase</th>
+          <th style="width:160px">Custo mensal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="ferr-nome">Google Workspace</div><div class="ferr-sub">Login · E-mail · Drive</div></td>
+          <td class="ferr-desc">Login seguro com o e-mail do escritório. Envio de relatórios, cobranças e comunicados automáticos. Armazenamento dos arquivos.</td>
+          <td><span class="fase-pill fp1">Fase 1</span></td>
+          <td><div class="ferr-custo gratis">Incluso no plano atual</div></td>
+        </tr>
+        <tr>
+          <td><div class="ferr-nome">Google Cloud Run</div><div class="ferr-sub">Servidor no Brasil</div></td>
+          <td class="ferr-desc">Onde o sistema fica hospedado e roda. Dentro da infraestrutura Google — os dados ficam no Brasil.</td>
+          <td><span class="fase-pill fp1">Fase 1</span></td>
+          <td><div class="ferr-custo">~R$50–100/mês</div></td>
+        </tr>
+        <tr>
+          <td><div class="ferr-nome">Supabase</div><div class="ferr-sub">Banco de dados</div></td>
+          <td class="ferr-desc">Onde ficam todos os lançamentos, processos, sindicatos e beneficiários. Exporta para Excel a qualquer momento. O plano gratuito comporta o volume do escritório por cerca de 2 anos; após isso, o custo passa a ser de R$130/mês.</td>
+          <td><span class="fase-pill fp1">Fase 1</span></td>
+          <td><div class="ferr-custo gratis">Grátis (~2 anos)</div><div class="ferr-custo" style="margin-top:3px">R$130/mês após</div></td>
+        </tr>
+        <tr>
+          <td><div class="ferr-nome">Inteligência Artificial</div><div class="ferr-sub">Claude · Anthropic</div></td>
+          <td class="ferr-desc">Identifica transações desconhecidas, cruza nomes de beneficiários, processa documentos enviados por Tiago, gera os relatórios para Ricardo e responde perguntas do assistente (Fase 2).</td>
+          <td><span class="fase-pill fp1">Fase 1</span></td>
+          <td><div class="ferr-custo">~R$100–300/mês</div></td>
+        </tr>
+        <tr>
+          <td><div class="ferr-nome">ADV Box</div><div class="ferr-sub">Sistema jurídico</div></td>
+          <td class="ferr-desc">Base de processos e beneficiários. Na Fase 1, via exportação de arquivo CSV (mensal). Se a API já estiver inclusa no plano do escritório, passa a ser automático desde o início.</td>
+          <td><span class="fase-pill fp1">Fase 1</span></td>
+          <td><div class="ferr-custo">Verificar plano atual</div><div style="font-size:11px;color:var(--mu);margin-top:2px">API: +R$280/mês se não inclusa</div></td>
+        </tr>
+        <tr>
+          <td><div class="ferr-nome">Open Finance</div><div class="ferr-sub">Pluggy · integração bancária</div></td>
+          <td class="ferr-desc">Conecta diretamente ao BB e Caixa — elimina o upload manual de extrato. Avaliado após a Fase 1 estar funcionando e com base no uso real.</td>
+          <td><span class="fase-pill fp2">Fase 2</span></td>
+          <td><div class="ferr-custo">R$2.500/mês</div></td>
+        </tr>
+        <tr>
+          <td><div class="ferr-nome">ZapSign</div><div class="ferr-sub">Assinatura digital</div></td>
+          <td class="ferr-desc">Assinatura digital dos recibos de honorários. O advogado recebe o link no celular e assina sem precisar imprimir nada.</td>
+          <td><span class="fase-pill fp3">Fase 3</span></td>
+          <td><div class="ferr-custo">~R$150/mês</div></td>
+        </tr>
+        <tr>
+          <td><div class="ferr-nome">WhatsApp Business</div><div class="ferr-sub">Relatórios e cobranças</div></td>
+          <td class="ferr-desc">Alternativa ao e-mail para o relatório de Ricardo e cobranças de sindicatos. A Fase 1 usa Gmail (grátis, já incluso no Workspace) no lugar.</td>
+          <td><span class="fase-pill fp3">Fase 3</span></td>
+          <td><div class="ferr-custo">~R$50–100/mês infra</div><div style="font-size:11px;color:var(--mu);margin-top:2px">+ ~R$0,08 por mensagem</div></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div style="margin-top:14px;padding:14px 17px;background:var(--goldb);border:1px solid rgba(201,168,76,.4);border-radius:8px;font-size:13px;color:#7a5c0a;line-height:1.65">
+      <strong>Fase 1 (MVP):</strong> R$280–530/mês &nbsp;·&nbsp;
+      <strong>Fase 2 (com Open Finance):</strong> +R$2.500/mês &nbsp;·&nbsp;
+      <strong>Fase 3 (completo):</strong> R$3.000–3.500/mês &nbsp;·&nbsp;
+      O Pluggy (Fase 2) é opcional — avaliado com ROI comprovado após a Fase 1.
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- ⑦ ASSISTENTE IA (PLUS) -->
+  <div class="secao">
+    <div class="secao-label">Recurso adicional · Fase 2</div>
+    <h2 class="secao-titulo">Assistente com IA — opcional</h2>
+
+    <div class="plus-banner">
+      <div class="plus-icon">💬</div>
+      <div>
+        <div class="plus-titulo">Disponível a partir da Fase 2, caso o escritório queira ativar</div>
+        <div class="plus-desc">Além do painel financeiro, o sistema pode contar com uma janela de conversa com inteligência artificial. Waldir digita uma pergunta como se estivesse mandando uma mensagem e recebe a resposta com os dados reais — sem precisar navegar por telas ou montar relatório manualmente, aproveitando o plano já pago da Anthropic.</div>
+      </div>
+    </div>
+
+    <div class="chat-demo">
+      <div class="chat-header">
+        <div class="chat-dot"></div>
+        <div class="chat-header-txt">Assistente Financeiro — exemplo de uso</div>
+      </div>
+      <div class="chat-msgs">
+        <div>
+          <div class="msg-label">Waldir</div>
+          <div class="msg-user">O Sinijude pagou esse mês?</div>
+        </div>
+        <div>
+          <div class="msg-label">Assistente</div>
+          <div class="msg-ia">Não, Waldir. O Sinijude não tem registro de pagamento em junho. O último pagamento foi em 15 de fevereiro de 2026 — está há 4 meses em atraso. Quer que eu gere a cobrança agora?</div>
+        </div>
+        <div>
+          <div class="msg-user">Gera o resumo de maio para mandar pro Ricardo</div>
+        </div>
+        <div>
+          <div class="msg-ia">Resumo de maio: total recebido R$198.400 · honorários do escritório R$142.800 · distribuído para advogados R$38.200 · a repassar para a Receita R$17.400 · inadimplentes: Sinijude (4 meses), Sindprev (1 mês). Clique em "Enviar para Ricardo" para disparar o e-mail.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- ⑧ SEGURANÇA -->
+  <div class="secao">
+    <div class="secao-label">Segurança</div>
+    <h2 class="secao-titulo">Como os dados do escritório são protegidos</h2>
+    <p class="secao-desc">O sistema foi desenhado para que nenhuma informação sensível do escritório fique exposta — nem credenciais bancárias, nem dados de clientes, nem chaves de acesso.</p>
+    <div class="seg-grid">
+      <div class="seg-item">
+        <div class="seg-icon">🔐</div>
+        <div>
+          <div class="seg-titulo">Login com Google — sem senha nova</div>
+          <div class="seg-desc">O acesso é feito com o e-mail do Google Workspace do escritório. O Google é responsável pela autenticação. Se quiserem, ativam verificação em dois fatores pelo próprio Google.</div>
+        </div>
+      </div>
+      <div class="seg-item">
+        <div class="seg-icon">🔒</div>
+        <div>
+          <div class="seg-titulo">Comunicação criptografada — HTTPS</div>
+          <div class="seg-desc">Toda comunicação entre o sistema e os dispositivos é criptografada. Ninguém consegue interceptar os dados em trânsito.</div>
+        </div>
+      </div>
+      <div class="seg-item">
+        <div class="seg-icon">💾</div>
+        <div>
+          <div class="seg-titulo">Dados armazenados com criptografia</div>
+          <div class="seg-desc">Todos os lançamentos, processos e beneficiários ficam criptografados no banco de dados. Mesmo que alguém acesse o servidor fisicamente, não consegue ler nada.</div>
+        </div>
+      </div>
+      <div class="seg-item">
+        <div class="seg-icon">🏦</div>
+        <div>
+          <div class="seg-titulo">Senha do banco nunca entra no sistema</div>
+          <div class="seg-desc">Waldir exporta o extrato do banco e faz o upload. As credenciais bancárias ficam exclusivamente no app do banco — nunca tocam o sistema. Na Fase 2 (Open Finance), a autorização é feita pelo próprio app do banco.</div>
+        </div>
+      </div>
+      <div class="seg-item">
+        <div class="seg-icon">🔑</div>
+        <div>
+          <div class="seg-titulo">Chaves de integração protegidas</div>
+          <div class="seg-desc">As chaves de acesso às ferramentas integradas (IA, ADV Box, Gmail) ficam guardadas no Google Secret Manager — nunca no código, nunca expostas.</div>
+        </div>
+      </div>
+      <div class="seg-item">
+        <div class="seg-icon">📝</div>
+        <div>
+          <div class="seg-titulo">Auditoria — tudo registrado</div>
+          <div class="seg-desc">Toda ação no sistema fica registrada: quem confirmou qual lançamento, quando, de qual dispositivo. Rastreabilidade completa.</div>
+        </div>
+      </div>
+      <div class="seg-item">
+        <div class="seg-icon">🗄️</div>
+        <div>
+          <div class="seg-titulo">Backup automático diário</div>
+          <div class="seg-desc">O banco de dados tem backup automático todo dia. Os arquivos ficam também no Google Drive. Os dados do escritório nunca se perdem.</div>
+        </div>
+      </div>
+      <div class="seg-item">
+        <div class="seg-icon">🇧🇷</div>
+        <div>
+          <div class="seg-titulo">Dados no Brasil</div>
+          <div class="seg-desc">O servidor e o banco de dados ficam hospedados no Brasil, dentro da infraestrutura Google. Os dados não saem do país.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- ⑨ ARQUITETURA TÉCNICA -->
+  <div class="secao">
+    <div class="secao-label">Visão técnica</div>
+    <h2 class="secao-titulo">Como as ferramentas se conectam</h2>
+    <p class="secao-desc">Mapa de integração — cada ferramenta, o que faz e como se comunica com as demais.</p>
+
+    <div class="fluxo-wrap">
+      <div class="fluxo-row r3">
+        <div class="fluxo-box">
+          <div class="fluxo-titulo">Extrato Banco do Brasil</div>
+          <div class="fluxo-sub">OFX ou CSV · exportado por Waldir</div>
+        </div>
+        <div class="fluxo-box">
+          <div class="fluxo-titulo">Extrato Caixa Econômica</div>
+          <div class="fluxo-sub">OFX ou CSV · exportado por Waldir</div>
+        </div>
+        <div class="fluxo-box">
+          <div class="fluxo-titulo">Base ADV Box</div>
+          <div class="fluxo-sub">CSV mensal ou API direta se inclusa</div>
+        </div>
+      </div>
+      <div class="fluxo-seta">↓</div>
+      <div class="fluxo-row r1">
+        <div class="fluxo-box destaque">
+          <div class="fluxo-titulo" style="color:var(--bx);font-size:14px">Sistema Financeiro do Escritório · Python</div>
+          <div class="fluxo-sub">Processa extratos · identifica transações · calcula honorários · aprende padrões</div>
+        </div>
+      </div>
+      <div class="fluxo-seta">↓</div>
+      <div class="fluxo-row r3">
+        <div class="fluxo-box azul">
+          <div class="fluxo-titulo">Portal público BB</div>
+          <div class="fluxo-sub">Consulta automática por protocolo + CNPJ · identifica processo judicial</div>
+        </div>
+        <div class="fluxo-box azul">
+          <div class="fluxo-titulo">E-mail para Tiago</div>
+          <div class="fluxo-sub">Gmail automático · IA processa resposta · registra comprovante Caixa</div>
+        </div>
+        <div class="fluxo-box azul">
+          <div class="fluxo-titulo">Claude (IA)</div>
+          <div class="fluxo-sub">Categoriza · cruza nomes · gera relatórios · responde perguntas</div>
+        </div>
+      </div>
+      <div class="fluxo-seta">↓</div>
+      <div class="fluxo-row r3">
+        <div class="fluxo-box verde">
+          <div class="fluxo-titulo">Painel Waldir</div>
+          <div class="fluxo-sub">Receita · custo · saldo · inadimplência · lançamentos pendentes</div>
+        </div>
+        <div class="fluxo-box verde">
+          <div class="fluxo-titulo">E-mail Ricardo</div>
+          <div class="fluxo-sub">Relatório automático toda sexta com resumo do período</div>
+        </div>
+        <div class="fluxo-box verde">
+          <div class="fluxo-titulo">Supabase</div>
+          <div class="fluxo-sub">Dados guardados · exporta Excel · backup automático</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLUXO DE IDENTIFICAÇÃO -->
+  <div class="secao">
+    <div class="secao-label">Como o sistema pensa</div>
+    <h2 class="secao-titulo">Fluxo de identificação de cada transação</h2>
+    <p class="secao-desc">Quando um pagamento entra no extrato, o sistema percorre esta sequência até identificar a origem.</p>
+    <div class="ident-lista">
+      <div class="ident-item">
+        <div><div class="ident-tipo">Já foi visto antes?</div><div class="ident-tipo-sub">Pattern matching</div></div>
+        <div class="ident-fluxo">Verifica se aquele CNPJ, nome ou padrão de valor já foi categorizado antes. <strong>Se sim: confirma automaticamente</strong> e aplica a mesma regra. Sem interação de Waldir.</div>
+      </div>
+      <div class="ident-item">
+        <div><div class="ident-tipo">Mensalidade de sindicato?</div><div class="ident-tipo-sub">Cadastro fixo</div></div>
+        <div class="ident-fluxo">Cruza o CNPJ ou nome do pagador com o cadastro dos 15 sindicatos. <strong>Se encontrar: registra automaticamente</strong> com o percentual de repasse correspondente e marca como pago.</div>
+      </div>
+      <div class="ident-item">
+        <div><div class="ident-tipo">PIX de pessoa física?</div><div class="ident-tipo-sub">Correspondência de nomes</div></div>
+        <div class="ident-fluxo">O banco às vezes trunca o nome. O sistema compara com a base de beneficiários e calcula a semelhança. <strong>Acima de 90%: aceita automaticamente.</strong> Entre 70–90%: exibe sugestão para Waldir confirmar. Abaixo de 70%: pede classificação manual.</div>
+      </div>
+      <div class="ident-item">
+        <div><div class="ident-tipo">Depósito judicial — BB?</div><div class="ident-tipo-sub">Portal público</div></div>
+        <div class="ident-fluxo">O extrato do BB traz um número de protocolo. O sistema consulta o portal público do Banco do Brasil com esse número + CNPJ do escritório. <strong>Retorna automaticamente: processo, sindicato, valor, data, juros.</strong> Waldir não faz nada.</div>
+      </div>
+      <div class="ident-item">
+        <div><div class="ident-tipo">Depósito / TEV — Caixa?</div><div class="ident-tipo-sub">E-mail automático</div></div>
+        <div class="ident-fluxo">Sem portal público disponível. O sistema envia automaticamente um e-mail para Tiago com o valor e a data. Quando Tiago responde, a IA lê o documento e <strong>registra o processo identificado sem ação de Waldir.</strong></div>
+      </div>
+      <div class="ident-item">
+        <div><div class="ident-tipo">Não identificado</div><div class="ident-tipo-sub">Classificação manual</div></div>
+        <div class="ident-fluxo">Waldir classifica manualmente uma única vez. O sistema aprende e reconhece automaticamente nas próximas vezes. Com o uso, o número de lançamentos manuais vai diminuindo.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+
+  <!-- NOTA FINAL -->
+  <div class="nota-final">
+    <div class="nota-final-titulo">Este documento é para validação</div>
+    <div class="nota-final-txt">Antes de iniciar o desenvolvimento, precisamos confirmar que o fluxo descrito reflete o dia a dia real do escritório. Se algum passo não faz sentido, se há alguma situação que ficou de fora, ou se a ordem das fases precisa ser ajustada — este é o momento de alinhar. O desenvolvimento começa somente após a validação.</div>
+  </div>
+
+</div>
+
+<div class="rodape">
+  <strong>Estevão & Pinheiro Advogados Associados</strong> · Sistema Financeiro · Yasmin G. Lopes · Junho 2026
+</div>
+
+</body>
+</html>

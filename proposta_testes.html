@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta Técnica — Sistema de Gestão Financeira · Estevão & Pinheiro</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bx:#6B1C2E;--bxd:#4a1220;--gold:#c9a84c;--bg:#faf8f5;--wh:#fff;--tx:#1a1a1a;--mu:#6b6b6b;--bd:#e0d9d4;--gn:#2d7d46;--or:#c07000;--bl:#1a5276}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.6}
+
+/* ─── NAV ─── */
+.top-nav{background:var(--bxd);padding:10px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:16px;color:#fff;letter-spacing:-.2px;text-transform:uppercase}
+.nav-logo span{color:#c9a84c;font-style:italic}
+.nav-links{display:flex;gap:20px}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:12px;transition:color .15s}
+.nav-links a:hover{color:#fff}
+
+/* ─── WRAPPER ─── */
+.doc{max-width:900px;margin:0 auto;padding:0 24px 60px}
+
+/* ─── CAPA ─── */
+.capa{background:linear-gradient(135deg,var(--bxd) 0%,var(--bx) 60%,#8b2a40 100%);border-radius:16px;padding:52px 48px;margin:32px 0;color:#fff;position:relative;overflow:hidden}
+.capa::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:rgba(201,168,76,.08);border-radius:50%}
+.capa-badge{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.capa-title{font-family:'DM Serif Display',serif;font-size:38px;font-weight:400;line-height:1.15;margin-bottom:8px}
+.capa-sub{font-size:15px;color:rgba(255,255,255,.75);margin-bottom:32px}
+.capa-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;border-top:1px solid rgba(255,255,255,.2);padding-top:24px;margin-top:24px}
+.capa-meta-item .lbl{font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.5);margin-bottom:4px}
+.capa-meta-item .val{font-size:14px;font-weight:600;color:#fff}
+.demo-btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#3a2800;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;margin-top:24px;transition:opacity .15s}
+.demo-btn:hover{opacity:.9}
+
+/* ─── SECTIONS ─── */
+section{margin-bottom:44px}
+.section-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.section-title{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;color:var(--tx);margin-bottom:16px}
+.section-title span{color:var(--bx);font-style:italic}
+p.body-text{color:#3a3a3a;line-height:1.7;margin-bottom:12px}
+.sep{border:none;border-top:1px solid var(--bd);margin:40px 0}
+
+/* ─── PROBLEMA ─── */
+.pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.pain-card{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:16px;display:flex;gap:12px;align-items:center}
+.pain-icon{font-size:22px;flex-shrink:0}
+.pain-title{font-weight:700;font-size:13px;margin-bottom:3px}
+.pain-desc{font-size:12px;color:var(--mu);line-height:1.5}
+
+/* ─── PHASE TIMELINE ─── */
+.timeline{display:flex;gap:0;margin:24px 0;position:relative}
+.timeline::before{content:'';position:absolute;top:28px;left:28px;right:28px;height:2px;background:var(--bd);z-index:0}
+.tl-step{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1}
+.tl-num{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;border:3px solid;margin-bottom:10px}
+.tl-1 .tl-num{background:rgba(201,168,76,.15);border-color:var(--gold);color:#7a5c0a}
+.tl-2 .tl-num{background:rgba(45,125,70,.12);border-color:var(--gn);color:#1e5a32}
+.tl-3 .tl-num{background:rgba(107,28,46,.1);border-color:var(--bx);color:var(--bx)}
+.tl-label{font-weight:700;font-size:13px;margin-bottom:4px}
+.tl-sub{font-size:11px;color:var(--mu);line-height:1.4;max-width:140px}
+.tl-prazo{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;margin-top:6px;padding:2px 8px;border-radius:10px}
+.tl-1 .tl-prazo{background:rgba(201,168,76,.2);color:#7a5c0a}
+.tl-2 .tl-prazo{background:rgba(45,125,70,.15);color:#1e5a32}
+.tl-3 .tl-prazo{background:rgba(107,28,46,.1);color:var(--bx)}
+
+/* ─── PHASE DETAIL ─── */
+.phase-detail{background:#fff;border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-bottom:24px}
+.ph-header{padding:20px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bd)}
+.ph-header-left{display:flex;align-items:center;gap:14px}
+.ph-num{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0}
+.ph-n1{background:var(--gold)}
+.ph-n2{background:var(--gn)}
+.ph-n3{background:var(--bx)}
+.ph-title{font-size:16px;font-weight:700}
+.ph-sub{font-size:12px;color:var(--mu);margin-top:2px}
+.ph-badge{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em}
+.ph-b1{background:rgba(201,168,76,.15);color:#7a5c0a;border:1px solid rgba(201,168,76,.4)}
+.ph-b2{background:rgba(45,125,70,.12);color:#1e5a32;border:1px solid rgba(45,125,70,.3)}
+.ph-b3{background:rgba(107,28,46,.1);color:var(--bx);border:1px solid rgba(107,28,46,.25)}
+.ph-body{display:grid;grid-template-columns:1fr 1.1fr;gap:0;align-items:start}
+.ph-desc{padding:20px 24px;border-right:1px solid var(--bd)}
+.ph-desc ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.ph-desc li{display:flex;align-items:flex-start;gap:8px;font-size:13px}
+.ph-desc li::before{content:'✓';color:var(--gn);font-weight:700;flex-shrink:0}
+
+/* MOCKUPS */
+.ph-mockup{padding:16px;background:#f4f1ee;display:flex;flex-direction:column;gap:12px;border-radius:0 0 14px 0}
+.mk-result-box{background:#fff;border:1px solid var(--bd);border-radius:8px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px}
+.mk-result-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.mk-result-label{font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.mk-result-text{font-size:12px;line-height:1.5;color:#3a3a3a}
+.mockup-wrap{background:#fff;border-radius:10px;border:1px solid var(--bd);overflow:hidden;font-size:0}
+.mk-nav{background:var(--bxd);height:28px;display:flex;align-items:center;padding:0 10px;gap:6px}
+.mk-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3)}
+.mk-tab{height:100%;padding:0 10px;display:flex;align-items:center;font-size:9px;color:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent}
+.mk-tab.active{color:#fff;border-bottom-color:var(--gold)}
+.mk-body{padding:10px}
+/* Phase 1 mockup */
+.mk-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
+.mk-form{background:#faf8f6;border:1px solid var(--bd);border-radius:6px;padding:8px}
+.mk-field{height:14px;background:#fff;border:1px solid var(--bd);border-radius:4px;margin-bottom:4px}
+.mk-label{font-size:7px;color:var(--mu);font-family:'DM Sans',sans-serif;margin-bottom:2px}
+.mk-calc{background:#faf8f6;border:1px solid var(--bd);border-radius:6px;padding:8px}
+.mk-calc-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.mk-calc-lbl{font-size:7px;color:var(--mu);font-family:'DM Sans',sans-serif}
+.mk-calc-val{font-size:8px;font-weight:700;font-family:'DM Mono',monospace}
+.mk-btn{height:16px;border-radius:4px;background:var(--bx)}
+.mk-btn-g{background:var(--gold)}
+.mk-btn-row{display:flex;gap:4px;margin-top:6px}
+/* Phase 2 mockup */
+.mk-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:6px}
+.mk-kpi{border-radius:5px;height:36px;display:flex;flex-direction:column;justify-content:center;padding:4px 6px;position:relative;overflow:hidden}
+.mk-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.mk-kpi-bx{background:#fdecea;}.mk-kpi-bx::before{background:var(--bx)}
+.mk-kpi-gn{background:#e8f5ec;}.mk-kpi-gn::before{background:var(--gn)}
+.mk-kpi-or{background:#fff3e0;}.mk-kpi-or::before{background:var(--or)}
+.mk-kpi-bl{background:#eaf1f8;}.mk-kpi-bl::before{background:var(--bl)}
+.mk-kpi-lbl{font-size:6px;color:var(--mu);font-family:'DM Sans',sans-serif;text-transform:uppercase}
+.mk-kpi-val{font-size:9px;font-weight:800;font-family:'DM Mono',monospace}
+.mk-charts{display:grid;grid-template-columns:1.5fr 1fr;gap:4px;margin-bottom:4px}
+.mk-chart{background:#faf8f6;border:1px solid var(--bd);border-radius:5px;height:68px;display:flex;align-items:flex-end;padding:4px 6px;gap:3px}
+.mk-bar{border-radius:2px 2px 0 0;flex:1}
+.mk-donut-ph{width:40px;height:40px;border-radius:50%;background:conic-gradient(#1a3c8f 0 34%,#7d5a00 34% 62%,#6a1b9a 62% 78%,#c9a84c 78% 100%);margin:auto}
+.mk-table-row{display:flex;gap:4px;padding:3px 4px;border-bottom:1px solid #f0ece8;align-items:center}
+.mk-table-row:last-child{border:none}
+.mk-cell{font-size:6px;font-family:'DM Sans',sans-serif;color:var(--mu)}
+.mk-badge{font-size:6px;padding:1px 4px;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:700}
+/* Phase 3 mockup */
+.mk-p3-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:5px}
+.mk-p3-card{background:#faf8f6;border:1px solid var(--bd);border-radius:6px;padding:8px}
+.mk-p3-title{font-size:7px;font-weight:700;font-family:'DM Sans',sans-serif;color:var(--tx);margin-bottom:5px}
+.mk-wa{background:#dcf8c6;border-radius:5px 5px 2px 5px;padding:4px 6px;font-size:6px;font-family:'DM Mono',monospace;color:#1a1a1a;line-height:1.4}
+.mk-step-row{display:flex;gap:4px;align-items:flex-start;margin-bottom:3px}
+.mk-step-n{width:10px;height:10px;border-radius:50%;background:var(--bx);color:#fff;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;flex-shrink:0}
+.mk-step-t{font-size:6px;color:var(--mu);font-family:'DM Sans',sans-serif;line-height:1.4}
+
+/* ─── TECH TABLE ─── */
+.tech-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:10px;overflow:hidden;border:1px solid var(--bd)}
+.tech-table th{background:#faf8f6;padding:10px 16px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu);border-bottom:1px solid var(--bd)}
+.tech-table td{padding:11px 16px;border-bottom:1px solid var(--bd)}
+.tech-table tr:last-child td{border-bottom:none}
+.tech-table tr:hover td{background:#faf8f6}
+.cost-free{color:var(--gn);font-weight:700}
+.cost-low{color:var(--or);font-weight:700}
+.tech-badge{display:inline-flex;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;font-family:'DM Mono',monospace;white-space:nowrap}
+.tb-inc{background:rgba(45,125,70,.1);color:var(--gn)}
+.tb-opt{background:#f0ece8;color:#888}
+
+/* ─── PRICING ─── */
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px}
+.price-card{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:8px}
+.price-card.highlight{border:2px solid var(--gold);position:relative}
+.price-card.highlight::before{content:'Recomendado';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:#3a2800;font-size:10px;font-weight:700;padding:3px 14px;border-radius:20px;white-space:nowrap;font-family:'DM Mono',monospace}
+.pc-badge{font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;width:fit-content}
+.pc-b1{background:rgba(201,168,76,.15);color:#7a5c0a}
+.pc-b2{background:rgba(107,28,46,.1);color:var(--bx)}
+.pc-b3{background:#eee;color:#555}
+.pc-name{font-size:16px;font-weight:700;color:var(--tx)}
+.pc-price{font-family:'DM Serif Display',serif;font-size:30px;color:var(--bx)}
+.pc-price small{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--mu)}
+.pc-sub{font-size:12px;color:var(--mu)}
+.pc-list{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.pc-list li{font-size:12px;color:#3a3a3a;display:flex;align-items:flex-start;gap:6px}
+.pc-list li::before{content:'·';color:var(--gold);font-size:16px;line-height:1;flex-shrink:0}
+.pc-note{font-size:11px;color:var(--mu);margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)}
+
+/* ─── QUESTIONS ─── */
+.q-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-radius:10px;overflow:hidden;border:1px solid var(--bd)}
+.q-table th{background:var(--bxd);padding:10px 16px;text-align:left;font-size:11px;font-weight:600;color:rgba(255,255,255,.85);text-transform:uppercase;letter-spacing:.5px}
+.q-table td{padding:11px 16px;border-bottom:1px solid var(--bd);vertical-align:top}
+.q-table tr:last-child td{border-bottom:none}
+.q-table tr:hover td{background:#faf8f6}
+.q-num{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--bx)}
+.q-impact{font-size:12px;color:var(--mu)}
+
+/* ─── NEXT STEPS ─── */
+.steps-timeline{display:flex;flex-direction:column;gap:0;margin-top:20px}
+.st-step{display:flex;gap:16px;padding:14px 0;border-left:2px solid var(--bd);padding-left:20px;margin-left:16px;position:relative}
+.st-step:last-child{border-left:2px solid transparent}
+.st-dot{width:14px;height:14px;border-radius:50%;background:var(--bx);position:absolute;left:-8px;top:18px;flex-shrink:0}
+.st-week{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;min-width:90px}
+.st-text{font-size:13px;color:var(--tx)}.st-text strong{color:var(--bx)}
+
+/* ─── ABOUT ─── */
+.about-card{background:linear-gradient(135deg,#faf8f5,#fff);border:1px solid var(--bd);border-radius:14px;padding:28px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start}
+.about-avatar{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--bxd),var(--bx));display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:28px;color:#fff;flex-shrink:0}
+.about-name{font-family:'DM Serif Display',serif;font-size:22px;color:var(--tx);margin-bottom:4px}
+.about-role{font-size:13px;color:var(--mu);margin-bottom:12px}
+.about-text{font-size:13px;color:#3a3a3a;line-height:1.65}
+.about-cnpj{font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);margin-top:8px}
+.contact-row{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap}
+.contact-item{font-size:12px;color:var(--mu);display:flex;align-items:center;gap:5px}
+
+/* FOOTER */
+.doc-footer{text-align:center;padding:24px 0;font-size:11px;color:var(--mu);border-top:1px solid var(--bd);margin-top:40px}
+.doc-footer span{color:var(--bx);font-weight:600}
+
+/* PRINT */
+@media print{
+  @page{margin:12mm 15mm;size:A4 portrait}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
+  .top-nav{display:none!important}
+  .doc{max-width:100%;padding:0 0 20px}
+  body{background:#fff}
+  .capa{border-radius:0;margin:0;break-after:page}
+  .demo-btn{display:none!important}
+  .phase-detail{break-inside:avoid;margin-bottom:16px}
+  .price-card{break-inside:avoid}
+  .pain-card{break-inside:avoid}
+  .security-grid{break-inside:avoid}
+  section{break-inside:avoid}
+  .sep{margin:24px 0}
+  a::after{content:none!important}
+  .st-step{break-inside:avoid}
+  .steps-timeline{break-inside:avoid}
+}
+
+/* RESPONSIVE */
+@media(max-width:720px){.pain-grid,.pricing-grid,.ph-body{grid-template-columns:1fr}.mk-kpi-row{grid-template-columns:1fr 1fr}.mk-grid{grid-template-columns:1fr}.capa-meta{grid-template-columns:1fr 1fr}.timeline{flex-direction:column;gap:20px}.timeline::before{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-logo">Estevão <span>&</span> Pinheiro · Gestão Financeira</div>
+  <div class="nav-links">
+    <a href="#problema">Problema</a>
+    <a href="#solucao">Solução</a>
+    <a href="#fases">Fases</a>
+    <a href="#tecnologia">Tecnologia</a>
+    <a href="#investimento">Investimento</a>
+    <a href="#proximos">Próximos passos</a>
+  </div>
+</nav>
+
+<div class="doc">
+
+  <!-- ══ CAPA ══ -->
+  <div class="capa">
+    <div class="capa-badge">Proposta Técnica e Comercial · Maio 2026</div>
+    <div class="capa-title">Sistema de Gestão<br>Financeira</div>
+    <div class="capa-sub">Automação do controle de RPVs, despesas, honorários, tributos e cobranças — eliminando o trabalho manual e entregando visibilidade financeira completa em tempo real.</div>
+    <a class="demo-btn" href="https://yasloopes.github.io/MazyOS/demo_v2.html" target="_blank">
+      ▶ Acessar demonstração interativa
+    </a>
+    <div style="margin-top:12px;font-size:11px;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace">demo atualizada · maio 2026</div>
+    <div class="capa-meta">
+      <div class="capa-meta-item">
+        <div class="lbl">Cliente</div>
+        <div class="val">Estevão & Pinheiro<br>Advogados Associados</div>
+      </div>
+      <div class="capa-meta-item">
+        <div class="lbl">Contato interno</div>
+        <div class="val">Waldir Rodrigues<br>Rua Dom Vital, 48 — Recife PE</div>
+      </div>
+      <div class="capa-meta-item">
+        <div class="lbl">Elaborado por</div>
+        <div class="val">Yasmin G. Lopes<br>CNPJ 44.704.456/0001-08</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="sep">
+
+  <!-- ══ PROBLEMA ══ -->
+  <section id="problema">
+    <div class="section-label">01 · Contexto atual</div>
+    <div class="section-title">O problema que o escritório <span>vive hoje</span></div>
+    <p class="body-text">O controle financeiro de causas do Estevão & Pinheiro é feito manualmente: planilhas desconectadas, cálculos repetidos a cada RPV, e relatórios digitados à mão para a diretoria. O risco de erro é alto, o tempo gasto é significativo, e não existe visibilidade financeira consolidada em tempo real.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card"><div class="pain-icon">⏱</div><div><div class="pain-title">Tempo excessivo em trabalho manual</div></div></div>
+      <div class="pain-card"><div class="pain-icon">⚠️</div><div><div class="pain-title">Risco de erro no cálculo</div></div></div>
+      <div class="pain-card"><div class="pain-icon">📊</div><div><div class="pain-title">Sem visibilidade financeira consolidada</div></div></div>
+      <div class="pain-card"><div class="pain-icon">☁️</div><div><div class="pain-title">Dados sem backup digital centralizado</div></div></div>
+      <div class="pain-card"><div class="pain-icon">🔔</div><div><div class="pain-title">Sem alertas de prazo</div></div></div>
+      <div class="pain-card"><div class="pain-icon">📁</div><div><div class="pain-title">Recibos físicos e sem rastreamento</div></div></div>
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ SOLUÇÃO ══ -->
+  <section id="solucao">
+    <div class="section-label">02 · Visão geral</div>
+    <div class="section-title">A <span>solução</span> proposta</div>
+    <p class="body-text">Um sistema web próprio — acessível em qualquer navegador, desktop ou mobile — que centraliza RPVs, despesas, honorários, cobranças e relatórios em um único lugar. Os cálculos são automáticos, os relatórios são gerados com um clique e a visibilidade financeira existe em tempo real, sem depender de planilha ou de memória. Desenvolvido em três fases incrementais: cada fase já entrega valor antes da seguinte começar.</p>
+
+    <div class="timeline" style="margin-top:32px">
+      <div class="tl-step tl-1">
+        <div class="tl-num">1</div>
+        <div class="tl-label">Entrada & Cálculo</div>
+        <div class="tl-sub">Leitura automática de extrato bancário com preenchimento inteligente por histórico</div>
+        <div class="tl-prazo">Semanas 1–3</div>
+      </div>
+      <div class="tl-step tl-2">
+        <div class="tl-num">2</div>
+        <div class="tl-label">Painel Financeiro</div>
+        <div class="tl-sub">Dashboard com KPIs, gráficos, histórico e filtros interativos</div>
+        <div class="tl-prazo">Semanas 4–6</div>
+      </div>
+      <div class="tl-step tl-3">
+        <div class="tl-num">3</div>
+        <div class="tl-label">Automações Avançadas</div>
+        <div class="tl-sub">Envio automático de relatórios e assinatura digital de recibos</div>
+        <div class="tl-prazo">Semanas 7–11</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ FASES ══ -->
+  <section id="fases">
+    <div class="section-label">03 · Detalhamento</div>
+    <div class="section-title">As três <span>fases do projeto</span></div>
+
+    <!-- FASE 1 -->
+    <div class="phase-detail">
+      <div class="ph-header">
+        <div class="ph-header-left">
+          <div class="ph-num ph-n1">1</div>
+          <div><div class="ph-title">Entrada, Cálculo e Controle de RPVs</div><div class="ph-sub">MVP operacional — elimina as planilhas manuais</div></div>
+        </div>
+        <span class="ph-badge ph-b1">Semanas 1–3</span>
+      </div>
+      <div class="ph-body">
+        <div class="ph-desc">
+          <p style="font-size:13px;color:#3a3a3a">O sistema importa o extrato bancário — OFX, CSV ou PDF — e identifica automaticamente cada depósito com o processo correspondente. A cada confirmação, aprende os padrões do escritório: no mês seguinte, os lançamentos já chegam pré-preenchidos, eliminando o retrabalho entrada a entrada.</p>
+          <ul>
+            <li>Importação de extrato bancário (OFX, CSV, PDF) — depósito vinculado automaticamente ao processo correspondente</li>
+            <li>Memória de preenchimento — aprende com cada confirmação e pré-preenche nas próximas competências, sem redigitar</li>
+            <li>Lançamento de RPV/Precatório com honorários, tributos e saldo líquido calculados automaticamente</li>
+            <li>Alertas automáticos: tributos acumulados por trimestre e processos não levantados após 60 dias</li>
+            <li>Histórico completo com edição inline, filtros e exportação para Excel / PDF</li>
+          </ul>
+        </div>
+        <div class="ph-mockup">
+          <div style="font-size:10px;color:var(--mu);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Prévia da interface</div>
+          <div class="mockup-wrap">
+            <div class="mk-nav">
+              <div class="mk-dot"></div><div class="mk-dot"></div><div class="mk-dot"></div>
+              <div class="mk-tab active" style="margin-left:8px">Fase 1 · Entrada</div>
+            </div>
+            <div class="mk-body">
+              <div class="mk-grid">
+                <div class="mk-form">
+                  <div class="mk-label">Sindicato</div><div class="mk-field"></div>
+                  <div class="mk-label">Processo</div><div class="mk-field"></div>
+                  <div class="mk-label">Valor Bruto (R$)</div><div class="mk-field"></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px">
+                    <div><div class="mk-label">% Honor.</div><div class="mk-field" style="height:12px"></div></div>
+                    <div><div class="mk-label">% Trib.</div><div class="mk-field" style="height:12px"></div></div>
+                  </div>
+                  <div class="mk-btn-row"><div class="mk-btn" style="flex:1"></div><div class="mk-btn mk-btn-g" style="flex:1"></div></div>
+                </div>
+                <div class="mk-calc">
+                  <div style="font-size:8px;font-weight:700;font-family:'DM Sans',sans-serif;color:var(--tx);margin-bottom:6px">Cálculo automático</div>
+                  <div class="mk-calc-row"><div class="mk-calc-lbl">Valor Bruto</div><div class="mk-calc-val" style="color:var(--bx)">R$ 28.400</div></div>
+                  <div class="mk-calc-row"><div class="mk-calc-lbl">Honorários (30%)</div><div class="mk-calc-val" style="color:#c0392b">−R$ 8.520</div></div>
+                  <div class="mk-calc-row"><div class="mk-calc-lbl">Tributos (18%)</div><div class="mk-calc-val" style="color:#c07000">−R$ 5.112</div></div>
+                  <div style="border-top:1.5px solid var(--bx);margin:4px 0"></div>
+                  <div class="mk-calc-row"><div class="mk-calc-lbl" style="font-weight:700">Saldo líquido</div><div class="mk-calc-val" style="color:var(--gn);font-size:11px">R$ 14.768</div></div>
+                  <div style="background:var(--orb);border-radius:4px;padding:4px 5px;margin-top:5px">
+                    <div style="font-size:6px;color:var(--or);font-weight:700;font-family:'DM Sans',sans-serif">ACUM. TRIBUTOS Q2</div>
+                    <div style="font-size:9px;font-weight:800;color:var(--or);font-family:'DM Mono',monospace">R$ 8.399,00</div>
+                  </div>
+                </div>
+              </div>
+              <div style="background:#faf8f6;border:1px solid var(--bd);border-radius:5px;padding:5px">
+                <div style="font-size:7px;font-weight:700;font-family:'DM Sans',sans-serif;color:var(--mu);margin-bottom:3px;text-transform:uppercase">Lançamentos recentes</div>
+                <div class="mk-table-row"><div class="mk-cell" style="flex:1">22/05</div><div class="mk-cell" style="flex:2">0011234-05</div><div class="mk-cell" style="flex:1">SINDSEP</div><div class="mk-cell" style="flex:1">R$12.800</div><div class="mk-badge" style="background:var(--gnb);color:var(--gn)">Disp.</div></div>
+                <div class="mk-table-row"><div class="mk-cell" style="flex:1">19/05</div><div class="mk-cell" style="flex:2">0003412-78</div><div class="mk-cell" style="flex:1">SINDPD</div><div class="mk-cell" style="flex:1">R$20.020</div><div class="mk-badge" style="background:var(--orb);color:var(--or)">Pend.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FASE 2 -->
+    <div class="phase-detail">
+      <div class="ph-header">
+        <div class="ph-header-left">
+          <div class="ph-num ph-n2">2</div>
+          <div><div class="ph-title">Painel de Controle Financeiro</div><div class="ph-sub">Visibilidade total — filtros interativos, gráficos e exportação</div></div>
+        </div>
+        <span class="ph-badge ph-b2">Semanas 4–6</span>
+      </div>
+      <div class="ph-body">
+        <div class="ph-desc">
+          <p style="font-size:13px;color:#3a3a3a">Dashboard financeiro consolidado com visão de todos os processos monitorados. Cada elemento é clicável e filtra toda a página instantaneamente — sem abrir relatório, sem clicar em menu.</p>
+          <ul>
+            <li>"O que fazer hoje" — prioridades do dia com navegação direta: clique em qualquer item e o painel já filtra ou abre a tela de ação</li>
+            <li>P&amp;L consolidado: receitas e custos dos últimos 6 meses com gráficos clicáveis (fixo vs. variável)</li>
+            <li>KPIs, inadimplência por sindicato e distribuição por banco — todos interativos, clique para filtrar a tabela</li>
+            <li>Honorários por advogado e volume de causas por sindicato com filtro direto</li>
+            <li>Filtros combinados por banco, sindicato, tipo, status e período + exportação Excel/PDF</li>
+          </ul>
+        </div>
+        <div class="ph-mockup">
+          <div style="font-size:10px;color:var(--mu);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Prévia da interface</div>
+          <div class="mockup-wrap">
+            <div class="mk-nav">
+              <div class="mk-dot"></div><div class="mk-dot"></div><div class="mk-dot"></div>
+              <div class="mk-tab active" style="margin-left:8px">Fase 2 · Painel</div>
+            </div>
+            <div class="mk-body">
+              <div class="mk-kpi-row">
+                <div class="mk-kpi mk-kpi-bx"><div class="mk-kpi-lbl">Total Receber</div><div class="mk-kpi-val" style="color:var(--bx)">R$891k</div></div>
+                <div class="mk-kpi mk-kpi-gn"><div class="mk-kpi-lbl">Disponível</div><div class="mk-kpi-val" style="color:var(--gn)">R$70k</div></div>
+                <div class="mk-kpi mk-kpi-or"><div class="mk-kpi-lbl">Pendente</div><div class="mk-kpi-val" style="color:var(--or)">R$182k</div></div>
+                <div class="mk-kpi mk-kpi-bl"><div class="mk-kpi-lbl">Recebido</div><div class="mk-kpi-val" style="color:var(--bl)">R$41k</div></div>
+              </div>
+              <div class="mk-charts">
+                <div class="mk-chart">
+                  <div class="mk-bar" style="height:55%;background:#1a3c8f"></div>
+                  <div class="mk-bar" style="height:75%;background:#1a3c8f"></div>
+                  <div class="mk-bar" style="height:40%;background:#1a3c8f"></div>
+                  <div class="mk-bar" style="height:90%;background:#1a3c8f"></div>
+                  <div class="mk-bar" style="height:60%;background:#1a3c8f"></div>
+                  <div class="mk-bar" style="height:100%;background:#1a3c8f"></div>
+                </div>
+                <div class="mk-chart" style="justify-content:center;align-items:center">
+                  <div class="mk-donut-ph"></div>
+                </div>
+              </div>
+              <div style="background:#faf8f6;border:1px solid var(--bd);border-radius:5px;padding:5px">
+                <div class="mk-table-row"><div class="mk-cell" style="flex:2;font-size:7px;font-weight:700;color:var(--mu)">PROCESSO</div><div class="mk-cell" style="flex:1;font-size:7px;font-weight:700;color:var(--mu)">BANCO</div><div class="mk-cell" style="flex:1;font-size:7px;font-weight:700;color:var(--mu)">VALOR</div><div class="mk-cell" style="flex:1;font-size:7px;font-weight:700;color:var(--mu)">STATUS</div></div>
+                <div class="mk-table-row"><div class="mk-cell" style="flex:2;color:var(--bx);font-weight:600">0001823-45</div><div class="mk-cell" style="flex:1">CEF</div><div class="mk-cell" style="flex:1;color:var(--gn)">R$28.400</div><div class="mk-badge" style="background:var(--gnb);color:var(--gn)">Disp.</div></div>
+                <div class="mk-table-row" style="background:#fff7f0"><div class="mk-cell" style="flex:2;color:var(--bx);font-weight:600">0014221-09</div><div class="mk-cell" style="flex:1">SIAPE</div><div class="mk-cell" style="flex:1">R$15.400</div><div class="mk-badge" style="background:var(--orb);color:var(--or)">⚠ Venc.</div></div>
+                <div class="mk-table-row"><div class="mk-cell" style="flex:2;color:var(--bx);font-weight:600">0009302-12</div><div class="mk-cell" style="flex:1">BB</div><div class="mk-cell" style="flex:1;color:var(--mu)">R$9.800</div><div class="mk-badge" style="background:#eee;color:#888">Pend.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FASE 3 -->
+    <div class="phase-detail">
+      <div class="ph-header">
+        <div class="ph-header-left">
+          <div class="ph-num ph-n3">3</div>
+          <div><div class="ph-title">Automações Avançadas</div><div class="ph-sub">Relatórios automáticos · Assinatura digital · Integrações externas</div></div>
+        </div>
+        <span class="ph-badge ph-b3">Semanas 7–11</span>
+      </div>
+      <div class="ph-body">
+        <div class="ph-desc">
+          <p style="font-size:13px;color:#3a3a3a">A fase que elimina as últimas etapas manuais: relatórios disparados automaticamente, cobranças de mensalidades enviadas sem intervenção e recibos assinados digitalmente pelo celular. Cada seção já sinaliza onde a automação pode ser expandida — o escritório escolhe o ritmo.</p>
+          <ul>
+            <li>Relatórios automáticos por período (diário/semanal/mensal) com preview antes do envio via WhatsApp ou e-mail</li>
+            <li>Cobrança de mensalidades: seleção de inadimplentes e geração de e-mail de cobrança com um clique</li>
+            <li>Escalonamento automático: e-mail + WhatsApp após X dias sem resposta, sem nenhuma ação manual</li>
+            <li>Recibo digital gerado automaticamente após confirmação de levantamento — assinatura pelo celular com validade jurídica (ICP-Brasil)</li>
+            <li>Cadastro de sindicatos e gestão de acessos por perfil (admin, editor, visualização)</li>
+          </ul>
+        </div>
+        <div class="ph-mockup">
+          <div style="font-size:10px;color:var(--mu);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Prévia da interface</div>
+          <div class="mockup-wrap">
+            <div class="mk-nav">
+              <div class="mk-dot"></div><div class="mk-dot"></div><div class="mk-dot"></div>
+              <div class="mk-tab active" style="margin-left:8px">Fase 3 · Automações</div>
+            </div>
+            <div class="mk-body">
+              <div class="mk-p3-grid">
+                <div class="mk-p3-card">
+                  <div class="mk-p3-title">Relatório automático</div>
+                  <div class="mk-wa">📊 *RPV — Mai/2026*<br>SINDSEP · 4 procs<br>Total: R$179.950<br>Honorários: R$53.985<br>_Enviado às 08:00_</div>
+                  <div style="display:flex;gap:3px;margin-top:5px">
+                    <div style="flex:1;height:10px;border-radius:3px;background:#25d366;opacity:.5"></div>
+                    <div style="flex:1;height:10px;border-radius:3px;background:var(--bl);opacity:.3;border:1px solid var(--bl)"></div>
+                  </div>
+                </div>
+                <div class="mk-p3-card">
+                  <div class="mk-p3-title">Assinatura digital</div>
+                  <div class="mk-step-row"><div class="mk-step-n">1</div><div class="mk-step-t">Recibo gerado automaticamente</div></div>
+                  <div class="mk-step-row"><div class="mk-step-n">2</div><div class="mk-step-t">Link enviado por SMS + e-mail</div></div>
+                  <div class="mk-step-row"><div class="mk-step-n">3</div><div class="mk-step-t">Assinatura no celular (ICP-Brasil)</div></div>
+                  <div class="mk-step-row"><div class="mk-step-n">4</div><div class="mk-step-t">Status → Assinado (automático)</div></div>
+                </div>
+              </div>
+              <div style="background:#faf8f6;border:1px solid var(--bd);border-radius:6px;padding:8px">
+                <div class="mk-p3-title">Cobrança escalonada</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-bottom:3px">
+                  <div style="width:6px;height:6px;border-radius:50%;background:#1e4272;flex-shrink:0"></div>
+                  <div style="font-size:6px;font-family:'DM Sans',sans-serif;color:var(--mu)">Dia 1 — E-mail automático enviado</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px;margin-bottom:3px">
+                  <div style="width:6px;height:6px;border-radius:50%;background:#25d366;flex-shrink:0"></div>
+                  <div style="font-size:6px;font-family:'DM Sans',sans-serif;color:var(--mu)">Dia 5 — WhatsApp se sem resposta</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px">
+                  <div style="width:6px;height:6px;border-radius:50%;background:var(--bx);flex-shrink:0"></div>
+                  <div style="font-size:6px;font-family:'DM Sans',sans-serif;color:var(--mu)">Dia 10 — Alerta para admin</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ TECNOLOGIA ══ -->
+  <section id="tecnologia">
+    <div class="section-label">04 · Infraestrutura</div>
+    <div class="section-title">Tecnologia & <span>custos de ferramentas</span></div>
+    <p class="body-text">O sistema será construído com tecnologias modernas e estáveis, escolhidas para minimizar custos operacionais e maximizar confiabilidade. A infraestrutura base é gratuita — custos adicionais surgem apenas conforme o volume crescer ou features avançadas forem ativadas.</p>
+
+    <table class="tech-table" style="margin-top:20px">
+      <thead>
+        <tr><th>Ferramenta</th><th>Finalidade</th><th>Custo</th><th>Fase</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Vercel</strong></td><td>Hospedagem do sistema web (frontend)</td><td class="cost-free">Gratuito</td><td><span class="tech-badge tb-inc">1 · 2 · 3</span></td></tr>
+        <tr><td><strong>Supabase</strong></td><td>Banco de dados seguro (PostgreSQL na AWS)</td><td class="cost-free">Gratuito até 500 MB — depois ~R$145/mês</td><td><span class="tech-badge tb-inc">1 · 2 · 3</span></td></tr>
+        <tr><td><strong>Chart.js</strong></td><td>Gráficos interativos do painel</td><td class="cost-free">Gratuito</td><td><span class="tech-badge tb-inc">2</span></td></tr>
+        <tr><td><strong>Domínio personalizado</strong></td><td>URL própria (ex.: sistema.estevaoepinheiro.com.br)</td><td class="cost-low">~R$65/ano</td><td><span class="tech-badge" style="background:rgba(201,168,76,.15);color:var(--or)">Indicado</span></td></tr>
+      </tbody>
+    </table>
+
+    <div style="background:#fff;border:1px solid var(--bd);border-radius:10px;padding:16px 20px;margin-top:16px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:12px;display:flex;align-items:center;gap:6px">🔐 Segurança da plataforma</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--bx);margin-bottom:4px">Acesso e autenticação</div>
+          <div style="font-size:12px;color:#3a3a3a;line-height:1.65">Login via conta Google (OAuth 2.0) — sem criar nova senha, usando o acesso ao Gmail já existente. O sistema aceita apenas e-mails previamente autorizados pelo administrador. Sessões expiram automaticamente após inatividade.</div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--bx);margin-bottom:4px">Domínio personalizado (recomendado)</div>
+          <div style="font-size:12px;color:#3a3a3a;line-height:1.65">URL própria como <span style="font-family:'DM Mono',monospace;font-size:11px">sistema.estevaoepinheiro.adv.br</span> com certificado HTTPS dedicado — mais seguro que domínio genérico, evita phishing e reforça a identidade do escritório. Custo: ~R$65/ano. Indicado, pois aumenta a confiabilidade percebida e o controle sobre o acesso.</div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--bx);margin-bottom:4px">Armazenamento dos dados</div>
+          <div style="font-size:12px;color:#3a3a3a;line-height:1.65">Banco de dados criptografado em repouso (PostgreSQL na AWS) com backup automático diário. Extratos e arquivos armazenados em bucket privado — acessíveis apenas via sistema autenticado, sem exposição em pastas abertas.</div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--bx);margin-bottom:4px">Rastreabilidade e backup</div>
+          <div style="font-size:12px;color:#3a3a3a;line-height:1.65">Toda ação no sistema é registrada com data, hora e usuário responsável. As planilhas históricas do escritório continuam como backup externo em Google Drive — o sistema não as substitui, apenas absorve os dados para uso interno. Nenhum dado bruto fica exposto.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ INVESTIMENTO ══ -->
+  <section id="investimento">
+    <div class="section-label">05 · Comercial</div>
+    <div class="section-title"><span>Investimento</span></div>
+    <p class="body-text">Três opções para adequar o investimento ao ritmo de adoção do escritório. Cada fase entra em operação antes da seguinte começar — sem período de espera, sem "big bang". O sistema já trabalha enquanto é construído.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <span class="pc-badge pc-b3">Apenas Fase 1</span>
+        <div class="pc-name">Essencial — Lançamentos</div>
+        <div class="pc-price">R$ 6.500 <small>à vista</small></div>
+        <div class="pc-sub">ou 2× R$ 3.400</div>
+        <ul class="pc-list">
+          <li>Lançamento de RPV/Precatório + Despesas</li>
+          <li>Cálculo automático (honorários, tributos, saldo líquido)</li>
+          <li>Importação OFX com auto-categorização por aprendizado</li>
+          <li>Nota visual para despesas</li>
+          <li>Histórico completo com edição inline e em massa</li>
+          <li>Alertas de prazo (60 dias da expedição)</li>
+          <li>Exportação Excel / PDF</li>
+        </ul>
+        <div class="pc-note">Para escritórios que querem autonomia e controle total da própria operação</div>
+      </div>
+
+      <div class="price-card highlight">
+        <span class="pc-badge pc-b1">Fases 1 + 2</span>
+        <div class="pc-name">Integrado — Análise de Dados</div>
+        <div class="pc-price">R$ 8.500 <small>à vista</small></div>
+        <div class="pc-sub">ou 3× R$ 2.950</div>
+        <ul class="pc-list">
+          <li>Tudo do MVP Essencial</li>
+          <li>"O que fazer hoje" com navegação direta</li>
+          <li>P&amp;L consolidado (Receitas e Custos 6 meses)</li>
+          <li>Painel de inadimplência por sindicato</li>
+          <li>Gráficos interativos clicáveis</li>
+          <li>Filtros combinados + exportação filtrada</li>
+        </ul>
+        <div class="pc-note">Visibilidade total + controle operacional</div>
+      </div>
+
+      <div class="price-card">
+        <span class="pc-badge pc-b2">Fases 1 + 2 + 3</span>
+        <div class="pc-name">Completo — Comunicações Automatizadas</div>
+        <div class="pc-price">R$ 10.000 <small>à vista</small></div>
+        <div class="pc-sub">ou 4× R$ 2.650</div>
+        <ul class="pc-list">
+          <li>Tudo dos planos anteriores</li>
+          <li>Relatórios automáticos (WhatsApp + e-mail)</li>
+          <li>Cobrança automática de mensalidades</li>
+          <li>Assinatura digital de recibos (ClickSign)</li>
+          <li>Cadastro de sindicatos com contatos</li>
+          <li>Gestão de acessos e permissões</li>
+        </ul>
+        <div class="pc-note">Automação máxima — zero trabalho manual</div>
+      </div>
+    </div>
+
+    <div style="background:#fffbf0;border:1px solid rgba(201,168,76,.4);border-left:4px solid var(--gold);border-radius:10px;padding:16px 20px;margin-top:16px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:8px">⚙ Ferramentas para automação completa (Fase 3) — custos mensais do escritório</div>
+      <div style="font-size:12px;color:#3a3a3a;line-height:1.65;margin-bottom:12px">Além do investimento de desenvolvimento, a Fase 3 exige a contratação de ferramentas externas para automação, comunicação e assinatura digital. Estes são custos operacionais do escritório, pagos diretamente aos fornecedores:</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+        <div style="background:#fff;border:1px solid var(--bd);border-radius:8px;padding:10px 14px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:2px">ClickSign — assinatura digital</div>
+          <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--or);font-weight:700">~R$99–R$299/mês</div>
+          <div style="font-size:11px;color:var(--mu);margin-top:2px">Plano por volume · obrigatório para validade ICP-Brasil</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--bd);border-radius:8px;padding:10px 14px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:2px">WhatsApp Business API</div>
+          <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--or);font-weight:700">~R$97/mês (Z-API)</div>
+          <div style="font-size:11px;color:var(--mu);margin-top:2px">Necessário para envio automático de relatórios e cobranças via WhatsApp</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--bd);border-radius:8px;padding:10px 14px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:2px">n8n — orquestrador de automações</div>
+          <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--or);font-weight:700">~R$70–R$100/mês</div>
+          <div style="font-size:11px;color:var(--mu);margin-top:2px">Servidor próprio (VPS) · conecta WhatsApp, Gmail, banco de dados e IA em fluxos visuais sem código adicional</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--bd);border-radius:8px;padding:10px 14px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:2px">Claude API — inteligência artificial</div>
+          <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--or);font-weight:700">~R$20–R$60/mês</div>
+          <div style="font-size:11px;color:var(--mu);margin-top:2px">Leitura de documentos, agente autônomo em fluxos n8n e fallback inteligente para automações críticas</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid var(--bd);border-radius:10px;padding:16px 20px;margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:8px">Suporte mensal (opcional)</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:26px;color:var(--bx)">R$ 1.000 <span style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--mu)">/mês</span></div>
+        <div style="font-size:12px;color:var(--mu);margin-top:4px">Até 5 alterações/mês neste projeto</div>
+      </div>
+      <div style="font-size:13px;color:#3a3a3a;line-height:1.65">
+        Inclui: manutenção corretiva, pequenas evoluções funcionais (ajustes de telas, regras de cálculo, novos campos), suporte a dúvidas de uso e monitoramento de estabilidade. Sem fidelidade mínima — cancelamento com 30 dias de aviso prévio. Alterações em outros sistemas ou projetos novos demandam nova proposta.
+      </div>
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ ALINHAMENTOS ══ -->
+  <section id="alinhamentos">
+    <div class="section-label">06 · Antes de avançar</div>
+    <div class="section-title">Alinhamentos <span>pendentes</span></div>
+    <p class="body-text">As questões abaixo precisam ser respondidas para que o desenvolvimento comece com as regras de negócio corretas. Itens marcados com ✓ foram respondidos no diagnóstico de 21/05/2026.</p>
+
+    <table class="q-table" style="margin-top:16px">
+      <thead><tr><th width="36">#</th><th>Questão</th><th>Impacto</th></tr></thead>
+      <tbody>
+        <tr><td class="q-num">1</td><td><strong>Os dados históricos (planilhas dos últimos meses) serão migrados para o sistema, ou o início será com dados novos?</strong></td><td class="q-impact">Define escopo e prazo da Fase 1</td></tr>
+        <tr><td class="q-num">2</td><td><strong>Quantos RPVs/precatórios são lançados por mês em média? Quantos sindicatos ativos no momento?</strong></td><td class="q-impact">Valida banco de dados e infraestrutura</td></tr>
+        <tr><td class="q-num">3</td><td><strong>Quem terá acesso ao sistema e quais permissões cada perfil terá?</strong></td><td class="q-impact">Define perfis de usuário e controle de acesso</td></tr>
+        <tr><td class="q-num">4</td><td><strong>Os relatórios serão enviados por WhatsApp, e-mail, ou ambos? Quem são os destinatários fixos?</strong></td><td class="q-impact">Define integrações da Fase 3</td></tr>
+        <tr><td class="q-num">5</td><td><strong>Existem fórmulas documentadas para o pró-labore e distribuição do fundo entre sócios?</strong></td><td class="q-impact">Essencial para automatizar a distribuição de honorários</td></tr>
+        <tr><td class="q-num">6</td><td><strong>Quais advogados têm distribuição diferenciada por processo? Como funciona a regra?</strong></td><td class="q-impact">Define o motor de cálculo</td></tr>
+        <tr><td class="q-num">7</td><td><strong>O banco de dados do extrato OFX virá da CEF e do BB — há outros bancos no escopo inicial?</strong></td><td class="q-impact">Define escopo da importação OFX na Fase 1</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ PRÓXIMOS PASSOS ══ -->
+  <section id="proximos">
+    <div class="section-label">07 · Cronograma</div>
+    <div class="section-title">Próximos <span>passos</span></div>
+
+    <div class="steps-timeline">
+      <div class="st-step"><div class="st-dot"></div><div class="st-week">Semana 0</div><div class="st-text"><strong>Confirmação da proposta</strong> · Assinatura de contrato · Resposta dos alinhamentos pendentes · Acesso às planilhas atuais</div></div>
+      <div class="st-step"><div class="st-dot"></div><div class="st-week">Semana 1</div><div class="st-text"><strong>Reunião de mapeamento</strong> · Documentação das regras de cálculo, fluxo atual e dados de entrada</div></div>
+      <div class="st-step"><div class="st-dot"></div><div class="st-week">Semanas 1–3</div><div class="st-text"><strong>Desenvolvimento da Fase 1</strong> · Formulário, cálculo, histórico, alertas e exportação</div></div>
+      <div class="st-step"><div class="st-dot"></div><div class="st-week">Semana 3–4</div><div class="st-text"><strong>Testes com Waldir e Andrielly</strong> · Ajustes de regras · Go-live da Fase 1</div></div>
+      <div class="st-step"><div class="st-dot"></div><div class="st-week">Semanas 4–6</div><div class="st-text"><strong>Desenvolvimento da Fase 2</strong> · Painel financeiro, gráficos, filtros interativos</div></div>
+      <div class="st-step"><div class="st-dot"></div><div class="st-week">Semanas 7–11</div><div class="st-text"><strong>Desenvolvimento da Fase 3</strong> · Relatórios automáticos, assinatura digital, integrações</div></div>
+      <div class="st-step"><div class="st-dot"></div><div class="st-week">Semana 12</div><div class="st-text"><strong>Entrega final e treinamento</strong> · Go-live completo · Início do suporte mensal (se contratado)</div></div>
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <!-- ══ SOBRE ══ -->
+  <section>
+    <div class="section-label">08 · Quem entrega</div>
+    <div class="section-title">Sobre <span>Yasmin G. Lopes</span></div>
+
+    <div class="about-card">
+      <div class="about-avatar">Y</div>
+      <div>
+        <div class="about-name">Yasmin Gonçalves Lopes</div>
+        <div class="about-role">Especialista em Automação e Engenharia de Processos</div>
+        <div class="about-text">
+          Trabalho com automação de processos de negócio — identificando gargalos operacionais e construindo sistemas que eliminam trabalho manual repetitivo. Cada entrega é pensada para gerar resultado imediato e escalar conforme o negócio cresce.
+          <br><br>
+          Minha abordagem: entender profundamente o processo antes de propor qualquer solução. Nenhuma ferramenta é escolhida sem analisar custo-benefício real, manutenibilidade e adequação ao perfil da equipe que utilizará.
+        </div>
+        <div class="about-cnpj">CNPJ: 44.704.456/0001-08</div>
+        <div class="contact-row">
+          <div class="contact-item">📧 yasmingonca99@gmail.com</div>
+          <div class="contact-item">📍 Recife — PE</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="doc-footer">
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+      <a href="https://yasloopes.github.io/MazyOS/demo_v2.html" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#f0ece8;color:var(--bx);padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px;border:1px solid var(--bd)">▶ Ver demonstração</a>
+      <a href="https://yasloopes.github.io/MazyOS/termo_aceite.html" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:var(--bx);color:#fff;padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px">✍ Assinar Termo de Aceite</a>
+    </div>
+    Proposta elaborada por <span>Yasmin G. Lopes</span> · CNPJ <span>44.704.456/0001-08</span> · Recife — PE · Maio 2026<br>
+    Estevão & Pinheiro Advogados Associados · Confidencial
+  </div>
+
+</div>
+</body>
+</html>

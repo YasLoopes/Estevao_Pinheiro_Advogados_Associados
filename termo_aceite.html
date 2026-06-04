@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termo de Aceite — Sistema de Gestão Financeira · Estevão & Pinheiro</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bx:#6B1C2E;--bxd:#4a1220;--gold:#c9a84c;--bg:#faf8f5;--wh:#fff;--tx:#1a1a1a;--mu:#6b6b6b;--bd:#e0d9d4;--gn:#2d7d46}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:13px;line-height:1.65}
+.doc{max-width:780px;margin:0 auto;padding:32px 24px 60px}
+
+/* HEADER */
+.ta-header{background:linear-gradient(135deg,var(--bxd) 0%,var(--bx) 100%);border-radius:14px;padding:36px 40px;color:#fff;margin-bottom:28px;position:relative;overflow:hidden}
+.ta-header::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:rgba(201,168,76,.08);border-radius:50%}
+.ta-badge{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.ta-title{font-family:'DM Serif Display',serif;font-size:28px;line-height:1.2;margin-bottom:6px}
+.ta-sub{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:24px}
+.ta-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;border-top:1px solid rgba(255,255,255,.15);padding-top:20px}
+.ta-meta-item .lbl{font-size:9px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.5);margin-bottom:3px}
+.ta-meta-item .val{font-size:13px;font-weight:600;color:#fff}
+
+/* SECTIONS */
+.ta-section{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:20px 24px;margin-bottom:14px}
+.ta-section-title{font-size:11px;font-family:'DM Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:14px}
+.ta-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ta-field{margin-bottom:10px}
+.ta-field label{display:block;font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.ta-field .val{font-size:13px;font-weight:600;color:var(--tx);border-bottom:1.5px solid var(--bd);padding-bottom:4px}
+.ta-field .val.blank{color:var(--mu);font-weight:400}
+
+/* PLAN SELECTOR */
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.plan-card{border:2px solid var(--bd);border-radius:8px;padding:12px 14px;cursor:pointer;transition:border-color .15s}
+.plan-card.selected{border-color:var(--bx);background:rgba(107,28,46,.04)}
+.plan-name{font-size:12px;font-weight:700;color:var(--tx);margin-bottom:2px}
+.plan-phases{font-size:10px;color:var(--mu);margin-bottom:6px}
+.plan-price{font-family:'DM Serif Display',serif;font-size:18px;color:var(--bx)}
+.plan-parcel{font-size:10px;color:var(--mu);margin-top:1px}
+.plan-check{width:16px;height:16px;border:2px solid var(--bd);border-radius:50%;margin-top:8px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff}
+.plan-card.selected .plan-check{background:var(--bx);border-color:var(--bx)}
+
+/* CLAUSES */
+.clause-list{display:flex;flex-direction:column;gap:8px}
+.clause{display:flex;gap:10px;font-size:12px;color:#3a3a3a;line-height:1.5}
+.clause-num{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:var(--bx);flex-shrink:0;margin-top:2px;min-width:18px}
+.obr-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.obr-col-title{font-size:11px;font-weight:700;color:var(--tx);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--bd)}
+.obr-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.obr-list li{display:flex;align-items:flex-start;gap:6px;font-size:11.5px;color:#3a3a3a;line-height:1.45}
+.obr-list li::before{content:'·';color:var(--bx);font-weight:700;flex-shrink:0}
+
+/* SIGNATURES */
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:8px}
+.sig-block{display:flex;flex-direction:column;gap:6px}
+.sig-label{font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.06em}
+.sig-line{border-bottom:1.5px solid var(--tx);height:36px;margin-top:4px}
+.sig-name{font-size:12px;color:var(--tx);margin-top:4px}
+.sig-role{font-size:10px;color:var(--mu)}
+.sig-cpfcnpj{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu)}
+.sig-date{border:1px solid var(--bd);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--mu);text-align:center;background:#faf8f5;margin-bottom:16px}
+
+/* PRINT */
+@media print{
+  @page{margin:12mm 14mm;size:A4 portrait}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:#fff}
+  .doc{padding:0}
+  .ta-header{border-radius:0 0 14px 14px;margin-bottom:20px}
+  .ta-section{break-inside:avoid;margin-bottom:10px}
+  .plan-card{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- HEADER -->
+  <div class="ta-header">
+    <div class="ta-badge">Termo de Aceite · Prestação de Serviços de Tecnologia</div>
+    <div class="ta-title">Sistema de Gestão Financeira</div>
+    <div class="ta-sub">Estevão & Pinheiro Advogados Associados</div>
+    <div class="ta-meta">
+      <div class="ta-meta-item"><div class="lbl">Data</div><div class="val">Recife, 29 de Maio de 2026</div></div>
+      <div class="ta-meta-item"><div class="lbl">Referência</div><div class="val">Proposta Técnica · Maio 2026</div></div>
+      <div class="ta-meta-item"><div class="lbl">Validade da proposta</div><div class="val">30 dias a partir da data</div></div>
+    </div>
+  </div>
+
+  <!-- PARTES -->
+  <div class="ta-section">
+    <div class="ta-section-title">01 · Partes</div>
+    <div class="ta-grid">
+      <div>
+        <div class="ta-field"><label>Contratante</label><div class="val">Estevão & Pinheiro Advogados Associados</div></div>
+        <div class="ta-field"><label>CNPJ</label><div class="val blank">_________________.____/____-__</div></div>
+        <div class="ta-field"><label>Representante</label><div class="val blank">________________________</div></div>
+        <div class="ta-field"><label>Endereço</label><div class="val">Rua Dom Vital, 48 — Recife, PE</div></div>
+      </div>
+      <div>
+        <div class="ta-field"><label>Contratada</label><div class="val">Yasmin Gonçalves Lopes</div></div>
+        <div class="ta-field"><label>CNPJ</label><div class="val">44.704.456/0001-08</div></div>
+        <div class="ta-field"><label>E-mail</label><div class="val">yasmingonca99@gmail.com</div></div>
+        <div class="ta-field"><label>Endereço</label><div class="val">Recife — PE</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJETO E PLANO -->
+  <div class="ta-section">
+    <div class="ta-section-title">02 · Objeto — Plano Contratado</div>
+    <p style="font-size:12px;color:#3a3a3a;margin-bottom:16px">O Contratante seleciona abaixo o plano de desenvolvimento conforme Proposta Técnica e Comercial de Maio/2026, que integra este Termo como Anexo I.</p>
+    <div class="plan-grid">
+      <div class="plan-card">
+        <div class="plan-name">Essencial — Lançamentos</div>
+        <div class="plan-phases">Apenas Fase 1 · Semanas 1–3</div>
+        <div class="plan-price">R$ 6.500</div>
+        <div class="plan-parcel">ou 2× R$ 3.400</div>
+        <div class="plan-check">✓</div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Integrado — Análise de Dados</div>
+        <div class="plan-phases">Fases 1 + 2 · Semanas 1–6</div>
+        <div class="plan-price">R$ 8.500</div>
+        <div class="plan-parcel">ou 3× R$ 2.950</div>
+        <div class="plan-check">✓</div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Completo — Com. Automatizadas</div>
+        <div class="plan-phases">Fases 1 + 2 + 3 · Semanas 1–11</div>
+        <div class="plan-price">R$ 10.000</div>
+        <div class="plan-parcel">ou 4× R$ 2.650</div>
+        <div class="plan-check">✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGAMENTO -->
+  <div class="ta-section">
+    <div class="ta-section-title">03 · Valor e Forma de Pagamento</div>
+    <div class="ta-grid">
+      <div>
+        <div class="ta-field"><label>Valor total contratado</label><div class="val blank">R$ ___________________</div></div>
+        <div class="ta-field"><label>Forma de pagamento</label><div class="val blank">________________________</div></div>
+      </div>
+      <div>
+        <div class="ta-field"><label>Chave Pix (Contratada)</label><div class="val">yasmingonca99@gmail.com</div></div>
+        <div class="ta-field"><label>Data de início</label><div class="val blank">____/____/2026</div></div>
+      </div>
+    </div>
+    <div class="ta-grid" style="margin-top:4px">
+      <div class="ta-field"><label>Quantidade de parcelas</label><div class="val blank">________________________</div></div>
+      <div class="ta-field"><label>Data de pagamento fixo mensal</label><div class="val blank">Todo dia ______ de cada mês</div></div>
+    </div>
+  </div>
+
+  <!-- OBRIGAÇÕES -->
+  <div class="ta-section">
+    <div class="ta-section-title">04 · Obrigações das Partes</div>
+    <div class="obr-grid">
+      <div>
+        <div class="obr-col-title">Contratante</div>
+        <ul class="obr-list">
+          <li>Fornecer acesso às planilhas e dados históricos</li>
+          <li>Responder alinhamentos pendentes em até 3 dias úteis</li>
+          <li>Nomear responsável para validação e testes de cada fase</li>
+          <li>Efetuar pagamentos nas datas acordadas</li>
+          <li>Não compartilhar o sistema com terceiros sem autorização</li>
+        </ul>
+      </div>
+      <div>
+        <div class="obr-col-title">Contratada</div>
+        <ul class="obr-list">
+          <li>Desenvolver o sistema conforme escopo da Proposta</li>
+          <li>Entregar cada fase no prazo do cronograma acordado</li>
+          <li>Realizar até 2 rodadas de ajustes por fase entregue</li>
+          <li>Manter sigilo sobre dados e informações do Contratante</li>
+          <li>Transferir o código-fonte após quitação integral</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLÁUSULAS -->
+  <div class="ta-section">
+    <div class="ta-section-title">05 · Cláusulas Essenciais</div>
+    <div class="clause-list">
+      <div class="clause"><div class="clause-num">§1</div><div><strong>Sigilo:</strong> Ambas as partes comprometem-se a manter confidencialidade sobre informações, dados e processos compartilhados durante e após a vigência deste Termo, por prazo indeterminado.</div></div>
+      <div class="clause"><div class="clause-num">§2</div><div><strong>Propriedade intelectual:</strong> O código-fonte, interfaces e toda a documentação produzida passam à propriedade do Contratante após a quitação integral do valor contratado.</div></div>
+      <div class="clause"><div class="clause-num">§3</div><div><strong>Escopo:</strong> Alterações de escopo solicitadas após o início do desenvolvimento que excedam o definido na Proposta serão orçadas separadamente em nova proposta.</div></div>
+      <div class="clause"><div class="clause-num">§4</div><div><strong>Rescisão:</strong> Qualquer das partes pode rescindir mediante aviso prévio de 30 dias. Fases concluídas são devidas integralmente. Fases em andamento serão cobradas proporcionalmente ao trabalho realizado.</div></div>
+      <div class="clause"><div class="clause-num">§5</div><div><strong>Foro:</strong> Fica eleito o foro da Comarca de Recife/PE para dirimir quaisquer controvérsias, com renúncia a qualquer outro por mais privilegiado que seja.</div></div>
+    </div>
+  </div>
+
+  <!-- ASSINATURAS -->
+  <div class="ta-section">
+    <div class="ta-section-title">06 · Assinaturas</div>
+    <div class="sig-date">Recife (PE), _____ de _________________ de 2026</div>
+    <div class="sig-grid">
+      <div class="sig-block">
+        <div class="sig-label">Contratante</div>
+        <div class="sig-line"></div>
+        <div class="sig-name" style="color:var(--mu)">________________________</div>
+        <div class="sig-role">Estevão & Pinheiro Advogados Associados</div>
+        <div class="sig-cpfcnpj">CNPJ: _____________________</div>
+      </div>
+      <div class="sig-block">
+        <div class="sig-label">Contratada</div>
+        <div class="sig-line"></div>
+        <div class="sig-name">Yasmin Gonçalves Lopes</div>
+        <div class="sig-role">Especialista em Automação e Engenharia de Processos</div>
+        <div class="sig-cpfcnpj">CNPJ: 44.704.456/0001-08</div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--bd);font-size:10.5px;color:var(--mu);line-height:1.6">
+      Este documento constitui o acordo integral entre as partes para o objeto descrito, prevalecendo sobre qualquer comunicação anterior. A assinatura digital via Gov.br, ClickSign ou outro método com validade eletrônica tem o mesmo valor jurídico da assinatura manuscrita, nos termos da Lei nº 14.063/2020 e MP 2.200-2/2001.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:estevaoepinheiro.adv.br)",
+      "WebSearch",
+      "Bash(git commit *)",
+      "Bash(git checkout *)",
+      "Bash(git -C \"c:\\\\Users\\\\Yasmi\\\\OneDrive\\\\Área de Trabalho\\\\Estevao e Pinheiro_Advogados Associados\" log --oneline -5)",
+      "Bash(python -c ' *)"
+    ]
+  }
+}

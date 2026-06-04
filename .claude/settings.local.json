@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat ~/.claude/CLAUDE.md)",
+      "Read(//c/Users/Yasmi/.claude/**)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(python \"c:\\\\Users\\\\Yasmi\\\\OneDrive\\\\Área de Trabalho\\\\Estevao e Pinheiro_Advogados Associados\\\\fix_encoding.py\")",
+      "Bash(git -C \"c:\\\\Users\\\\Yasmi\\\\OneDrive\\\\Área de Trabalho\\\\Estevao e Pinheiro_Advogados Associados\" add demo_v2.html)",
+      "Bash(git -C 'c:\\\\Users\\\\Yasmi\\\\OneDrive\\\\Área de Trabalho\\\\Estevao e Pinheiro_Advogados Associados' commit -m ' *)",
+      "Bash(git -C \"c:\\\\Users\\\\Yasmi\\\\OneDrive\\\\Área de Trabalho\\\\Estevao e Pinheiro_Advogados Associados\" push origin main)",
+      "Bash(git -C \"c:\\\\Users\\\\Yasmi\\\\OneDrive\\\\Área de Trabalho\\\\Estevao e Pinheiro_Advogados Associados\" status --short)",
+      "Bash(git -C \"c:\\\\Users\\\\Yasmi\\\\OneDrive\\\\Área de Trabalho\\\\Estevao e Pinheiro_Advogados Associados\" diff demo_v2.html)",
+      "Bash(python -c ' *)",
+      "Bash(git -C \"c:\\\\Users\\\\Yasmi\\\\OneDrive\\\\Área de Trabalho\\\\Estevao e Pinheiro_Advogados Associados\" add demo_v3.html)"
+    ]
+  }
+}

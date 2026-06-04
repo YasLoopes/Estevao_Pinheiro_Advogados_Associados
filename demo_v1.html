@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estevão & Pinheiro — Painel Financeiro de Causas</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bordeaux: #6B1C2E;
+    --bordeaux-dark: #4a1220;
+    --bordeaux-light: #8b2a40;
+    --gold: #c9a84c;
+    --bg: #f4f1ee;
+    --white: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --border: #e0d9d4;
+    --green: #2d7d46;
+    --green-bg: #e8f5ec;
+    --orange: #c07000;
+    --orange-bg: #fff3e0;
+    --red: #c0392b;
+    --red-bg: #fdecea;
+    --blue: #1a5276;
+    --blue-bg: #eaf1f8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-area {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .logo-main {
+    display: flex;
+    align-items: baseline;
+  }
+  .logo-ep {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .logo-amp {
+    color: #8B1C2C;
+    font-style: italic;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    margin: 0 3px;
+  }
+  .logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #5c5650;
+    margin-top: 3px;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .badge-demo {
+    background: var(--bordeaux);
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .header-date { font-size: 12px; color: var(--muted); }
+
+  /* NAV */
+  nav {
+    background: var(--bordeaux);
+    padding: 0 32px;
+    display: flex;
+    gap: 4px;
+  }
+  nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 12px 16px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  nav a.active {
+    color: white;
+    border-bottom-color: var(--gold);
+  }
+  nav a:hover { color: white; }
+
+  /* MAIN */
+  main { padding: 14px 24px; max-width: 1400px; margin: 0 auto; }
+
+  /* FILTER BAR */
+  .filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-bar label {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .filter-bar select, .filter-bar input {
+    font-size: 13px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 12px;
+    background: white;
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+  }
+  .filter-bar select:focus, .filter-bar input:focus {
+    border-color: var(--bordeaux);
+  }
+  .btn-filtrar {
+    background: var(--bordeaux);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .btn-exportar {
+    background: white;
+    color: var(--bordeaux);
+    border: 1px solid var(--bordeaux);
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: auto;
+  }
+
+  /* KPI CARDS */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .kpi-card {
+    background: white;
+    border-radius: 10px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .kpi-card.bordeaux::before { background: var(--bordeaux); }
+  .kpi-card.green::before { background: var(--green); }
+  .kpi-card.orange::before { background: var(--orange); }
+  .kpi-card.blue::before { background: var(--blue); }
+
+  .kpi-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  .kpi-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+  .kpi-value.green { color: var(--green); }
+  .kpi-value.orange { color: var(--orange); }
+  .kpi-value.bordeaux { color: var(--bordeaux); }
+  .kpi-value.blue { color: var(--blue); }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .kpi-sub .up { color: var(--green); font-weight: 700; }
+  .kpi-icon {
+    position: absolute;
+    top: 18px; right: 18px;
+    font-size: 28px;
+    opacity: 0.08;
+  }
+
+  /* CHARTS ROW */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .chart-card {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+  }
+  .chart-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .chart-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .chart-wrap { position: relative; }
+
+  /* TABLE */
+  .table-card {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .table-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .table-header-left h3 { font-size: 14px; font-weight: 700; }
+  .table-header-left p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .table-header-right { font-size: 12px; color: var(--muted); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    background: #faf8f6;
+    padding: 11px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #faf8f6; }
+  tbody td { padding: 12px 16px; vertical-align: middle; }
+
+  .proc-num {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--bordeaux);
+    font-weight: 600;
+  }
+  .causa-desc { font-weight: 600; color: var(--text); }
+  .causa-sindic { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .fonte-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .fonte-cef { background: #e8f0fe; color: #1a3c8f; }
+  .fonte-bb { background: #fff8e1; color: #7d5a00; }
+  .fonte-trt5 { background: #f3e5f5; color: #6a1b9a; }
+  .fonte-trt15 { background: #e0f2f1; color: #00695c; }
+  .fonte-bradesco { background: #fce4ec; color: #880e4f; }
+  .fonte-siape { background: #e8eaf6; color: #283593; }
+
+  .valor-cell { font-weight: 700; font-size: 14px; white-space: nowrap; }
+  .valor-positivo { color: var(--green); }
+  .valor-pendente { color: var(--text); }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .status-disponivel { background: var(--green-bg); color: var(--green); }
+  .status-pendente { background: var(--orange-bg); color: var(--orange); }
+  .status-recebido { background: #e8f4f8; color: var(--blue); }
+  .status-em-fila { background: #f5f5f5; color: #555; }
+
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  .data-cell { color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+  /* ALERT BANNER */
+  .alert-banner {
+    background: linear-gradient(135deg, #fff8e1, #fffde7);
+    border: 1px solid #ffe082;
+    border-left: 4px solid var(--gold);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .alert-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .alert-text strong { font-size: 13px; color: #7d5a00; display: block; margin-bottom: 2px; }
+  .alert-text p { font-size: 12px; color: #a07000; }
+
+  /* SECOND ROW — two small charts */
+  .charts-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 20px 32px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    background: white;
+  }
+  footer span { color: var(--bordeaux); font-weight: 600; }
+
+  .atualizado-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--green);
+    font-weight: 600;
+    background: var(--green-bg);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .atualizado-dot {
+    width: 7px; height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  @media (max-width: 1100px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .charts-row { grid-template-columns: 1fr; }
+    .charts-row-2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="active">Financeiro de Causas</a>
+  <a href="#">Precatórios</a>
+  <a href="#">RPV</a>
+  <a href="#">Por Sindicato</a>
+  <a href="#">Histórico</a>
+  <a href="#">Alertas</a>
+</nav>
+
+<main>
+
+  <!-- ALERT -->
+  <div class="alert-banner">
+    <div class="alert-icon">🔔</div>
+    <div class="alert-text">
+      <strong>3 novos valores disponíveis para levantamento</strong>
+      <p>Caixa Econômica Federal liberou R$ 48.420,00 em 2 RPVs — Processo 0001823-45.2022.5.06.0012 e 0003412-78.2021.5.06.0008. Bradesco liberou R$ 21.900,00 — Processo 0007291-33.2023.5.06.0001. <strong>Detectado hoje às 07:42.</strong></p>
+    </div>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filter-bar">
+    <label>Período:
+      <select>
+        <option>Maio 2026</option>
+        <option>Abril 2026</option>
+        <option>Últimos 6 meses</option>
+        <option>2026 completo</option>
+      </select>
+    </label>
+    <label>Fonte/Banco:
+      <select>
+        <option>Todas as fontes</option>
+        <option>Caixa Econômica Federal</option>
+        <option>Banco do Brasil</option>
+        <option>TRT 6ª Região</option>
+        <option>TRT 15ª Região</option>
+        <option>Bradesco</option>
+        <option>SIAPE</option>
+      </select>
+    </label>
+    <label>Status:
+      <select>
+        <option>Todos</option>
+        <option>Disponível para levantamento</option>
+        <option>Pendente</option>
+        <option>Recebido</option>
+        <option>Em fila de pagamento</option>
+      </select>
+    </label>
+    <label>Sindicato:
+      <select>
+        <option>Todos</option>
+        <option>SINDSEP</option>
+        <option>SINDPD</option>
+        <option>SEEB</option>
+        <option>SINDIFISCO</option>
+      </select>
+    </label>
+    <button class="btn-filtrar">Filtrar</button>
+    <button class="btn-exportar">⬇ Exportar Excel</button>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi-card bordeaux">
+      <div class="kpi-icon">⚖️</div>
+      <div class="kpi-label">Total a Receber</div>
+      <div class="kpi-value bordeaux">R$ 1.247.830</div>
+      <div class="kpi-sub">Em 58 causas ativas monitoradas</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-icon">✅</div>
+      <div class="kpi-label">Disponível para Levantamento</div>
+      <div class="kpi-value green">R$ 284.620</div>
+      <div class="kpi-sub"><span class="up">↑ 12</span> causas liberadas este mês</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-icon">⏳</div>
+      <div class="kpi-label">Recebido em Maio/2026</div>
+      <div class="kpi-value orange">R$ 312.450</div>
+      <div class="kpi-sub">Em 23 processos · Meta: R$ 350k</div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-icon">🏦</div>
+      <div class="kpi-label">Fontes Monitoradas</div>
+      <div class="kpi-value blue">6 bancos</div>
+      <div class="kpi-sub">CEF · BB · TRT5 · TRT15 · Bradesco · SIAPE</div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Recebimentos mensais por fonte</div>
+      <div class="chart-sub">Histórico dos últimos 8 meses — valores em R$ mil</div>
+      <div class="chart-wrap">
+        <canvas id="chartHistorico" height="70"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Distribuição por Banco / Origem</div>
+      <div class="chart-sub">% do total pendente a receber</div>
+      <div class="chart-wrap">
+        <canvas id="chartPizza" height="120"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 2 -->
+  <div class="charts-row-2">
+    <div class="chart-card">
+      <div class="chart-title">Status das causas</div>
+      <div class="chart-sub">Distribuição por situação atual de pagamento</div>
+      <canvas id="chartStatus" height="90"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Evolução do total pendente</div>
+      <div class="chart-sub">Comparativo com meta de recebimento mensal</div>
+      <canvas id="chartMeta" height="90"></canvas>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-card">
+    <div class="table-header">
+      <div class="table-header-left">
+        <h3>Causas monitoradas — detalhamento</h3>
+        <p>Atualização automática diária às 06h00 · Fonte: portais TRT, CEF, BB, SIAPE</p>
+      </div>
+      <div class="table-header-right">Exibindo 12 de 58 causas</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nº Processo</th>
+          <th>Descrição / Sindicato</th>
+          <th>Banco / Fonte</th>
+          <th>Tipo</th>
+          <th>Valor</th>
+          <th>Status</th>
+          <th>Últ. Atualização</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="proc-num">0001823-45.2022<br>.5.06.0012</div></td>
+          <td><div class="causa-desc">Complemento salarial retroativo</div><div class="causa-sindic">SINDSEP — João C. Ferreira</div></td>
+          <td><span class="fonte-badge fonte-cef">🏦 CEF</span></td>
+          <td>RPV</td>
+          <td><div class="valor-cell valor-positivo">R$ 28.400,00</div></td>
+          <td><span class="status-badge status-disponivel"><div class="dot"></div>Disponível</span></td>
+          <td><div class="data-cell">Hoje, 07:42</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0003412-78.2021<br>.5.06.0008</div></td>
+          <td><div class="causa-desc">Horas extras não pagas</div><div class="causa-sindic">SINDPD — Maria L. Souza</div></td>
+          <td><span class="fonte-badge fonte-cef">🏦 CEF</span></td>
+          <td>RPV</td>
+          <td><div class="valor-cell valor-positivo">R$ 20.020,00</div></td>
+          <td><span class="status-badge status-disponivel"><div class="dot"></div>Disponível</span></td>
+          <td><div class="data-cell">Hoje, 07:42</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0007291-33.2023<br>.5.06.0001</div></td>
+          <td><div class="causa-desc">Adicional de insalubridade</div><div class="causa-sindic">SEEB — Carlos A. Nunes</div></td>
+          <td><span class="fonte-badge fonte-bradesco">🏦 Bradesco</span></td>
+          <td>RPV</td>
+          <td><div class="valor-cell valor-positivo">R$ 21.900,00</div></td>
+          <td><span class="status-badge status-disponivel"><div class="dot"></div>Disponível</span></td>
+          <td><div class="data-cell">Hoje, 07:42</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0004521-12.2020<br>.5.06.0034</div></td>
+          <td><div class="causa-desc">Equiparação salarial</div><div class="causa-sindic">SINDIFISCO — Ana R. Lima</div></td>
+          <td><span class="fonte-badge fonte-bb">🏦 Banco do Brasil</span></td>
+          <td>Precatório</td>
+          <td><div class="valor-cell valor-pendente">R$ 185.000,00</div></td>
+          <td><span class="status-badge status-em-fila"><div class="dot"></div>Em fila 2026</span></td>
+          <td><div class="data-cell">20/05/2026</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0009834-67.2022<br>.5.15.0144</div></td>
+          <td><div class="causa-desc">Desvio de função</div><div class="causa-sindic">SINDSEP — Paulo M. Costa</div></td>
+          <td><span class="fonte-badge fonte-trt15">⚖️ TRT 15ª</span></td>
+          <td>RPV</td>
+          <td><div class="valor-cell valor-pendente">R$ 43.750,00</div></td>
+          <td><span class="status-badge status-pendente"><div class="dot"></div>Pendente</span></td>
+          <td><div class="data-cell">19/05/2026</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0002198-91.2021<br>.5.06.0009</div></td>
+          <td><div class="causa-desc">FGTS não depositado</div><div class="causa-sindic">SINDPD — Fernanda O.</div></td>
+          <td><span class="fonte-badge fonte-cef">🏦 CEF</span></td>
+          <td>RPV</td>
+          <td><div class="valor-cell valor-pendente">R$ 31.200,00</div></td>
+          <td><span class="status-badge status-pendente"><div class="dot"></div>Pendente</span></td>
+          <td><div class="data-cell">18/05/2026</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0006712-44.2019<br>.5.06.0021</div></td>
+          <td><div class="causa-desc">Verbas rescisórias</div><div class="causa-sindic">SEEB — Roberto S. Melo</div></td>
+          <td><span class="fonte-badge fonte-trt5">⚖️ TRT 6ª</span></td>
+          <td>RPV</td>
+          <td><div class="valor-cell valor-positivo">R$ 18.640,00</div></td>
+          <td><span class="status-badge status-recebido"><div class="dot"></div>Recebido</span></td>
+          <td><div class="data-cell">15/05/2026</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0011234-05.2022<br>.5.06.0055</div></td>
+          <td><div class="causa-desc">Adicional noturno</div><div class="causa-sindic">SINDSEP — Lucia B. Ramos</div></td>
+          <td><span class="fonte-badge fonte-siape">🏛 SIAPE</span></td>
+          <td>RPV</td>
+          <td><div class="valor-cell valor-positivo">R$ 12.800,00</div></td>
+          <td><span class="status-badge status-recebido"><div class="dot"></div>Recebido</span></td>
+          <td><div class="data-cell">14/05/2026</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0008991-22.2018<br>.5.06.0003</div></td>
+          <td><div class="causa-desc">Diferenças salariais</div><div class="causa-sindic">SINDIFISCO — Marcos V.</div></td>
+          <td><span class="fonte-badge fonte-bb">🏦 Banco do Brasil</span></td>
+          <td>Precatório</td>
+          <td><div class="valor-cell valor-pendente">R$ 320.000,00</div></td>
+          <td><span class="status-badge status-em-fila"><div class="dot"></div>Em fila 2027</span></td>
+          <td><div class="data-cell">13/05/2026</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0004102-88.2023<br>.5.15.0031</div></td>
+          <td><div class="causa-desc">Reintegração e salários</div><div class="causa-sindic">SINDPD — Silvia M. Torres</div></td>
+          <td><span class="fonte-badge fonte-trt15">⚖️ TRT 15ª</span></td>
+          <td>RPV</td>
+          <td><div class="valor-cell valor-pendente">R$ 67.500,00</div></td>
+          <td><span class="status-badge status-pendente"><div class="dot"></div>Pendente</span></td>
+          <td><div class="data-cell">12/05/2026</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0005567-13.2021<br>.5.06.0018</div></td>
+          <td><div class="causa-desc">Horas in itinere</div><div class="causa-sindic">SEEB — André L. Brito</div></td>
+          <td><span class="fonte-badge fonte-cef">🏦 CEF</span></td>
+          <td>RPV</td>
+          <td><div class="valor-cell valor-positivo">R$ 9.870,00</div></td>
+          <td><span class="status-badge status-recebido"><div class="dot"></div>Recebido</span></td>
+          <td><div class="data-cell">10/05/2026</div></td>
+        </tr>
+        <tr>
+          <td><div class="proc-num">0013445-77.2020<br>.5.06.0041</div></td>
+          <td><div class="causa-desc">Indenização por danos morais</div><div class="causa-sindic">SINDSEP — Cristiane P.</div></td>
+          <td><span class="fonte-badge fonte-bb">🏦 Banco do Brasil</span></td>
+          <td>Precatório</td>
+          <td><div class="valor-cell valor-pendente">R$ 95.000,00</div></td>
+          <td><span class="status-badge status-em-fila"><div class="dot"></div>Em fila 2026</span></td>
+          <td><div class="data-cell">08/05/2026</div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer>
+  Painel desenvolvido por <span>Yasmin G. Lopes</span> · Dados coletados automaticamente dos portais oficiais · Atualização diária às 06h00 · Estevão & Pinheiro Advogados Associados © 2026
+</footer>
+
+<script>
+// Chart 1 — Histórico de recebimentos por fonte
+const ctx1 = document.getElementById('chartHistorico').getContext('2d');
+new Chart(ctx1, {
+  type: 'bar',
+  data: {
+    labels: ['Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26', 'Mar/26', 'Abr/26', 'Mai/26'],
+    datasets: [
+      {
+        label: 'CEF',
+        data: [42, 55, 31, 68, 44, 72, 58, 91],
+        backgroundColor: '#1a3c8f',
+        borderRadius: 4,
+      },
+      {
+        label: 'Banco do Brasil',
+        data: [28, 18, 45, 22, 39, 31, 44, 38],
+        backgroundColor: '#7d5a00',
+        borderRadius: 4,
+      },
+      {
+        label: 'TRT 6ª / 15ª',
+        data: [19, 33, 27, 15, 28, 41, 22, 67],
+        backgroundColor: '#6a1b9a',
+        borderRadius: 4,
+      },
+      {
+        label: 'Bradesco / SIAPE',
+        data: [12, 8, 21, 18, 14, 22, 19, 33],
+        backgroundColor: '#c9a84c',
+        borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 12 } }
+    },
+    scales: {
+      x: { stacked: true, grid: { display: false } },
+      y: {
+        stacked: true,
+        grid: { color: '#f0ece8' },
+        ticks: {
+          callback: v => 'R$' + v + 'k'
+        }
+      }
+    }
+  }
+});
+
+// Chart 2 — Pizza por banco
+const ctx2 = document.getElementById('chartPizza').getContext('2d');
+new Chart(ctx2, {
+  type: 'doughnut',
+  data: {
+    labels: ['Caixa Econômica', 'Banco do Brasil', 'TRT 6ª Região', 'TRT 15ª', 'Bradesco', 'SIAPE'],
+    datasets: [{
+      data: [34, 28, 16, 11, 7, 4],
+      backgroundColor: ['#1a3c8f','#7d5a00','#6a1b9a','#00695c','#880e4f','#283593'],
+      borderWidth: 3,
+      borderColor: '#fff',
+      hoverOffset: 6
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '62%',
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { font: { size: 11 }, padding: 10 }
+      },
+      tooltip: {
+        callbacks: {
+          label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + '%'
+        }
+      }
+    }
+  }
+});
+
+// Chart 3 — Status das causas
+const ctx3 = document.getElementById('chartStatus').getContext('2d');
+new Chart(ctx3, {
+  type: 'bar',
+  data: {
+    labels: ['Disponível', 'Pendente', 'Em fila', 'Recebido (mai)'],
+    datasets: [{
+      label: 'Causas',
+      data: [12, 21, 14, 11],
+      backgroundColor: ['#2d7d46', '#c07000', '#6b6b6b', '#1a5276'],
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: '#f0ece8' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// Chart 4 — Meta mensal
+const ctx4 = document.getElementById('chartMeta').getContext('2d');
+new Chart(ctx4, {
+  type: 'line',
+  data: {
+    labels: ['Out/25','Nov/25','Dez/25','Jan/26','Fev/26','Mar/26','Abr/26','Mai/26'],
+    datasets: [
+      {
+        label: 'Recebido',
+        data: [101, 114, 124, 123, 125, 166, 143, 229],
+        borderColor: '#6B1C2E',
+        backgroundColor: 'rgba(107,28,46,0.08)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: '#6B1C2E',
+      },
+      {
+        label: 'Meta',
+        data: [120, 120, 120, 150, 150, 180, 180, 350],
+        borderColor: '#c9a84c',
+        borderDash: [6, 4],
+        fill: false,
+        tension: 0.1,
+        pointRadius: 3,
+        pointBackgroundColor: '#c9a84c',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 10 } }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: {
+        grid: { color: '#f0ece8' },
+        ticks: { callback: v => 'R$' + v + 'k' }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

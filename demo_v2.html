@@ -1,0 +1,3135 @@
+<!DOCTYPE html>
+<!-- saved from url=(0119)file:///c%3A/Users/Yasmi/OneDrive/%C3%81rea%20de%20Trabalho/Estevao%20e%20Pinheiro_Advogados%20Associados/demo_v2.html# -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estevão & Pinheiro — Sistema Financeiro de Causas · Demo v2</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2/dist/chartjs-plugin-datalabels.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bx:#6B1C2E;--bxd:#4a1220;--bxl:#8b2a40;--gold:#c9a84c;--bg:#e4dfd9;--wh:#fff;--tx:#1a1a1a;--mu:#6b6b6b;--bd:#e0d9d4;--gn:#2c5940;--gnb:#deeae3;--or:#b36a00;--orb:#f8eed6;--rd:#c0392b;--rdb:#fdecea;--bl:#1e4272;--blb:#dde8f4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+
+/* HEADER */
+header{background:#fff;border-bottom:1px solid var(--bd);padding:12px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo-ep{font-family:'DM Serif Display',serif;font-size:26px;color:#1a1a1a;letter-spacing:-.3px;text-transform:uppercase}
+.logo-amp{color:#8B1C2C;font-style:italic}
+.logo-sub{font-family:'DM Sans',sans-serif;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#5c5650;margin-top:4px}
+.hdr-r{display:flex;align-items:center;gap:10px}
+.badge-demo{background:var(--bx);color:#fff;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;padding:4px 10px;border-radius:4px;letter-spacing:.5px;text-transform:uppercase}
+.hdr-date{font-size:12px;color:var(--mu);font-family:'DM Mono',monospace}
+
+/* TAB NAV */
+.tab-nav{background:var(--bxd);padding:0 20px;display:flex;overflow-x:auto}
+.ttab{display:flex;flex-direction:column;padding:10px 22px;text-decoration:none;border-bottom:3px solid transparent;cursor:pointer;min-width:160px;border-right:1px solid rgba(255,255,255,.07);transition:background .15s}
+.ttab:hover{background:rgba(255,255,255,.05)}
+.ttab.active{border-bottom-color:var(--gold);background:rgba(255,255,255,.06)}
+.ttab-l{font-size:15px;font-weight:600;color:rgba(255,255,255,.72)}
+.ttab.active .ttab-l{color:#fff}
+.ttab-s{font-size:9px;font-family:'DM Mono',monospace;color:rgba(255,255,255,.3);margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
+.ttab.active .ttab-s{color:var(--gold)}
+
+/* TAB CONTENT */
+.tab-content{display:none}
+.tab-content.active{display:block}
+.pbadge-bar{background:#fff;border-bottom:1px solid var(--bd);padding:7px 28px;display:flex;align-items:center;gap:10px}
+.pbadge{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;padding:3px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.08em}
+.pb1{background:rgba(201,168,76,.15);color:#7a5c0a;border:1px solid rgba(201,168,76,.4)}
+.pb2{background:rgba(45,125,70,.12);color:#1e5a32;border:1px solid rgba(45,125,70,.3)}
+.pb3{background:rgba(107,28,46,.1);color:var(--bx);border:1px solid rgba(107,28,46,.25)}
+.pbadge-desc{font-size:12px;color:var(--mu)}
+
+/* SHARED TABLE */
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:#faf8f6;padding:9px 14px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu);border-bottom:1px solid var(--bd);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--bd);transition:background .12s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#faf8f6}
+tbody td{padding:10px 14px;vertical-align:middle}
+th.chk-col,td.chk-col{width:36px;text-align:center;padding:8px 4px}
+td.chk-col input[type=checkbox]{visibility:hidden}
+table.sel-active td.chk-col input[type=checkbox]{visibility:visible}
+input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--bx)}
+.proc-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--bx);font-weight:600}
+.causa-desc{font-weight:600;font-size:13px}
+.causa-sub{font-size:11px;color:var(--mu);margin-top:1px}
+.val-cell{font-weight:700;font-size:13px;font-family:'DM Mono',monospace;white-space:nowrap}
+.val-pos{color:var(--gn)}.val-neg{color:var(--rd)}.val-or{color:var(--or)}
+.data-cell{color:var(--mu);font-size:12px;white-space:nowrap}
+
+/* STATUS BADGES */
+.sbadge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;white-space:nowrap;cursor:pointer;transition:opacity .15s}
+.sbadge:hover{opacity:.8}
+.sb-disp{background:var(--gnb);color:var(--gn)}
+.sb-pend{background:var(--orb);color:var(--or)}
+.sb-fila{background:#f5f5f5;color:#555}
+.sb-rec{background:var(--blb);color:var(--bl)}
+.sb-arq{background:#eee;color:#888}
+.sb-pago{background:#ede7f6;color:#5e35b1}
+.dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+.overdue-row{background:#fff7f0!important}
+.overdue-row:hover{background:#ffede0!important}
+.vencida-badge{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;color:var(--rd);margin-left:5px;background:var(--rdb);padding:2px 6px;border-radius:10px}
+
+/* STATUS SELECT */
+.status-select{border:1px solid var(--bx);border-radius:6px;padding:4px 8px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--tx);background:#fff;cursor:pointer;outline:none}
+
+/* BANK BADGES */
+.fbadge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px}
+.fb-cef{background:#e8f0fe;color:#1a3c8f}
+.fb-bb{background:#fff8e1;color:#7d5a00}
+
+/* BULK BAR */
+.bulk-bar{background:var(--bx);color:#fff;padding:10px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.15)}
+.bulk-info{font-size:13px;font-weight:600}
+.bulk-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bulk-actions label{font-size:12px}
+.bulk-select{border:1px solid rgba(255,255,255,.4);border-radius:6px;padding:5px 10px;font-size:12px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer}
+.bulk-select option{background:var(--bx);color:#fff}
+.btn-bulk-apply{background:#fff;color:var(--bx);border:none;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-bulk-cancel{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* FILTER CHIPS */
+.filter-chips{display:flex;gap:8px;flex-wrap:wrap;padding:8px 28px;background:#f9f6f3;border-bottom:1px solid var(--bd);align-items:center}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--bx);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;font-family:'DM Mono',monospace}
+.chip-x{cursor:pointer;opacity:.7;font-size:13px;line-height:1}
+.chip-x:hover{opacity:1}
+.btn-clear-all{font-size:12px;color:var(--bx);cursor:pointer;background:none;border:none;text-decoration:underline;font-family:'DM Sans',sans-serif}
+
+/* BUTTONS */
+.btn-primary{background:var(--bx);color:#fff;border:none;border-radius:7px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-secondary{background:#fff;color:var(--bx);border:1px solid var(--bx);border-radius:7px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-gold{background:var(--gold);color:#3a2800;border:none;border-radius:7px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-off{opacity:.5;cursor:not-allowed!important}
+.soon-tag{font-size:9px;font-family:'DM Mono',monospace;background:rgba(0,0,0,.15);padding:1px 5px;border-radius:3px}
+
+/* ═══ TAB 1: LANÇAMENTOS ═══ */
+.t1-main{padding:14px 28px;max-width:1440px;margin:0 auto}
+.t1-top{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.form-card,.calc-panel{background:#fff;border-radius:12px;border:1px solid var(--bd);padding:22px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:3px}
+.card-sub{font-size:12px;color:var(--mu);margin-bottom:16px}
+.tipo-toggle{display:flex;gap:0;border:1px solid var(--bd);border-radius:8px;overflow:hidden;margin-bottom:14px}
+.tipo-toggle button{flex:1;padding:8px;border:none;background:#f9f6f3;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--mu);transition:all .15s}
+.tipo-toggle button.active-ent{background:var(--gnb);color:var(--gn)}
+.tipo-toggle button.active-desp{background:var(--rdb);color:var(--rd)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.frow.full{grid-template-columns:1fr}
+.frow.three{grid-template-columns:1fr 1fr 1fr}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mu)}
+.field input,.field select{border:1px solid var(--bd);border-radius:7px;padding:8px 11px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--tx);outline:none;background:#fff;transition:border-color .2s}
+.field input:focus,.field select:focus{border-color:var(--bx)}
+.field .hint{font-size:10px;color:var(--mu)}
+.form-actions{display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--bd);flex-wrap:wrap}
+
+/* OFX UPLOAD */
+.ofx-section{background:#fff;border-radius:12px;border:1px solid var(--bd);padding:18px;margin-bottom:18px}
+.ofx-section h3{font-size:14px;font-weight:700;margin-bottom:4px}
+.ofx-section p{font-size:12px;color:var(--mu);margin-bottom:14px}
+.ofx-drop{border:2px dashed var(--bd);border-radius:10px;padding:28px;text-align:center;cursor:default;background:#faf8f6;transition:border-color .2s}
+.ofx-drop:hover{border-color:var(--bx)}
+.ofx-icon{font-size:32px;margin-bottom:8px}
+.ofx-label{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:4px}
+.ofx-formats{font-size:11px;color:var(--mu);margin-bottom:10px}
+.ofx-formats span{display:inline-block;background:#f0ece8;border-radius:4px;padding:2px 7px;margin:2px;font-family:'DM Mono',monospace;font-size:10px;font-weight:600}
+.ofx-note{font-size:10px;color:var(--or);background:var(--orb);padding:6px 10px;border-radius:6px;display:inline-block;margin-top:6px}
+
+/* CALC PANEL */
+.calc-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f0ece8}
+.calc-lbl{font-size:13px;color:var(--mu)}
+.calc-val{font-size:15px;font-weight:700;font-family:'DM Mono',monospace}
+.cv-bx{color:var(--bx)}.cv-rd{color:var(--rd)}.cv-gn{color:var(--gn)}.cv-big{font-size:22px}
+.calc-div{border:none;border-top:2px solid var(--bx);margin:10px 0}
+.accum-box{margin-top:14px;padding:11px;background:var(--orb);border-radius:8px;border-left:3px solid var(--or)}
+.accum-lbl{font-size:10px;color:var(--or);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.accum-val{font-size:18px;font-weight:800;color:var(--or);font-family:'DM Mono',monospace}
+.accum-note{font-size:11px;color:#a07000;margin-top:3px}
+.dist-box{margin-top:14px;border:1px solid var(--bd);border-radius:8px;padding:12px 14px;background:#fff}
+.dist-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--mu);margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid var(--bd)}
+.dist-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px solid #f5f2ef}
+.dist-item:last-child{border-bottom:none;padding-bottom:0}
+.dist-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.dist-name{font-size:12px;font-weight:600;color:var(--tx);margin-bottom:1px}
+.dist-desc{font-size:11px;color:var(--mu)}
+
+/* TABLE CARD */
+.tcard{background:#fff;border-radius:12px;border:1px solid var(--bd);overflow:hidden;margin-bottom:18px}
+.tcard-hdr{padding:13px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.tcard-hdr h3{font-size:14px;font-weight:700}
+.tcard-hdr span{font-size:12px;color:var(--mu)}
+
+/* ═══ TAB 2: PAINEL FINANCEIRO ═══ */
+.t2-main{padding:14px 28px;max-width:1440px;margin:0 auto}
+.filter-bar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:flex-end}
+.filter-bar label{font-size:12px;color:var(--mu);display:flex;flex-direction:column;gap:3px;flex:1;min-width:80px}
+.filter-bar select,.filter-bar input[type=date]{font-size:12px;border:1px solid var(--bd);border-radius:6px;padding:6px 10px;background:#fff;color:var(--tx);outline:none;cursor:pointer;font-family:'DM Sans',sans-serif;width:100%}
+.filter-bar select:focus,.filter-bar input[type=date]:focus{border-color:var(--bx)}
+.btn-filter-act{background:var(--bx);color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;align-self:flex-end;font-family:'DM Sans',sans-serif}
+.btn-clear-f{background:#fff;color:var(--bx);border:1px solid var(--bx);border-radius:6px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;align-self:flex-end;font-family:'DM Sans',sans-serif}
+.btn-export{background:#fff;color:var(--bx);border:1px solid var(--bx);border-radius:6px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;align-self:flex-end;font-family:'DM Sans',sans-serif}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.kpi-card{background:#fff;border-radius:10px;padding:14px 16px;border:1px solid var(--bd);position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s,border .15s;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between}
+.kpi-card:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.kpi-card.kpi-active{border:2px solid}
+.kpi-card.kpi-active.k-bx{border-color:var(--bx)}
+.kpi-card.kpi-active.k-gn{border-color:var(--gn)}
+.kpi-card.kpi-active.k-or{border-color:var(--or)}
+.kpi-card.kpi-active.k-bl{border-color:var(--bl)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.k-bx::before{background:var(--bx)}.k-gn::before{background:var(--gn)}.k-or::before{background:var(--or)}.k-bl::before{background:var(--bl)}
+.kpi-lbl{font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.kpi-val{font-size:28px;font-weight:800;line-height:1;margin:4px 0 3px}
+.kv-bx{color:var(--bx)}.kv-gn{color:var(--gn)}.kv-or{color:var(--or)}.kv-bl{color:var(--bl)}
+.kpi-sub{font-size:12px;color:var(--mu)}
+.kpi-icon{position:absolute;top:10px;right:12px;font-size:16px;opacity:.07}
+.kpi-filter-hint{font-size:9px;color:var(--mu);margin-top:2px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em}
+.kpi-card.kpi-active .kpi-filter-hint{color:var(--bx);font-weight:700}
+.charts-row{display:grid;grid-template-columns:1.5fr 1fr;gap:10px;margin-bottom:10px}
+.charts-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.charts-row-3{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.chart-card{background:#fff;border-radius:10px;border:1px solid var(--bd);padding:12px 16px}
+.chart-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.chart-sub{font-size:11px;color:var(--mu);margin-bottom:12px}
+
+/* CHART WRAPPER — explicit height, no white-space issues */
+.ch-wrap{position:relative;height:210px}
+.ch-wrap-sm{position:relative;height:170px}
+
+/* BANK DIST — donut centered, legend below */
+.bank-dist-layout{display:flex;flex-direction:column;align-items:center;gap:10px}
+.bank-legend{display:flex;flex-direction:column;gap:5px;width:100%}
+.bl-row{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer;transition:background .12s;font-size:12px}
+.bl-row:hover{background:#f5f0ee}
+.bl-row.bl-active{background:rgba(107,28,46,.08)}
+.bl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.bl-name{flex:1;font-weight:600;font-size:10px;color:var(--tx)}
+.bl-bar-wrap{flex:1;height:6px;background:#f0ece8;border-radius:3px;overflow:hidden}
+.bl-bar{height:100%;border-radius:3px;transition:width .4s}
+.bl-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--tx);white-space:nowrap;min-width:70px;text-align:right}
+.bl-pct{font-size:10px;color:var(--mu);min-width:34px;text-align:right}
+
+/* RESULTADO (Receitas & Custos) */
+.resultado-card{background:#fff;border-radius:10px;border:1px solid var(--bd);padding:14px 16px;margin-bottom:10px}
+.resultado-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 14px}
+.rk-item{padding:10px 12px;border-radius:8px;border:1px solid var(--bd);text-align:center}
+.rk-val{font-size:18px;font-weight:800;font-family:'DM Mono',monospace}
+.rk-lbl{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+.rk-gn .rk-val{color:var(--gn)}
+.rk-rd .rk-val{color:var(--rd)}
+.rk-bx .rk-val{color:var(--bx)}
+.resultado-split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* COST RANKING */
+.cost-toggle{display:flex;gap:4px;margin-bottom:10px}
+.ct-btn{padding:4px 12px;border-radius:20px;border:1px solid var(--bd);font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:var(--mu);font-family:'DM Sans',sans-serif;transition:all .15s}
+.ct-btn.ct-active{background:var(--bx);color:#fff;border-color:var(--bx)}
+.cost-list{display:flex;flex-direction:column;gap:10px}
+.cbr{display:flex;align-items:center;gap:8px;font-size:13px}
+.cbr-label{flex:0 0 150px;font-size:12px;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cbr-track{flex:1;height:10px;background:#f0ece8;border-radius:5px;overflow:hidden}
+.cbr-fill{height:100%;border-radius:5px;transition:width .4s}
+.cbr-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;white-space:nowrap;min-width:50px;text-align:right}
+.cbr-tag{font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.04em}
+.tag-fixo{background:#f5f5f5;color:#555}
+.tag-var{background:rgba(201,168,76,.15);color:#7a5c0a}
+
+/* PIPE GRID — no horizontal scroll */
+.pipe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-top:4px}
+.pipe-step{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:12px 14px;text-align:center}
+.pipe-step.ps-done{border-color:var(--gn);background:var(--gnb)}
+.pipe-step.ps-active{border-color:var(--bx);background:rgba(107,28,46,.04)}
+.pipe-step.ps-wait{border-color:var(--bd);background:#faf8f6}
+.ps-icon{font-size:22px;margin-bottom:4px}
+.ps-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.ps-label{font-size:12px;font-weight:700;color:var(--tx)}
+.ps-desc{font-size:10px;color:var(--mu);margin-top:3px;line-height:1.4}
+.ps-done .ps-label{color:var(--gn)}
+.ps-active .ps-label{color:var(--bx)}
+
+/* HOJE SECTION at top of painel */
+.hoje-section{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+
+/* OVERDUE ALERT */
+.overdue-alert{background:var(--rdb);border:1px solid #f5c6cb;border-left:4px solid var(--rd);border-radius:10px;padding:9px 13px;margin-bottom:10px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.overdue-alert:hover{background:#fdd}
+.oa-txt{font-size:13px;color:var(--rd);font-weight:600}
+.oa-link{font-size:12px;color:var(--rd);text-decoration:underline;margin-left:8px}
+
+/* TABLE CARD (painel) */
+.table-card{background:#fff;border-radius:10px;border:1px solid var(--bd);overflow:hidden;margin-bottom:14px}
+.table-hdr{padding:12px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.table-hdr h3{font-size:14px;font-weight:700}
+.table-hdr p{font-size:11px;color:var(--mu);margin-top:2px}
+.tbl-actions{display:flex;gap:6px;align-items:center}
+
+/* O QUE FAZER HOJE */
+.hoje-card{background:#fff;border-radius:10px;border:1px solid var(--bd);padding:14px 16px;margin-bottom:10px}
+.hoje-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.hoje-list{display:flex;flex-direction:column;gap:7px}
+.hoje-item{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;border:1px solid}
+.hi-urgente{background:var(--rdb);border-color:#f5c6cb}
+.hi-atencao{background:var(--orb);border-color:#ffe0b2}
+.hi-info{background:var(--gnb);border-color:#c8e6c9}
+.hi-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.hi-body .hi-label{font-size:12px;font-weight:700}
+.hi-body .hi-desc{font-size:11px;color:var(--mu);margin-top:1px}
+
+/* CONTRATOS */
+.contratos-card{background:#fff;border-radius:10px;border:1px solid var(--bd);padding:14px 16px;box-sizing:border-box;display:flex;flex-direction:column}
+.contratos-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.ck-item{text-align:center;padding:10px 8px;border-radius:8px;border:1px solid var(--bd)}
+.ck-val{font-size:20px;font-weight:800;font-family:'DM Mono',monospace}
+.ck-lbl{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+.contrato-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f0ee;font-size:12px}
+.contrato-row:last-child{border-bottom:none}
+.cr-info{font-weight:600;font-size:12px}
+.cr-sub{font-size:11px;color:var(--mu)}
+
+/* ═══ TAB 3: COMUNICAÇÃO ═══ */
+.t3-main{padding:18px 28px;max-width:1300px;margin:0 auto}
+.t3-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.t3-card{background:#fff;border-radius:12px;border:1px solid var(--bd);padding:20px}
+.t3-card-full{background:#fff;border-radius:12px;border:1px solid var(--bd);padding:20px;margin-bottom:18px}
+.t3-card-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--bd)}
+.t3-card-title{font-size:14px;font-weight:700}
+.t3-card-sub{font-size:11px;color:var(--mu);margin-top:3px}
+.c-phase{background:rgba(107,28,46,.1);color:var(--bx);font-size:9px;font-weight:700;padding:3px 8px;border-radius:4px;font-family:'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;margin-left:8px}
+.period-radio{display:flex;gap:6px;margin-bottom:10px}
+.prad{display:flex;align-items:center;gap:4px;cursor:pointer;font-size:12px;color:var(--mu);padding:5px 10px;border-radius:20px;border:1px solid var(--bd);transition:all .15s}
+.prad.active{background:var(--bx);color:#fff;border-color:var(--bx)}
+.wa-bubble{background:#dcf8c6;border-radius:12px 12px 4px 12px;padding:14px 18px;font-family:'DM Mono',monospace;font-size:11.5px;line-height:1.7;color:#1a1a1a;white-space:pre-wrap;display:inline-block;max-width:100%;box-shadow:0 2px 8px rgba(0,0,0,.08);word-break:break-word}
+.wa-time{font-size:10px;color:#888;margin-top:4px;text-align:right}
+.t3-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn-wa-off{background:#25d366;color:#fff;border:none;border-radius:7px;padding:8px 16px;font-size:12px;font-weight:600;cursor:not-allowed;opacity:.5;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
+.btn-em-off{background:#fff;color:var(--bl);border:1px solid var(--bl);border-radius:7px;padding:8px 14px;font-size:12px;font-weight:600;cursor:not-allowed;opacity:.5;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:6px}
+
+/* EMAIL COBRANÇA */
+.email-template{background:#f9f6f3;border:1px solid var(--bd);border-radius:8px;padding:16px;font-size:12px;font-family:'DM Mono',monospace;line-height:1.7;white-space:pre-wrap;color:var(--tx)}
+.email-subject{font-size:12px;font-weight:700;color:var(--bx);font-family:'DM Sans',sans-serif;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
+
+/* UPSELL BOX */
+.upsell-box{background:linear-gradient(135deg,rgba(107,28,46,.06),rgba(201,168,76,.08));border:1px solid rgba(201,168,76,.4);border-left:4px solid var(--gold);border-radius:10px;padding:14px 16px;margin-top:14px}
+.upsell-box h4{font-size:13px;font-weight:700;color:#7a5c0a;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.upsell-box p{font-size:12px;color:#7a5c0a;line-height:1.55}
+.upsell-box ul{margin:8px 0 0 16px;font-size:12px;color:#7a5c0a;line-height:1.7}
+
+/* HORIZONTAL PIPELINE */
+.pipeline-wrap{overflow-x:auto;padding-bottom:8px}
+.pipeline{display:flex;align-items:center;gap:0;min-width:max-content}
+.pipe-step{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:12px 14px;min-width:140px;text-align:center;position:relative}
+.pipe-step.ps-done{border-color:var(--gn);background:var(--gnb)}
+.pipe-step.ps-active{border-color:var(--bx);background:rgba(107,28,46,.05)}
+.pipe-step.ps-wait{border-color:var(--bd);background:#faf8f6}
+.ps-icon{font-size:20px;margin-bottom:4px}
+.ps-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.ps-label{font-size:11px;font-weight:700;color:var(--tx)}
+.ps-desc{font-size:10px;color:var(--mu);margin-top:2px;line-height:1.4}
+.pipe-arrow{font-size:18px;color:var(--bd);padding:0 6px;flex-shrink:0}
+.ps-done .ps-label{color:var(--gn)}
+.ps-active .ps-label{color:var(--bx)}
+
+/* ═══ TAB 4: CONFIGURAÇÕES ═══ */
+.t4-main{padding:18px 28px;max-width:900px;margin:0 auto}
+.t4-card{background:#fff;border-radius:12px;border:1px solid var(--bd);padding:20px;margin-bottom:18px}
+.t4-card-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--bd)}
+.t4-card-title{font-size:14px;font-weight:700}
+.t4-card-sub{font-size:11px;color:var(--mu);margin-top:3px}
+.user-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f5f0ee}
+.user-row:last-of-type{border-bottom:none}
+.user-info{display:flex;align-items:center;gap:9px}
+.uavatar{width:30px;height:30px;border-radius:50%;background:var(--bx);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.uname{font-weight:600;font-size:13px}
+.uemail{font-size:11px;color:var(--mu)}
+.rbadge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em}
+.rb-admin{background:rgba(107,28,46,.1);color:var(--bx)}
+.rb-editor{background:var(--blb);color:var(--bl)}
+.rb-viewer{background:#f5f5f5;color:#555}
+.perm-note{margin-top:12px;font-size:11px;color:var(--mu);background:#faf8f6;padding:10px;border-radius:6px;line-height:1.55}
+
+/* FOOTER */
+footer{text-align:center;padding:16px 28px;font-size:11px;color:var(--mu);border-top:1px solid var(--bd);background:#fff;margin-top:16px}
+footer span{color:var(--bx);font-weight:600}
+
+/* ═══ RESULTADO HIGHLIGHT ═══ */
+.resultado-highlight{background:#fff;border-radius:12px;border:2px solid var(--bx);border-left:6px solid var(--bx);padding:20px 24px;margin-bottom:14px}
+.rh-header{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:800;color:var(--bx);margin-bottom:3px;letter-spacing:.01em;text-transform:uppercase}
+.rh-sub{font-size:11px;color:var(--mu);margin-bottom:14px}
+.rh-body{display:grid;grid-template-columns:auto 1fr 1.2fr;gap:20px;align-items:stretch}
+.rh-kpis{display:flex;flex-direction:column;justify-content:space-between;min-width:160px}
+.rh-kpi{padding:14px 16px;border-radius:8px;border:1px solid var(--bd);cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.rh-kpi:hover{box-shadow:0 3px 12px rgba(0,0,0,.09);border-color:var(--mu)}
+.rh-kpi-val{font-size:22px;font-weight:800;font-family:'DM Mono',monospace}
+.rh-kpi-lbl{font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-top:3px}
+.rh-gn .rh-kpi-val{color:var(--gn)}.rh-rd .rh-kpi-val{color:var(--rd)}.rh-bx .rh-kpi-val{color:var(--bx)}.rh-gy .rh-kpi-val{color:#777}.rh-gl .rh-kpi-val{color:#c9a84c}
+.rh-kpi-active{outline:2px solid var(--bx);box-shadow:0 2px 10px rgba(107,28,46,.18)!important}
+.rh-chart-col{display:flex;flex-direction:column;align-items:center}
+.rh-chart-title{font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;text-align:center}
+.rh-costs-col{display:flex;flex-direction:column;justify-content:space-between}
+.rh-costs-col .cost-toggle{margin-bottom:8px}
+
+/* ═══ KPI + BANCO ROW ═══ */
+.kpi-banco-row{display:grid;grid-template-columns:1fr 320px;gap:10px;margin-bottom:12px;align-items:stretch}
+.kpi-grid-4{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;height:100%;align-content:stretch}
+.banco-card{background:#fff;border-radius:10px;border:1px solid var(--bd);padding:14px 16px}
+
+/* ═══ HOJE ITEM COM CHECKBOX ═══ */
+.hoje-item{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:8px;border:1px solid}
+.hi-chk{width:16px;height:16px;flex-shrink:0;margin-top:2px;cursor:pointer;accent-color:var(--bx)}
+.hi-body{flex:1;cursor:pointer}
+.hi-link{font-size:11px;font-weight:700;color:var(--bx);white-space:nowrap;background:rgba(107,28,46,.08);padding:3px 8px;border-radius:4px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;align-self:center;flex-shrink:0}
+.hi-link:hover{background:rgba(107,28,46,.18)}
+.hoje-done .hi-body{opacity:.4}
+.hoje-done .hi-body *{text-decoration:line-through}
+
+/* TAREFAS SUGERIDAS — strip horizontal */
+.tarefas-strip{background:#fff;border-radius:10px;border:1px solid var(--bd);padding:12px 16px;margin-bottom:12px}
+.tarefas-strip-hdr{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);margin-bottom:10px}
+.tarefas-row{display:flex;gap:8px;flex-wrap:wrap}
+.tarefa-chip{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;border:1px solid var(--bd);border-left:3px solid var(--bd);cursor:pointer;flex:1;min-width:200px;transition:box-shadow .15s}
+.tarefa-chip:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.tc-urgente{border-left-color:var(--rd);background:var(--rdb)}
+.tc-atencao{border-left-color:var(--or);background:var(--orb)}
+.tc-info{border-left-color:var(--gn);background:var(--gnb)}
+.tc-body{flex:1;min-width:0}
+.tc-label{font-size:12px;font-weight:700;color:var(--tx)}
+.tc-desc{font-size:10px;color:var(--mu);margin-top:1px}
+.tc-btn{background:rgba(107,28,46,.08);border:none;color:var(--bx);font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;padding:3px 8px;border-radius:4px;flex-shrink:0}
+.tc-btn:hover{background:rgba(107,28,46,.18)}
+.tarefa-chip.hoje-done{opacity:.6}
+.tarefa-chip.hoje-done .tc-label{text-decoration:line-through;opacity:.5}
+
+/* RECIBO + INADIMPLENTES ROW */
+.recibo-inad-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.inad-mini-card{background:#fff;border-radius:10px;border:1px solid var(--bd);padding:14px 16px;display:flex;flex-direction:column;box-sizing:border-box}
+.inad-mini-hdr{font-size:13px;font-weight:700;margin-bottom:4px}
+.inad-mini-sub{font-size:11px;color:var(--mu);margin-bottom:12px}
+.inad-mini-total{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--rdb);border-radius:6px;margin-bottom:10px}
+.inad-mini-total-lbl{font-size:11px;color:var(--rd);font-weight:700}
+.inad-mini-total-val{font-size:15px;font-weight:800;color:var(--rd);font-family:'DM Mono',monospace}
+.inad-mini-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd);cursor:pointer}
+.inad-mini-row:hover{background:var(--bg);margin:0 -4px;padding:8px 4px}
+.inad-mini-row:last-of-type{border-bottom:none}
+.inad-mini-nome{font-size:12px;font-weight:700}
+.inad-mini-det{font-size:10px;color:var(--mu);margin-top:1px}
+.inad-mini-val{font-size:12px;font-weight:800;font-family:'DM Mono',monospace;color:var(--rd)}
+
+/* ═══ NOTA FISCAL PANEL ═══ */
+.nota-panel{background:#fff;border-radius:12px;border:1px solid var(--bd);padding:22px;display:flex;flex-direction:column}
+.nota-fiscal{background:#fffcf5;border:1.5px dashed var(--gold);border-radius:10px;margin-top:0;position:relative;flex:1}
+.nota-body{padding:16px 16px 10px}
+.nota-perf{height:16px;margin:12px -16px 2px;background-image:radial-gradient(circle,#fff 5px,transparent 5px);background-size:18px 16px;background-position:0px center;background-repeat:repeat-x;border-top:1px dashed rgba(201,168,76,.35);border-bottom:1px dashed rgba(201,168,76,.35)}
+.nota-tear{height:12px;background:linear-gradient(135deg,#fffcf5 25%,transparent 25%) -10px 0,linear-gradient(225deg,#fffcf5 25%,transparent 25%) -10px 0,linear-gradient(315deg,#fffcf5 25%,transparent 25%),linear-gradient(45deg,#fffcf5 25%,transparent 25%);background-size:20px 12px;background-color:var(--bxd);background-repeat:repeat-x}
+.nota-stub{background:var(--bxd);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.nota-stub-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.55);font-family:'DM Mono',monospace}
+.nota-stub-sub{font-size:10px;color:rgba(255,255,255,.65);font-family:'DM Sans',sans-serif;margin-top:2px}
+.nota-stub-num{font-size:10px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em}
+.nota-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.nota-logo{width:34px;height:34px;border-radius:8px;background:var(--bx);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.nota-brand{font-family:'DM Serif Display',serif;font-size:12px;font-weight:700;color:var(--bx)}
+.nota-brand-sub{font-size:9px;color:var(--mu)}
+.nota-div{border-top:1px dashed var(--gold);margin:8px 0}
+.nota-row{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;font-family:'DM Mono',monospace}
+.nota-row span:first-child{color:var(--mu)}
+.nota-row span:last-child{font-weight:600;color:var(--tx);text-align:right;max-width:60%}
+.nota-valor-row{display:flex;justify-content:space-between;align-items:center;margin-top:6px;margin-bottom:4px}
+.nota-valor-lbl{font-size:13px;font-weight:700;font-family:'DM Mono',monospace}
+.nota-valor-val{font-size:22px;font-weight:800;color:var(--rd);font-family:'DM Mono',monospace}
+.nota-stamp{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) rotate(-20deg);font-size:26px;font-weight:900;color:var(--gn);opacity:.25;pointer-events:none;font-family:'DM Mono',monospace;letter-spacing:.1em;border:4px solid var(--gn);padding:4px 10px;border-radius:4px;display:none}
+.ofx-cat-toggle{display:flex;gap:0;border:1px solid var(--bd);border-radius:6px;overflow:hidden;margin-top:4px}
+.ofx-cat-toggle button{flex:1;padding:5px 10px;border:none;background:#f9f6f3;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--mu);transition:all .15s}
+.ofx-cat-toggle button.oct-active{background:var(--bxd);color:#fff}
+
+/* ═══ OFX DEMO — ACCORDION ═══ */
+.ofx-demo{margin-top:14px}
+.ofx-summary-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;padding:8px 10px;background:#faf8f6;border-radius:8px;border:1px solid var(--bd)}
+.ofx-sum-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);flex:1;min-width:100px}
+.oss{font-size:11px;font-weight:700;padding:2px 9px;border-radius:5px}
+.oss-ok{background:var(--gnb);color:var(--gn);border:1px solid rgba(45,125,70,.3)}
+.oss-pending{background:var(--orb);color:var(--or);border:1px solid rgba(192,112,0,.3)}
+.ofx-filter-tabs{display:flex;gap:0;border:1px solid var(--bd);border-radius:6px;overflow:hidden}
+.ofx-filter-tabs button{padding:4px 10px;border:none;border-right:1px solid var(--bd);background:#f9f6f3;font-size:11px;font-weight:600;color:var(--mu);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .12s}
+.ofx-filter-tabs button:last-child{border-right:none}
+.ofx-filter-tabs button.oft-active{background:var(--bx);color:#fff}
+.ofx-row{border:1px solid var(--bd);border-left:3px solid var(--bd);border-radius:9px;margin-bottom:6px;overflow:hidden;background:#fff;transition:box-shadow .15s}
+.ofx-row:hover{box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.ofx-row-ok{border-left-color:var(--gn)}
+.ofx-row-pending{border-left-color:var(--or)}
+.ofx-row-hdr{display:flex;align-items:center;gap:7px;padding:9px 12px;user-select:none;flex-wrap:nowrap}
+.ofx-row-hdr.clickable{cursor:pointer}
+.ofx-row-desc{flex:1;font-size:12px;font-weight:600;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.ofx-row-chevron{font-size:10px;color:var(--mu);flex-shrink:0;margin-left:2px;display:inline-block;transition:transform .18s}
+.ofx-row-chevron.open{transform:rotate(90deg)}
+.ofx-row-match{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:0 12px 10px 12px}
+.ofx-row-body{padding:10px 12px 12px;border-top:1px solid var(--bd)}
+.ofx-txn-date{font-size:11px;color:var(--mu);font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0}
+.ofx-txn-val{font-size:13px;font-weight:700;font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0}
+.ofx-txn-val.pos{color:var(--gn)}.ofx-txn-val.neg{color:var(--rd)}
+.mbadge-ok{background:var(--gnb);color:var(--gn);border:1.5px solid rgba(45,125,70,.45);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0}
+.mbadge-no{background:var(--orb);color:var(--or);border:1.5px solid rgba(192,112,0,.45);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0}
+.ofx-match-info{font-size:11px;color:var(--mu)}
+.ofx-txn-btns{display:flex;gap:8px}
+.ofx-cat-row{display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap}
+.ofx-sub-toggle{display:flex;gap:0;border:1px solid var(--bd);border-radius:6px;overflow:hidden;margin-bottom:10px;width:fit-content}
+.ofx-sub-toggle button{padding:5px 13px;border:none;background:#f9f6f3;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--mu);transition:all .15s}
+.ofx-sub-toggle button.ost-active{background:var(--gnb);color:var(--gn)}
+.ofx-mode-fields{display:flex;flex-direction:column;gap:8px}
+.ofx-proc-row{display:flex;gap:6px;align-items:flex-end;margin-bottom:8px}
+.ofx-proc-row .field{flex:1}
+.ofx-autofill{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px;background:#f4f7f5;border-radius:8px;border:1px solid rgba(30,92,56,.2);margin-bottom:6px}
+.oaf-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);margin-bottom:2px}
+.oaf-val{font-size:12px;font-weight:700;color:var(--tx)}
+.ofx-adv-row{display:flex;align-items:flex-end;gap:8px;margin-bottom:8px}
+.ofx-adv-row .field{flex:1}
+.ofx-not-found{font-size:11px;color:var(--or);background:var(--orb);padding:7px 10px;border-radius:6px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.ofx-not-found button{background:none;border:none;font-size:11px;font-weight:700;color:var(--bx);cursor:pointer;text-decoration:underline;font-family:'DM Sans',sans-serif;white-space:nowrap}
+
+/* ═══ INADIMPLENTES LIST ═══ */
+.inad-list{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.inad-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;border:1px solid var(--bd);background:#faf8f6;cursor:pointer}
+.inad-item:hover{background:#f5f0ee}
+.inad-chk{width:15px;height:15px;flex-shrink:0;cursor:pointer;accent-color:var(--bx)}
+.inad-nome{font-size:13px;font-weight:700}
+.inad-det{font-size:11px;color:var(--mu)}
+
+/* ═══ AUTOMAÇÃO EXTRA ═══ */
+.automacao-card{border:1.5px solid rgba(201,168,76,.5)!important;box-shadow:0 0 0 3px rgba(201,168,76,.07)}
+.automacao-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,var(--gold),#b8960e);color:#3a2800;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;margin-top:4px}
+.automacao-extra{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(107,28,46,.04));border:1.5px dashed rgba(201,168,76,.5);border-radius:10px;padding:14px 16px;margin-top:14px}
+.automacao-extra h4{font-size:12px;font-weight:700;color:#5a4000;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.automacao-extra p{font-size:12px;color:#5a4000;line-height:1.5}
+.automacao-extra ul{margin:6px 0 0 16px;font-size:11px;color:#5a4000;line-height:1.7}
+
+/* ═══ CHARTS BOTTOM ROW ═══ */
+.charts-row-bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+
+/* ACCORDION */
+.acc-toggle{background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--mu);font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;transition:background .15s;white-space:nowrap;flex-shrink:0}
+.acc-toggle:hover{background:var(--bg);color:var(--tx)}
+.acc-icon{font-size:13px;display:inline-block;transition:transform .28s ease;line-height:1}
+.acc-body{overflow:hidden;transition:max-height .32s ease, opacity .25s ease;max-height:4000px;opacity:1}
+.acc-body.collapsed{max-height:0;opacity:0;pointer-events:none}
+
+/* ═══ RESPONSIVE ═══ */
+
+/* ─ Laptop/large tablet (≤1200px) ─ */
+@media(max-width:1200px){
+  .kpi-banco-row{grid-template-columns:1fr}
+  .rh-body{grid-template-columns:1fr 1fr;gap:16px}
+  .rh-kpis{min-width:unset}
+  .resultado-split{grid-template-columns:1fr}
+  .hoje-section{grid-template-columns:1fr}
+}
+
+/* ─ Tablet (≤1050px) ─ */
+@media(max-width:1050px){
+  .t1-main,.t2-main,.t3-main,.t4-main{padding:14px 20px}
+  .t1-top,.t3-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .kpi-banco-row{grid-template-columns:1fr}
+  .charts-row,.charts-row-2,.charts-row-3,.charts-row-bottom,.recibo-inad-row{grid-template-columns:1fr}
+  .bank-dist-layout{flex-direction:row;align-items:flex-start;flex-wrap:wrap;width:100%}
+  .bank-legend{width:100%}
+  .contratos-kpis{grid-template-columns:repeat(2,1fr)}
+  .rh-body{grid-template-columns:1fr;gap:14px}
+  .rh-kpis{flex-direction:row;flex-wrap:wrap;min-width:unset;gap:8px}
+  .rh-kpi{flex:1;min-width:140px}
+  .resultado-split{grid-template-columns:1fr}
+  .hoje-section{grid-template-columns:1fr}
+  .filter-bar label{min-width:110px}
+}
+
+/* ─ Mobile landscape / small tablet (≤768px) ─ */
+@media(max-width:768px){
+  header{padding:10px 16px;flex-wrap:wrap;gap:8px}
+  .pbadge-bar{padding:8px 16px;flex-wrap:wrap;gap:6px}
+  .pbadge-desc{font-size:11px}
+  .t1-main,.t2-main,.t3-main,.t4-main{padding:12px 16px}
+  .ttab{min-width:110px;padding:8px 12px}
+  .ttab-l{font-size:13px}
+  .frow.three{grid-template-columns:1fr 1fr}
+  .resultado-highlight{padding:16px}
+  .resultado-kpis{grid-template-columns:1fr 1fr}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .t3-grid{grid-template-columns:1fr}
+  .table-card,.tcard{overflow-x:auto}
+  table{min-width:540px}
+  .ofx-autofill{grid-template-columns:1fr 1fr}
+  .form-card,.calc-panel{padding:16px}
+}
+
+/* ─ Mobile portrait (≤640px) ─ */
+@media(max-width:640px){
+  /* Header */
+  header{padding:9px 12px;flex-wrap:wrap;gap:6px}
+  .logo-ep{font-size:20px}
+  .logo-sub{font-size:9px;margin-top:3px}
+  .hdr-r{gap:6px}
+  .hdr-date{display:none}
+
+  /* Tab nav — abas dividem o espaço igualmente, subtítulo oculto */
+  .tab-nav{padding:0}
+  .ttab{min-width:0;flex:1;padding:7px 6px;text-align:center;border-right:none}
+  .ttab-l{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ttab-s{display:none}
+
+  /* Badge bar */
+  .pbadge-bar{padding:7px 12px;gap:6px}
+  .pbadge-desc{font-size:10px}
+
+  /* Conteúdo das tabs */
+  .t1-main,.t2-main,.t3-main,.t4-main{padding:10px 12px}
+
+  /* Layout grids */
+  .t1-top,.t3-grid{grid-template-columns:1fr}
+  .frow,.frow.three,.frow.four{grid-template-columns:1fr}
+  .frow.full{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .contratos-kpis{grid-template-columns:1fr 1fr}
+  .charts-row,.charts-row-2,.charts-row-3,.charts-row-bottom{grid-template-columns:1fr}
+  .recibo-inad-row{grid-template-columns:1fr}
+  .kpi-banco-row{grid-template-columns:1fr}
+
+  /* Painel Financeiro */
+  .resultado-highlight{padding:12px}
+  .rh-body{grid-template-columns:1fr;gap:10px}
+  .rh-kpis{flex-direction:row;flex-wrap:wrap;min-width:unset;gap:8px}
+  .rh-kpi{flex:1 1 45%}
+  .resultado-kpis{grid-template-columns:1fr 1fr}
+  .resultado-split{grid-template-columns:1fr}
+  .cbr-label{flex:0 0 110px}
+
+  /* Tabelas — scroll horizontal */
+  .table-card,.tcard{overflow-x:auto}
+  table{min-width:580px;font-size:12px}
+
+  /* Cards e painéis */
+  .form-card,.calc-panel{padding:14px}
+  .ofx-section{padding:12px}
+  .ofx-drop{padding:18px}
+  .t3-card,.t3-card-full{padding:14px}
+  .t4-card{padding:14px}
+
+  /* OFX */
+  .ofx-adv-row,.ofx-proc-row,.ofx-cat-row{flex-wrap:wrap}
+  .ofx-adv-row>.field,.ofx-proc-row>.field{flex:1 1 100%}
+  .ofx-autofill{grid-template-columns:1fr}
+  .ofx-summary-bar{flex-direction:column;align-items:flex-start;gap:6px}
+  .ofx-row-hdr{flex-wrap:wrap}
+
+  /* Bulk bar */
+  .bulk-bar{padding:8px 12px;gap:8px}
+  .bulk-actions{flex-wrap:wrap;gap:6px}
+  .bulk-select{font-size:11px}
+
+  /* Form actions */
+  .form-actions{flex-direction:column}
+  .form-actions .btn-primary,.form-actions .btn-secondary,.form-actions .btn-gold{width:100%}
+  select{width:100%}
+
+  /* Filtros */
+  .filter-bar{flex-direction:column;align-items:stretch;gap:6px}
+  .filter-bar label{width:100%;min-width:unset;flex:unset}
+  .filter-bar select,.filter-bar input[type=date]{width:100%}
+  .btn-filter-act,.btn-clear-f,.btn-export{width:100%;text-align:center}
+
+  /* Tarefas */
+  .tarefas-row{flex-direction:column}
+  .tarefa-chip{width:100%}
+
+  /* Tab 3 */
+  .t3-btns{flex-direction:column;gap:6px}
+  .t3-btns>button,.t3-btns>a{width:100%;text-align:center}
+  .period-radio{flex-wrap:wrap}
+  .pipe-grid{grid-template-columns:1fr 1fr}
+
+  /* Tab 4 */
+  .t4-main{max-width:100%}
+}
+
+/* ─ Mobile pequeno (≤420px) ─ */
+@media(max-width:420px){
+  .logo-ep{font-size:17px}
+  .logo-sub{font-size:8px}
+  .badge-demo{display:none}
+  .ttab-l{font-size:10px}
+  .kpi-grid{grid-template-columns:1fr}
+  .contratos-kpis{grid-template-columns:1fr}
+  .resultado-kpis{grid-template-columns:1fr}
+  .rh-kpi{flex:1 1 100%}
+  .pipe-grid{grid-template-columns:1fr}
+  .ofx-filter-tabs{flex-wrap:wrap}
+  .ofx-filter-tabs button{flex:1}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div style="display:flex;align-items:baseline">
+      <span class="logo-ep">Estevão <span class="logo-amp">&amp;</span> Pinheiro</span>
+    </div>
+    <div class="logo-sub">Advogados Associados</div>
+  </div>
+  <div class="hdr-r">
+    <div class="badge-demo">Demonstração v2</div>
+    <div class="hdr-date" id="hdrDate">28 de maio de 2026</div>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <a class="ttab active" data-tab="1" onclick="switchTab(1);return false;" href="#">
+    <div class="ttab-l">Lançamentos</div>
+    <div class="ttab-s">Entrada de dados</div>
+  </a>
+  <a class="ttab" data-tab="2" onclick="switchTab(2);return false;" href="#">
+    <div class="ttab-l">Painel Financeiro</div>
+    <div class="ttab-s">BI interativo</div>
+  </a>
+  <a class="ttab" data-tab="3" onclick="switchTab(3);return false;" href="#">
+    <div class="ttab-l">Comunicação</div>
+    <div class="ttab-s">Relatórios · Cobrança</div>
+  </a>
+  <a class="ttab" data-tab="4" onclick="switchTab(4);return false;" href="#">
+    <div class="ttab-l">Configurações</div>
+    <div class="ttab-s">Usuários · Acessos</div>
+  </a>
+</nav>
+
+<!-- ═══ TAB 1: LANÇAMENTOS ═══ -->
+<div id="tab-1" class="tab-content active">
+  <div class="pbadge-bar">
+    <div class="pbadge pb1">Fase 1</div>
+    <div class="pbadge-desc">Entrada manual de RPVs e despesas · cálculo automático · importação via extrato bancário</div>
+  </div>
+  <div class="t1-main">
+
+    <!-- OFX UPLOAD — sempre no topo -->
+    <div class="ofx-section">
+      <h3>Importar extrato bancário</h3>
+      <p>Importe o extrato diretamente do banco — o sistema reconhece os lançamentos e sugere categorias automaticamente.</p>
+      <div class="ofx-drop">
+        <div class="ofx-icon">📂</div>
+        <div class="ofx-label">Arraste o arquivo aqui ou clique para selecionar</div>
+        <div class="ofx-formats">
+          <span>OFX</span><span>CSV</span><span>PDF</span>
+        </div>
+        <div class="ofx-note">⚠ Área de demonstração — importação funcional disponível na versão contratada</div>
+      </div>
+      <!-- DEMO: Como o sistema valida as transações -->
+      <div class="ofx-demo">
+        <!-- Barra de resumo + filtros -->
+        <div class="ofx-summary-bar">
+          <div class="ofx-sum-title">Simulação — processamento do extrato</div>
+          <span class="oss oss-ok">✓ 1 identificado</span>
+          <span class="oss oss-pending">⚠ 2 sem identificação</span>
+          <div class="ofx-filter-tabs">
+            <button class="oft-active" onclick="filterOfx(&#39;all&#39;,this)">Todos 3</button>
+            <button onclick="filterOfx(&#39;pending&#39;,this)">Sem identificação 2</button>
+            <button onclick="filterOfx(&#39;ok&#39;,this)">Identificados 1</button>
+          </div>
+        </div>
+
+        <!-- Row 1: Reconhecido (sem accordion — compacto fixo) -->
+        <div class="ofx-row ofx-row-ok" id="ofxr-1" data-status="ok">
+          <div class="ofx-row-hdr">
+            <span class="fbadge fb-cef">CEF</span>
+            <span class="ofx-txn-date">22/05</span>
+            <span class="ofx-row-desc">TED RECEBIDO - TRIBUNAL REGIONAL DO TRABALHO 6ª REGIÃO</span>
+            <span class="ofx-txn-val pos">+ R$ 28.400,00</span>
+          </div>
+          <div class="ofx-row-match">
+            <span class="mbadge-ok">✓ Reconhecido</span>
+            <span class="ofx-match-info">→ Causa 0001823-45 · SINDSEP · João C. Ferreira · Adv: Cláudio Estevão</span>
+            <div class="ofx-txn-btns" style="margin-left:auto">
+              <button class="btn-primary" style="padding:5px 11px;font-size:11px" onclick="alert(&#39;Lançamento confirmado!\n\nProcesso 0001823-45 marcado como Recebido automaticamente.&#39;)">Confirmar</button>
+              <button class="btn-secondary" style="padding:5px 11px;font-size:11px" onclick="alert(&#39;Abrindo categorização manual...&#39;)">Ajustar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Não reconhecido — ENTRADA (acordeão) -->
+        <div class="ofx-row ofx-row-pending" id="ofxr-2" data-status="pending">
+          <div class="ofx-row-hdr clickable" onclick="toggleOfxRow(2)">
+            <span class="fbadge fb-cef">CEF</span>
+            <span class="ofx-txn-date">20/05</span>
+            <span class="ofx-row-desc">TED RECEBIDO - TRIBUNAL REGIONAL DO TRABALHO 6ª REGIÃO OF.2026/0087</span>
+            <span class="ofx-txn-val pos">+ R$ 15.400,00</span>
+            <span class="mbadge-no">⚠ Sem identificação</span>
+            <span class="ofx-row-chevron" id="chv-2">▶</span>
+          </div>
+          <div class="ofx-row-body" id="ofxb-2" style="display: none;">
+            <div class="ofx-sub-toggle">
+              <button id="t2-btn-causa" class="ost-active" onclick="setOfxSubMode(&#39;t2&#39;,&#39;causa&#39;)">Causa / RPV</button>
+              <button id="t2-btn-hon" onclick="setOfxSubMode(&#39;t2&#39;,&#39;hon&#39;)">Honorários do sindicato</button>
+            </div>
+            <!-- Sub-modo: Causa/RPV -->
+            <div id="t2-causa-fields">
+              <div class="ofx-proc-row">
+                <div class="field" style="flex:1">
+                  <label>Buscar processo cadastrado</label>
+                  <div style="display:flex;gap:6px">
+                    <input type="text" id="t2-proc" placeholder="Nº do processo, beneficiário ou sindicato..." style="flex:1;font-size:12px">
+                    <button class="btn-secondary" style="padding:6px 12px;font-size:12px;white-space:nowrap" onclick="procSearch(&#39;t2&#39;)">Buscar</button>
+                  </div>
+                </div>
+              </div>
+              <div class="ofx-autofill" id="t2-autofill" style="display:none">
+                <div><div class="oaf-lbl">Sindicato</div><div class="oaf-val" id="t2-af-sindic">—</div></div>
+                <div><div class="oaf-lbl">Beneficiário</div><div class="oaf-val" id="t2-af-benef">—</div></div>
+                <div><div class="oaf-lbl">Tipo</div><div class="oaf-val" id="t2-af-tipo">—</div></div>
+              </div>
+              <!-- Linha 1: Advogado + Tipo -->
+              <div class="ofx-adv-row" id="t2-adv-row">
+                <div class="field" style="flex:2;min-width:160px">
+                  <label>Advogado responsável</label>
+                  <select id="t2-adv-sel">
+                    <option value="">Selecione...</option>
+                    <option>Cláudio Estevão</option><option>Fred Pinheiro</option>
+                    <option>Dra. Beatriz Cavalcanti</option><option>Dr. Marco A. Lins</option>
+                    <option>Andrielly Gutierrez</option>
+                  </select>
+                </div>
+                <div class="field" style="flex:1;min-width:110px">
+                  <label>Tipo</label>
+                  <select id="t2-tipo-sel">
+                    <option value="RPV">RPV</option>
+                    <option value="Precatório">Precatório</option>
+                  </select>
+                </div>
+              </div>
+              <!-- Linha 2: Beneficiário + Status + Data -->
+              <div class="ofx-adv-row" style="margin-bottom:6px">
+                <div class="field" style="flex:2;min-width:150px">
+                  <label>Beneficiário (trabalhador)</label>
+                  <input type="text" id="t2-benef" placeholder="Nome do trabalhador beneficiário" style="font-size:12px">
+                </div>
+                <div class="field" style="flex:1;min-width:120px">
+                  <label>Status ao registrar</label>
+                  <select id="t2-status-sel">
+                    <option value="disponivel">Disponível</option>
+                    <option value="pendente">Pendente</option>
+                    <option value="recebido" selected="">Recebido</option>
+                    <option value="arquivado">Arquivado</option>
+                  </select>
+                </div>
+                <div class="field" style="flex:1;min-width:120px">
+                  <label>Data do depósito</label>
+                  <input type="date" id="t2-data-dep" value="2026-05-20">
+                </div>
+              </div>
+              <div class="ofx-not-found" id="t2-not-found" style="display:none">
+                ⚠ Processo não encontrado no sistema.
+                <button onclick="showNewProc(&#39;t2&#39;)">Preencher como processo novo →</button>
+              </div>
+              <!-- Campos para processo novo -->
+              <div id="t2-new-proc" style="display:none">
+                <div class="ofx-cat-row" style="flex-wrap:wrap;gap:8px;margin-bottom:8px">
+                  <div class="field" style="flex:1;min-width:130px">
+                    <label>Sindicato</label>
+                    <select id="t2-np-sindic">
+                      <option value="">Selecione...</option>
+                      <option>SINDSEP</option><option>SINDPD</option><option>SEEB</option>
+                      <option>SINDIFISCO</option><option>SINTETEL</option><option>SINIJUDE</option>
+                    </select>
+                  </div>
+                  <div class="field" style="flex:1;min-width:150px">
+                    <label>Advogado responsável</label>
+                    <select id="t2-np-adv">
+                      <option value="">Selecione...</option>
+                      <option>Cláudio Estevão</option><option>Fred Pinheiro</option>
+                      <option>Dra. Beatriz Cavalcanti</option><option>Dr. Marco A. Lins</option>
+                      <option>Andrielly Gutierrez</option>
+                    </select>
+                  </div>
+                  <div class="field" style="flex:1;min-width:100px">
+                    <label>Tipo</label>
+                    <select id="t2-np-tipo">
+                      <option value="RPV">RPV</option><option value="Precatório">Precatório</option>
+                    </select>
+                  </div>
+                  <div class="field" style="flex:1;min-width:120px">
+                    <label>Data de expedição</label>
+                    <input type="date" id="t2-np-expedicao">
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+                <button class="btn-primary" id="t2-btn-vincular" style="padding:7px 14px;font-size:12px" disabled="" onclick="vincularCausa(&#39;t2&#39;)">Vincular causa →</button>
+                <button class="btn-secondary" style="padding:7px 12px;font-size:12px" onclick="closeOfxRow(2)">Ignorar</button>
+              </div>
+            </div>
+            <!-- Sub-modo: Honorários do sindicato -->
+            <div id="t2-hon-fields" style="display:none">
+              <div class="ofx-cat-row" style="flex-wrap:wrap;gap:8px">
+                <div class="field" style="flex:1;min-width:130px">
+                  <label>Sindicato pagador</label>
+                  <select id="t2-hon-sindic">
+                    <option value="">Selecione...</option>
+                    <option>SINDSEP</option><option>SINDPD</option><option>SEEB</option>
+                    <option>SINDIFISCO</option><option>SINTETEL</option><option>SINIJUDE</option>
+                  </select>
+                </div>
+                <div class="field" style="flex:1;min-width:120px">
+                  <label>Mês de referência</label>
+                  <input type="month" id="t2-hon-ref" value="2026-05">
+                </div>
+                <div class="field" style="flex:1;min-width:140px">
+                  <label>Tipo de honorário</label>
+                  <select id="t2-hon-tipo">
+                    <option value="">Selecione...</option>
+                    <option value="mensalidade">Mensalidade</option>
+                    <option value="exito">Honorário de êxito</option>
+                    <option value="adiantamento">Adiantamento</option>
+                    <option value="outro">Outro</option>
+                  </select>
+                </div>
+                <div class="field" style="flex:1;min-width:140px">
+                  <label>Status ao registrar</label>
+                  <select id="t2-hon-status">
+                    <option value="disponivel">Disponível</option>
+                    <option value="pendente">Pendente</option>
+                    <option value="recebido" selected="">Recebido</option>
+                    <option value="arquivado">Arquivado</option>
+                  </select>
+                </div>
+                <button class="btn-primary" style="padding:7px 12px;font-size:12px;align-self:flex-end" onclick="alert(&#39;Honorário registrado!\n\nEntrada de R$ 15.400,00 vinculada ao sindicato e lançada no painel financeiro.&#39;)">Registrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: Não reconhecido — DESPESA (acordeão) -->
+        <div class="ofx-row ofx-row-pending" id="ofxr-3" data-status="pending">
+          <div class="ofx-row-hdr clickable" onclick="toggleOfxRow(3)">
+            <span class="fbadge fb-bb">BB</span>
+            <span class="ofx-txn-date">21/05</span>
+            <span class="ofx-row-desc">DEB AUTO - PRISCILA ASSESSORIA JURIDICA LTDA</span>
+            <span class="ofx-txn-val neg">− R$ 4.320,00</span>
+            <span class="mbadge-no">⚠ Sem identificação</span>
+            <span class="ofx-row-chevron" id="chv-3">▶</span>
+          </div>
+          <div class="ofx-row-body" id="ofxb-3" style="display: none;">
+            <div class="ofx-cat-row" style="flex-wrap:wrap;gap:8px;margin-bottom:10px">
+              <div class="field" style="flex:1;min-width:130px">
+                <label>Categoria</label>
+                <div class="ofx-cat-toggle">
+                  <button id="t3-cat-fixo" class="oct-active" onclick="setOfxDespCat(&#39;fixo&#39;,this)">Custo Fixo</button>
+                  <button id="t3-cat-var" onclick="setOfxDespCat(&#39;variavel&#39;,this)">Variável</button>
+                </div>
+              </div>
+              <div class="field" style="flex:2;min-width:160px">
+                <label>Tipo de despesa</label>
+                <input type="text" id="t3-tipo-desp" placeholder="Ex: Aluguel, contabilidade..." style="font-size:12px">
+              </div>
+              <div class="field" style="flex:2;min-width:150px">
+                <label>Fornecedor</label>
+                <input type="text" id="t3-forn" value="PRISCILA ASSESSORIA JURIDICA LTDA" style="font-size:11px">
+              </div>
+              <div class="field" style="flex:1;min-width:110px">
+                <label>Data</label>
+                <input type="date" id="t3-data-desp" value="2026-05-21">
+              </div>
+              <div class="field" style="flex:1;min-width:140px">
+                <label>Forma de pagamento</label>
+                <select id="t3-pagamento" style="font-size:12px">
+                  <option value="debito">Débito automático</option>
+                  <option value="ted">TED / PIX</option>
+                  <option value="boleto">Boleto</option>
+                  <option value="cartao">Cartão</option>
+                  <option value="dinheiro">Dinheiro</option>
+                </select>
+              </div>
+              <div class="field" style="flex:1;min-width:110px">
+                <label>Status</label>
+                <select id="t3-status" style="font-size:12px">
+                  <option value="pago" selected="">Pago</option>
+                  <option value="pendente">Pendente</option>
+                  <option value="arquivado">Arquivado</option>
+                </select>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn-primary" style="padding:7px 12px;font-size:12px" onclick="alert(&#39;Despesa registrada!\n\nDébito automático de R$ 4.320,00 categorizado e salvo no painel financeiro.&#39;)">Registrar</button>
+              <button class="btn-secondary" style="padding:7px 12px;font-size:12px" onclick="closeOfxRow(3)">Ignorar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="t1-top">
+
+      <!-- FORM -->
+      <div class="form-card">
+        <div class="card-title">Novo lançamento</div>
+        <div class="card-sub">Preencha os campos abaixo — o sistema calcula automaticamente</div>
+        <div class="tipo-toggle">
+          <button id="btn-entrada" class="active-ent" onclick="setTipoLanc(&#39;entrada&#39;)">+ Entrada (RPV / Honorário)</button>
+          <button id="btn-despesa" onclick="setTipoLanc(&#39;despesa&#39;)">− Despesa do escritório</button>
+        </div>
+
+        <!-- CAMPOS ENTRADA (RPV / Honorário) -->
+        <div id="rpv-fields">
+          <div class="frow">
+            <div class="field"><label>Sindicato</label>
+              <select id="f-sindic" oninput="calcU()">
+                <option value="">Selecione...</option>
+                <option>SINDSEP</option><option>SINDPD</option><option>SEEB</option>
+                <option>SINDIFISCO</option><option>SINTETEL</option><option>SINIJUDE</option>
+              </select></div>
+            <div class="field"><label>Advogado responsável</label>
+              <select id="f-adv">
+                <option value="">Selecione...</option>
+                <option>Cláudio Estevão</option><option>Fred Pinheiro</option>
+                <option>Dra. Beatriz Cavalcanti</option><option>Dr. Marco A. Lins</option>
+                <option>Andrielly Gutierrez</option>
+              </select></div>
+          </div>
+          <div class="frow full">
+            <div class="field"><label>Número do processo</label>
+              <input type="text" id="f-proc" placeholder="0001823-45.2022.5.06.0012" oninput="calcU()"></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label>Data de expedição (tribunal)</label>
+              <input type="date" id="f-expedicao">
+              <div class="hint">Prazo de levantamento: 60 dias</div></div>
+            <div class="field"><label>Banco destino</label>
+              <select id="f-banco">
+                <option value="">Selecione...</option>
+                <option value="CEF">Caixa Econômica Federal</option>
+                <option value="BB">Banco do Brasil</option>
+              </select></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label>Valor bruto (R$)</label>
+              <input type="number" id="f-bruto" placeholder="28400.00" step="0.01" min="0" oninput="calcU()"></div>
+            <div class="field"><label>Status</label>
+              <select id="f-status">
+                <option value="disponivel">Disponível</option>
+                <option value="pendente">Pendente</option>
+                <option value="recebido">Recebido</option>
+                <option value="arquivado">Arquivado</option>
+              </select></div>
+          </div>
+          <div class="frow three">
+            <div class="field"><label>% Honorários</label>
+              <input type="number" id="f-hon" value="30" step="0.01" min="0" max="100" oninput="calcU()">
+              <div class="hint">Padrão: 30%</div></div>
+            <div class="field"><label>% Tributos</label>
+              <input type="number" id="f-trib" value="18" step="0.01" min="0" max="100" oninput="calcU()">
+              <div class="hint">Padrão: 18%</div></div>
+            <div class="field"><label>Tipo</label>
+              <select id="f-tipo"><option value="RPV">RPV</option><option value="Precatório">Precatório</option></select></div>
+          </div>
+          <div class="frow full">
+            <div class="field"><label>Beneficiário (trabalhador)</label>
+              <input type="text" id="f-benef" placeholder="Nome do trabalhador beneficiário"></div>
+          </div>
+        </div>
+
+        <!-- CAMPOS DESPESA -->
+        <div id="desp-fields" style="display:none">
+          <div class="frow">
+            <div class="field"><label>Categoria</label>
+              <select id="fd-categoria" onchange="onCatChange()">
+                <option value="">Selecione...</option>
+                <option value="fixo">Custo Fixo</option>
+                <option value="variavel">Custo Variável</option>
+              </select></div>
+            <div class="field"><label>Tipo de despesa</label>
+              <input type="text" id="fd-tipo-desp" placeholder="Selecione a categoria primeiro" oninput="updateNota()"></div>
+          </div>
+          <div class="frow full">
+            <div class="field"><label>Fornecedor / Credor</label>
+              <input type="text" id="fd-fornecedor" placeholder="Ex: Marcelo Locações" oninput="updateNota()"></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label>Data de vencimento</label>
+              <input type="date" id="fd-vencimento" onchange="updateNota()"></div>
+            <div class="field"><label>Valor (R$)</label>
+              <input type="number" id="fd-valor" placeholder="0,00" step="0.01" min="0" oninput="updateNota()"></div>
+          </div>
+          <div class="frow">
+            <div class="field"><label>Forma de pagamento</label>
+              <select id="fd-pagamento" onchange="updateNota()">
+                <option value="">Selecione...</option>
+                <option>Boleto</option><option>TED / PIX</option>
+                <option>Débito automático</option><option>Cartão</option><option>Dinheiro</option>
+              </select></div>
+            <div class="field"><label>Status</label>
+              <select id="fd-status">
+                <option value="pago" selected="">Pago</option>
+                <option value="pendente">Pendente</option>
+                <option value="arquivado">Arquivado</option>
+              </select></div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-secondary" onclick="clearT1()">Limpar</button>
+          <button class="btn-primary" onclick="saveT1()">Salvar lançamento</button>
+        </div>
+      </div>
+
+      <!-- PAINEL DIREITO: Cálculo (entrada) ou Nota Fiscal (despesa) -->
+
+      <!-- CALC PANEL -->
+      <div class="calc-panel" id="calc-panel">
+        <div class="card-title">Cálculo em tempo real — RPV / Honorário</div>
+        <div class="card-sub">Atualizado conforme você preenche</div>
+        <div class="calc-row"><div class="calc-lbl">Valor bruto RPV</div><div class="calc-val cv-bx" id="c-bruto">R$ 10.000,00</div></div>
+        <div class="calc-row"><div class="calc-lbl">Honorários (<span id="c-hon-lbl">30</span>%)</div><div class="calc-val cv-rd" id="c-hon">− R$ 3.000,00</div></div>
+        <div class="calc-row"><div class="calc-lbl">Tributos (<span id="c-trib-lbl">18</span>% s/ bruto)</div><div class="calc-val cv-rd" id="c-trib">− R$ 1.800,00</div></div>
+        <hr class="calc-div">
+        <div class="calc-row" style="border:none"><div class="calc-lbl" style="font-weight:700;color:var(--tx);font-size:14px">Saldo líquido ao sindicato</div><div class="calc-val cv-gn cv-big" id="c-liq">R$ 5.200,00</div></div>
+        <div class="accum-box">
+          <div class="accum-lbl">Acumulado tributos Q2/2026</div>
+          <div class="accum-val" id="c-accum">R$ 5.087,00</div>
+          <div class="accum-note">Abr + Mai + Jun · Recolher até 31/07/2026</div>
+        </div>
+        <div class="dist-box">
+          <div class="dist-title">Distribuição de honorários</div>
+          <div class="dist-item">
+            <div class="dist-dot" style="background:var(--bx)"></div>
+            <div><div class="dist-name">Pró-labore</div><div class="dist-desc">Valor fixo mensal · pago diretamente aos sócios</div></div>
+          </div>
+          <div class="dist-item">
+            <div class="dist-dot" style="background:var(--gold)"></div>
+            <div><div class="dist-name">Fundo de participação</div><div class="dist-desc">Proporcional ao resultado do período por sócio</div></div>
+          </div>
+          <div class="dist-item">
+            <div class="dist-dot" style="background:var(--gn)"></div>
+            <div><div class="dist-name">Honorário diferenciado</div><div class="dist-desc">Calculado por processo · atribuído ao advogado responsável</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTA PANEL (despesa) -->
+      <div class="nota-panel" id="nota-panel" style="display:none">
+        <div class="card-title">Comprovante de despesa</div>
+        <div class="card-sub">Preenchendo em tempo real</div>
+        <div class="nota-fiscal">
+          <div class="nota-body">
+            <div class="nota-hdr">
+              <div class="nota-logo">E&amp;P</div>
+              <div>
+                <div class="nota-brand">Estevão &amp; Pinheiro</div>
+                <div class="nota-brand-sub">Advogados Associados</div>
+              </div>
+            </div>
+            <div class="nota-div"></div>
+            <div class="nota-row"><span>Categoria</span><span id="nota-cat">—</span></div>
+            <div class="nota-row"><span>Tipo</span><span id="nota-tipo">—</span></div>
+            <div class="nota-row"><span>Fornecedor</span><span id="nota-forn">—</span></div>
+            <div class="nota-row"><span>Vencimento</span><span id="nota-venc">—</span></div>
+            <div class="nota-row"><span>Forma pag.</span><span id="nota-pag">—</span></div>
+            <div class="nota-div"></div>
+            <div class="nota-valor-row">
+              <span class="nota-valor-lbl">Valor</span>
+              <span class="nota-valor-val" id="nota-val">R$ —</span>
+            </div>
+            <div class="nota-stamp" id="nota-stamp">REGISTRADO</div>
+            <div class="nota-perf"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="tcard">
+      <div class="tcard-hdr">
+        <h3>Lançamentos cadastrados</h3>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span id="t1-count">14 registros</span>
+          <button class="acc-toggle" onclick="toggleAcc('acc-t1','acc-icon-t1',this)" title="Expandir">
+            <span class="acc-icon" id="acc-icon-t1" style="transform:rotate(-90deg)">▾</span> Expandir registros
+          </button>
+        </div>
+      </div>
+      <div class="acc-body collapsed" id="acc-t1">
+      <div class="bulk-bar" id="t1-bulk" style="display:none">
+        <div class="bulk-info"><span id="t1-sel-n">0</span> selecionados</div>
+        <div class="bulk-actions">
+          <label>Status:
+            <select class="bulk-select" id="t1-bulk-sel">
+              <option value="">—</option>
+              <option value="disponivel">Disponível</option>
+              <option value="pendente">Pendente</option>
+              <option value="recebido">Recebido</option>
+              <option value="arquivado">Arquivado</option>
+              <option value="pago">Pago</option>
+            </select></label>
+          <label>Banco:
+            <select class="bulk-select" id="t1-bulk-banco">
+              <option value="">—</option>
+              <option value="CEF">CEF</option>
+              <option value="BB">BB</option>
+            </select></label>
+          <label>Sindicato:
+            <select class="bulk-select" id="t1-bulk-sindic">
+              <option value="">—</option>
+              <option>SINDSEP</option><option>SINDPD</option><option>SEEB</option>
+              <option>SINDIFISCO</option><option>SINTETEL</option><option>SINIJUDE</option>
+            </select></label>
+          <label>Advogado:
+            <select class="bulk-select" id="t1-bulk-adv">
+              <option value="">—</option>
+              <option>Cláudio Estevão</option><option>Fred Pinheiro</option>
+              <option>Dra. Beatriz Cavalcanti</option><option>Dr. Marco A. Lins</option>
+              <option>Andrielly Gutierrez</option>
+            </select></label>
+          <button class="btn-bulk-apply" onclick="applyT1Bulk()">Aplicar</button>
+          <button class="btn-bulk-cancel" onclick="clearT1Sel()">Cancelar</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th class="chk-col"><input type="checkbox" id="t1-chk-all" onchange="selAllT1(this)"></th>
+              <th>Data Expedição</th><th>Processo</th><th>Sindicato</th><th>Beneficiário</th>
+              <th>Banco</th><th>Bruto</th><th>Honorários</th><th>Tributos</th><th>Líquido</th>
+              <th>Status</th><th>Advogado</th>
+            </tr>
+          </thead>
+          <tbody id="t1-tbody"><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(1,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(1,&#39;dataExpedicao&#39;,this)"><div class="data-cell">20/04/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(1,&#39;proc&#39;,this)"><div class="proc-num">0001823-45.2022.5.06.0012</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(1,&#39;sindic&#39;,this)">SINDSEP</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(1,&#39;benef&#39;,this)"><div class="data-cell">João C. Ferreira</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(1,&#39;banco&#39;,this)"><span class="fbadge fb-cef">CEF</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(1,&#39;valor&#39;,this)"><div class="val-cell">R$ 28.400,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 8.520,00</div></td>
+      <td><div class="val-cell val-or">−R$ 5.112,00</div></td>
+      <td><div class="val-cell val-pos">R$ 14.768,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(1,&#39;status&#39;,this)"><span class="sbadge sb-disp"><div class="dot"></div>Disponível</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(1,&#39;adv&#39;,this)"><div class="data-cell">Cláudio Estevão</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(2,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(2,&#39;dataExpedicao&#39;,this)"><div class="data-cell">18/04/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(2,&#39;proc&#39;,this)"><div class="proc-num">0003412-78.2021.5.06.0008</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(2,&#39;sindic&#39;,this)">SINDPD</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(2,&#39;benef&#39;,this)"><div class="data-cell">Maria L. Souza</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(2,&#39;banco&#39;,this)"><span class="fbadge fb-cef">CEF</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(2,&#39;valor&#39;,this)"><div class="val-cell">R$ 20.020,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 6.006,00</div></td>
+      <td><div class="val-cell val-or">−R$ 3.603,60</div></td>
+      <td><div class="val-cell val-pos">R$ 10.410,40</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(2,&#39;status&#39;,this)"><span class="sbadge sb-disp"><div class="dot"></div>Disponível</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(2,&#39;adv&#39;,this)"><div class="data-cell">Fred Pinheiro</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(3,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(3,&#39;dataExpedicao&#39;,this)"><div class="data-cell">22/04/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(3,&#39;proc&#39;,this)"><div class="proc-num">0007291-33.2023.5.06.0001</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(3,&#39;sindic&#39;,this)">SEEB</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(3,&#39;benef&#39;,this)"><div class="data-cell">Carlos A. Nunes</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(3,&#39;banco&#39;,this)"><span class="fbadge fb-bb">BB</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(3,&#39;valor&#39;,this)"><div class="val-cell">R$ 21.900,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 6.570,00</div></td>
+      <td><div class="val-cell val-or">−R$ 3.942,00</div></td>
+      <td><div class="val-cell val-pos">R$ 11.388,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(3,&#39;status&#39;,this)"><span class="sbadge sb-disp"><div class="dot"></div>Disponível</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(3,&#39;adv&#39;,this)"><div class="data-cell">Cláudio Estevão</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(4,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(4,&#39;dataExpedicao&#39;,this)"><div class="data-cell">10/04/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(4,&#39;proc&#39;,this)"><div class="proc-num">0004521-12.2020.5.06.0034</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(4,&#39;sindic&#39;,this)">SINDIFISCO</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(4,&#39;benef&#39;,this)"><div class="data-cell">Ana R. Lima</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(4,&#39;banco&#39;,this)"><span class="fbadge fb-bb">BB</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(4,&#39;valor&#39;,this)"><div class="val-cell">R$ 85.000,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 25.500,00</div></td>
+      <td><div class="val-cell val-or">−R$ 15.300,00</div></td>
+      <td><div class="val-cell val-pos">R$ 44.200,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(4,&#39;status&#39;,this)"><span class="sbadge sb-pend"><div class="dot"></div>Pendente</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(4,&#39;adv&#39;,this)"><div class="data-cell">Fred Pinheiro</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(5,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(5,&#39;dataExpedicao&#39;,this)"><div class="data-cell">20/04/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(5,&#39;proc&#39;,this)"><div class="proc-num">0009834-67.2022.5.15.0144</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(5,&#39;sindic&#39;,this)">SINDSEP</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(5,&#39;benef&#39;,this)"><div class="data-cell">Paulo M. Costa</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(5,&#39;banco&#39;,this)"><span class="fbadge fb-cef">CEF</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(5,&#39;valor&#39;,this)"><div class="val-cell">R$ 43.750,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 13.125,00</div></td>
+      <td><div class="val-cell val-or">−R$ 7.875,00</div></td>
+      <td><div class="val-cell val-pos">R$ 22.750,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(5,&#39;status&#39;,this)"><span class="sbadge sb-pend"><div class="dot"></div>Pendente</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(5,&#39;adv&#39;,this)"><div class="data-cell">Dra. Beatriz Cavalcanti</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(6,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(6,&#39;dataExpedicao&#39;,this)"><div class="data-cell">25/04/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(6,&#39;proc&#39;,this)"><div class="proc-num">0002198-91.2021.5.06.0009</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(6,&#39;sindic&#39;,this)">SINDPD</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(6,&#39;benef&#39;,this)"><div class="data-cell">Fernanda O.</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(6,&#39;banco&#39;,this)"><span class="fbadge fb-cef">CEF</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(6,&#39;valor&#39;,this)"><div class="val-cell">R$ 31.200,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 9.360,00</div></td>
+      <td><div class="val-cell val-or">−R$ 5.616,00</div></td>
+      <td><div class="val-cell val-pos">R$ 16.224,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(6,&#39;status&#39;,this)"><span class="sbadge sb-pend"><div class="dot"></div>Pendente</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(6,&#39;adv&#39;,this)"><div class="data-cell">Cláudio Estevão</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(7,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(7,&#39;dataExpedicao&#39;,this)"><div class="data-cell">20/03/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(7,&#39;proc&#39;,this)"><div class="proc-num">0006712-44.2019.5.06.0021</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(7,&#39;sindic&#39;,this)">SEEB</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(7,&#39;benef&#39;,this)"><div class="data-cell">Roberto S. Melo</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(7,&#39;banco&#39;,this)"><span class="fbadge fb-bb">BB</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(7,&#39;valor&#39;,this)"><div class="val-cell">R$ 18.640,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 5.592,00</div></td>
+      <td><div class="val-cell val-or">−R$ 3.355,20</div></td>
+      <td><div class="val-cell val-pos">R$ 9.692,80</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(7,&#39;status&#39;,this)"><span class="sbadge sb-rec"><div class="dot"></div>Recebido</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(7,&#39;adv&#39;,this)"><div class="data-cell">Fred Pinheiro</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(8,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(8,&#39;dataExpedicao&#39;,this)"><div class="data-cell">10/03/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(8,&#39;proc&#39;,this)"><div class="proc-num">0011234-05.2022.5.06.0055</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(8,&#39;sindic&#39;,this)">SINDSEP</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(8,&#39;benef&#39;,this)"><div class="data-cell">Lucia B. Ramos</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(8,&#39;banco&#39;,this)"><span class="fbadge fb-cef">CEF</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(8,&#39;valor&#39;,this)"><div class="val-cell">R$ 12.800,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 3.840,00</div></td>
+      <td><div class="val-cell val-or">−R$ 2.304,00</div></td>
+      <td><div class="val-cell val-pos">R$ 6.656,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(8,&#39;status&#39;,this)"><span class="sbadge sb-rec"><div class="dot"></div>Recebido</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(8,&#39;adv&#39;,this)"><div class="data-cell">Dr. Marco A. Lins</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(9,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(9,&#39;dataExpedicao&#39;,this)"><div class="data-cell">01/03/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(9,&#39;proc&#39;,this)"><div class="proc-num">0008991-22.2018.5.06.0003</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(9,&#39;sindic&#39;,this)">SINDIFISCO</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(9,&#39;benef&#39;,this)"><div class="data-cell">Marcos V.</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(9,&#39;banco&#39;,this)"><span class="fbadge fb-bb">BB</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(9,&#39;valor&#39;,this)"><div class="val-cell">R$ 120.000,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 36.000,00</div></td>
+      <td><div class="val-cell val-or">−R$ 21.600,00</div></td>
+      <td><div class="val-cell val-pos">R$ 62.400,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(9,&#39;status&#39;,this)"><span class="sbadge sb-pend"><div class="dot"></div>Pendente</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(9,&#39;adv&#39;,this)"><div class="data-cell">Fred Pinheiro</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(10,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(10,&#39;dataExpedicao&#39;,this)"><div class="data-cell">15/04/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(10,&#39;proc&#39;,this)"><div class="proc-num">0004102-88.2023.5.15.0031</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(10,&#39;sindic&#39;,this)">SINDPD</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(10,&#39;benef&#39;,this)"><div class="data-cell">Silvia M. Torres</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(10,&#39;banco&#39;,this)"><span class="fbadge fb-cef">CEF</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(10,&#39;valor&#39;,this)"><div class="val-cell">R$ 67.500,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 20.250,00</div></td>
+      <td><div class="val-cell val-or">−R$ 12.150,00</div></td>
+      <td><div class="val-cell val-pos">R$ 35.100,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(10,&#39;status&#39;,this)"><span class="sbadge sb-pend"><div class="dot"></div>Pendente</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(10,&#39;adv&#39;,this)"><div class="data-cell">Dra. Beatriz Cavalcanti</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(11,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(11,&#39;dataExpedicao&#39;,this)"><div class="data-cell">05/03/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(11,&#39;proc&#39;,this)"><div class="proc-num">0005567-13.2021.5.06.0018</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(11,&#39;sindic&#39;,this)">SEEB</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(11,&#39;benef&#39;,this)"><div class="data-cell">André L. Brito</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(11,&#39;banco&#39;,this)"><span class="fbadge fb-cef">CEF</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(11,&#39;valor&#39;,this)"><div class="val-cell">R$ 9.870,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 2.961,00</div></td>
+      <td><div class="val-cell val-or">−R$ 1.776,60</div></td>
+      <td><div class="val-cell val-pos">R$ 5.132,40</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(11,&#39;status&#39;,this)"><span class="sbadge sb-rec"><div class="dot"></div>Recebido</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(11,&#39;adv&#39;,this)"><div class="data-cell">Cláudio Estevão</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(12,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(12,&#39;dataExpedicao&#39;,this)"><div class="data-cell">05/04/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(12,&#39;proc&#39;,this)"><div class="proc-num">0013445-77.2020.5.06.0041</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(12,&#39;sindic&#39;,this)">SINDSEP</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(12,&#39;benef&#39;,this)"><div class="data-cell">Cristiane P.</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(12,&#39;banco&#39;,this)"><span class="fbadge fb-bb">BB</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(12,&#39;valor&#39;,this)"><div class="val-cell">R$ 95.000,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 28.500,00</div></td>
+      <td><div class="val-cell val-or">−R$ 17.100,00</div></td>
+      <td><div class="val-cell val-pos">R$ 49.400,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(12,&#39;status&#39;,this)"><span class="sbadge sb-pend"><div class="dot"></div>Pendente</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(12,&#39;adv&#39;,this)"><div class="data-cell">Fred Pinheiro</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(13,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(13,&#39;dataExpedicao&#39;,this)"><div class="data-cell">01/03/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(13,&#39;proc&#39;,this)"><div class="proc-num">0014221-09.2022.5.06.0017</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(13,&#39;sindic&#39;,this)">SINDIFISCO</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(13,&#39;benef&#39;,this)"><div class="data-cell">Lucas T. Oliveira</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(13,&#39;banco&#39;,this)"><span class="fbadge fb-cef">CEF</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(13,&#39;valor&#39;,this)"><div class="val-cell">R$ 15.400,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 4.620,00</div></td>
+      <td><div class="val-cell val-or">−R$ 2.772,00</div></td>
+      <td><div class="val-cell val-pos">R$ 8.008,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(13,&#39;status&#39;,this)"><span class="sbadge sb-pend"><div class="dot"></div>Pendente</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(13,&#39;adv&#39;,this)"><div class="data-cell">Dr. Marco A. Lins</div></td>
+    </tr><tr>
+      <td class="chk-col"><input type="checkbox" onchange="toggleT1(14,this)"></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(14,&#39;dataExpedicao&#39;,this)"><div class="data-cell">10/03/2026</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(14,&#39;proc&#39;,this)"><div class="proc-num">0015830-22.2021.5.06.0034</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(14,&#39;sindic&#39;,this)">SEEB</td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(14,&#39;benef&#39;,this)"><div class="data-cell">Patricia M. Santos</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(14,&#39;banco&#39;,this)"><span class="fbadge fb-bb">BB</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(14,&#39;valor&#39;,this)"><div class="val-cell">R$ 22.100,00</div></td>
+      <td><div class="val-cell val-neg">−R$ 6.630,00</div></td>
+      <td><div class="val-cell val-or">−R$ 3.978,00</div></td>
+      <td><div class="val-cell val-pos">R$ 11.492,00</div></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(14,&#39;status&#39;,this)"><span class="sbadge sb-pend"><div class="dot"></div>Pendente</span></td>
+      <td title="Clique para editar" style="cursor:pointer" onclick="editT1Cell(14,&#39;adv&#39;,this)"><div class="data-cell">Dra. Beatriz Cavalcanti</div></td>
+    </tr></tbody>
+        </table>
+      </div>
+      </div><!-- /acc-body acc-t1 -->
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB 2: PAINEL FINANCEIRO ═══ -->
+<div id="tab-2" class="tab-content">
+  <div class="pbadge-bar">
+    <div class="pbadge pb2">Fase 2</div>
+    <div class="pbadge-desc">BI interativo · Clique em qualquer card, gráfico ou banco para filtrar toda a página</div>
+  </div>
+  <div class="t2-main">
+
+    <!-- 1. RECEITAS & CUSTOS — topo -->
+    <div class="resultado-highlight">
+      <div class="rh-header">Receitas &amp; Custos — últimos 6 meses</div>
+      <div class="rh-sub">Visão consolidada do período · Clique no gráfico para detalhar os custos</div>
+      <div class="rh-body">
+        <div class="rh-kpis">
+          <div class="rh-kpi rh-gn" onclick="rhKpiSelect(-1)" title="Ver composição completa"><div class="rh-kpi-val">R$ 275k</div><div class="rh-kpi-lbl">Total recebido</div></div>
+          <div class="rh-kpi rh-rd" onclick="rhKpiSelect(&#39;custos&#39;);setCostView(&#39;fixo&#39;,null)" title="Destacar total de custos"><div class="rh-kpi-val">R$ 172k</div><div class="rh-kpi-lbl">Total custos</div></div>
+          <div class="rh-kpi rh-bx" onclick="rhKpiSelect(0)" title="Destacar resultado líquido"><div class="rh-kpi-val">R$ 103k</div><div class="rh-kpi-lbl">Resultado líquido</div></div>
+        </div>
+        <div class="rh-chart-col">
+          <div class="rh-chart-title">Composição do resultado</div>
+          <div style="position:relative;height:190px;width:210px"><canvas id="chartResultado" width="262" height="237" style="display: block; box-sizing: border-box; height: 190px; width: 210px;"></canvas></div>
+          <div id="resultado-legend" style="display:flex;flex-direction:row;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:10px"><span style="display:flex;align-items:center;gap:5px;font-size:10px;color:#444;white-space:nowrap">
+            <span style="width:8px;height:8px;border-radius:50%;background:#2c5940;flex-shrink:0;display:inline-block"></span>
+            Resultado líquido <strong style="color:#1a1a1a">37%</strong></span><span style="display:flex;align-items:center;gap:5px;font-size:10px;color:#444;white-space:nowrap">
+            <span style="width:8px;height:8px;border-radius:50%;background:#888;flex-shrink:0;display:inline-block"></span>
+            Custos fixos <strong style="color:#1a1a1a">39%</strong></span><span style="display:flex;align-items:center;gap:5px;font-size:10px;color:#444;white-space:nowrap">
+            <span style="width:8px;height:8px;border-radius:50%;background:#c9a84c;flex-shrink:0;display:inline-block"></span>
+            Custos variáveis <strong style="color:#1a1a1a">23%</strong></span></div>
+        </div>
+        <div class="rh-costs-col">
+          <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px">Principais custos</div>
+          <div class="cost-toggle">
+            <button class="ct-btn ct-active" data-view="fixo" onclick="setCostView(&#39;fixo&#39;,this)">Custos fixos</button>
+            <button class="ct-btn" data-view="variavel" onclick="setCostView(&#39;variavel&#39;,this)">Custos variáveis</button>
+          </div>
+          <div class="cost-list" id="cost-bars"><div class="cbr">
+      <div class="cbr-label" title="Folha de pagamento">Folha de pagamento</div>
+      <div class="cbr-track"><div class="cbr-fill" style="width:100%;background:#888"></div></div>
+      <div class="cbr-val">R$45k</div>
+    </div><div class="cbr">
+      <div class="cbr-label" title="Aluguel">Aluguel</div>
+      <div class="cbr-track"><div class="cbr-fill" style="width:53%;background:#888"></div></div>
+      <div class="cbr-val">R$24k</div>
+    </div><div class="cbr">
+      <div class="cbr-label" title="Contabilidade">Contabilidade</div>
+      <div class="cbr-track"><div class="cbr-fill" style="width:33%;background:#888"></div></div>
+      <div class="cbr-val">R$15k</div>
+    </div><div class="cbr">
+      <div class="cbr-label" title="Softwares jurídicos">Softwares jurídicos</div>
+      <div class="cbr-track"><div class="cbr-fill" style="width:27%;background:#888"></div></div>
+      <div class="cbr-val">R$12k</div>
+    </div><div class="cbr">
+      <div class="cbr-label" title="Internet / Telefonia">Internet / Telefonia</div>
+      <div class="cbr-track"><div class="cbr-fill" style="width:18%;background:#888"></div></div>
+      <div class="cbr-val">R$8k</div>
+    </div><div class="cbr">
+      <div class="cbr-label" title="Outros fixos">Outros fixos</div>
+      <div class="cbr-track"><div class="cbr-fill" style="width:9%;background:#888"></div></div>
+      <div class="cbr-val">R$4k</div>
+    </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. TAREFAS SUGERIDAS — linha única -->
+    <div class="tarefas-strip">
+      <div class="tarefas-strip-hdr">Tarefas Sugeridas</div>
+      <div class="tarefas-row">
+        <div class="tarefa-chip tc-urgente" id="hi-1" onclick="goOverdue()">
+          <div class="tc-body">
+            <div class="tc-label">2 RPVs vencidos — levantar urgente</div>
+            <div class="tc-desc">Proc. 0014221-09 (SINDIFISCO) e 0015830-22 (SEEB) · +60 dias</div>
+          </div>
+          <button class="tc-btn" onclick="event.stopPropagation();goOverdue()">Ver →</button>
+          <input type="checkbox" class="hi-chk" onchange="markHoje(&#39;hi-1&#39;,this)" onclick="event.stopPropagation()">
+        </div>
+        <div class="tarefa-chip tc-urgente" id="hi-3" onclick="goCobranca(&#39;sinijude&#39;)">
+          <div class="tc-body">
+            <div class="tc-label">Cobrar SINIJUDE — 4 meses em atraso</div>
+            <div class="tc-desc">R$ 1.200/mês · total pendente: R$ 4.800,00</div>
+          </div>
+          <button class="tc-btn" onclick="event.stopPropagation();goCobranca(&#39;sinijude&#39;)">Cobrar →</button>
+          <input type="checkbox" class="hi-chk" onchange="markHoje(&#39;hi-3&#39;,this)" onclick="event.stopPropagation()">
+        </div>
+        <div class="tarefa-chip tc-atencao" id="hi-2" onclick="goRelatorio()">
+          <div class="tc-body">
+            <div class="tc-label">Relatório semanal para Ricardo Estevam</div>
+            <div class="tc-desc">Última entrega: 19/05/2026 · envio WhatsApp pendente</div>
+          </div>
+          <button class="tc-btn" onclick="event.stopPropagation();goRelatorio()">Enviar →</button>
+          <input type="checkbox" class="hi-chk" onchange="markHoje(&#39;hi-2&#39;,this)" onclick="event.stopPropagation()">
+        </div>
+        <div class="tarefa-chip tc-atencao" id="hi-4" onclick="goAssinatura()">
+          <div class="tc-body">
+            <div class="tc-label">3 recibos aguardando assinatura digital</div>
+            <div class="tc-desc">SINDPD · SEEB · SINDSEP · pendente há +5 dias</div>
+          </div>
+          <button class="tc-btn" onclick="event.stopPropagation();goAssinatura()">Ver →</button>
+          <input type="checkbox" class="hi-chk" onchange="markHoje(&#39;hi-4&#39;,this)" onclick="event.stopPropagation()">
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. HONORÁRIOS + SINDICATO -->
+    <div class="charts-row-bottom">
+      <div class="chart-card">
+        <div class="chart-title">Honorários por advogado</div>
+        <div class="chart-sub">Clique em uma barra para filtrar as causas abaixo</div>
+        <div class="ch-wrap"><canvas id="chartAdv" width="816" height="262" style="display: block; box-sizing: border-box; height: 210px; width: 653px;"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Volume de causas por sindicato</div>
+        <div class="chart-sub">Clique em uma barra para filtrar as causas abaixo</div>
+        <div class="ch-wrap"><canvas id="chartSindic" width="816" height="262" style="display: block; box-sizing: border-box; height: 210px; width: 653px;"></canvas></div>
+      </div>
+    </div>
+
+    <!-- 4. RECIBO DE HONORÁRIOS + INADIMPLENTES -->
+    <div class="recibo-inad-row">
+      <div class="contratos-card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:4px">Acompanhamento de Assinaturas</div>
+        <div style="font-size:11px;color:var(--mu);margin-bottom:12px">Recibos de honorários gerados após levantamento de RPV · assinatura digital pelo sindicato</div>
+        <div class="contratos-kpis">
+          <div class="ck-item" style="border-color:var(--bd)">
+            <div class="ck-val" style="color:var(--tx)">8</div>
+            <div class="ck-lbl">Total / mês</div>
+          </div>
+          <div class="ck-item" style="border-color:var(--gn);background:var(--gnb)">
+            <div class="ck-val" style="color:var(--gn)">3</div>
+            <div class="ck-lbl">Assinados</div>
+          </div>
+          <div class="ck-item" style="border-color:var(--or);background:var(--orb)">
+            <div class="ck-val" style="color:var(--or)">3</div>
+            <div class="ck-lbl">Aguardando</div>
+          </div>
+          <div class="ck-item" style="border-color:var(--mu);background:#f5f5f5">
+            <div class="ck-val" style="color:var(--mu)">2</div>
+            <div class="ck-lbl">Sem recibo</div>
+          </div>
+        </div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);margin-bottom:8px">Pendentes</div>
+        <div class="contrato-row">
+          <div><div class="cr-info">0003412-78 · SINDPD</div><div class="cr-sub">Maria L. Souza · R$ 10.410,40</div></div>
+          <span class="sbadge sb-pend"><div class="dot"></div>Aguardando</span>
+        </div>
+        <div class="contrato-row">
+          <div><div class="cr-info">0007291-33 · SEEB</div><div class="cr-sub">Carlos A. Nunes · R$ 11.388,00</div></div>
+          <span class="sbadge sb-pend"><div class="dot"></div>Aguardando</span>
+        </div>
+        <div class="contrato-row">
+          <div><div class="cr-info">0001823-45 · SINDSEP</div><div class="cr-sub">João C. Ferreira · R$ 14.768,00</div></div>
+          <span class="sbadge sb-fila"><div class="dot"></div>Sem recibo</span>
+        </div>
+        <div class="contrato-row">
+          <div><div class="cr-info">0005567-13 · SEEB</div><div class="cr-sub">André L. Brito · R$ 5.132,40</div></div>
+          <span class="sbadge sb-disp"><div class="dot"></div>Assinado</span>
+        </div>
+        <button class="btn-primary" style="width:100%;margin-top:auto;padding:10px 16px;font-size:12px" onclick="switchTab(3);setTimeout(()=&gt;document.getElementById(&#39;tab-3&#39;)?.scrollIntoView({behavior:&#39;smooth&#39;,block:&#39;start&#39;}),200)">Gerar novo documento →</button>
+      </div>
+      <div class="inad-mini-card">
+        <div class="inad-mini-hdr">Inadimplentes</div>
+        <div class="inad-mini-sub">Mensalidades sindicais em atraso · Clique para acionar cobrança</div>
+        <div class="inad-mini-total">
+          <span class="inad-mini-total-lbl">Total em aberto</span>
+          <span class="inad-mini-total-val">R$ 8.400,00</span>
+        </div>
+        <div class="inad-mini-row" onclick="goCobranca(&#39;sinijude&#39;)">
+          <div>
+            <div class="inad-mini-nome">SINIJUDE</div>
+            <div class="inad-mini-det">4 meses em atraso · Jan–Abr/2026</div>
+          </div>
+          <div style="text-align:right">
+            <div class="inad-mini-val">R$ 4.800,00</div>
+            <span class="sbadge sb-pend" style="font-size:10px;margin-top:3px"><div class="dot"></div>Inadimplente</span>
+          </div>
+        </div>
+        <div class="inad-mini-row" onclick="goCobranca(&#39;sintetel&#39;)">
+          <div>
+            <div class="inad-mini-nome">SINTETEL</div>
+            <div class="inad-mini-det">2 meses em atraso · Mar–Abr/2026</div>
+          </div>
+          <div style="text-align:right">
+            <div class="inad-mini-val">R$ 2.400,00</div>
+            <span class="sbadge sb-pend" style="font-size:10px;margin-top:3px"><div class="dot"></div>Inadimplente</span>
+          </div>
+        </div>
+        <div class="inad-mini-row" onclick="goCobranca(&#39;sindpd-inad&#39;)">
+          <div>
+            <div class="inad-mini-nome">SINDPD</div>
+            <div class="inad-mini-det">1 mês em atraso · Abr/2026</div>
+          </div>
+          <div style="text-align:right">
+            <div class="inad-mini-val">R$ 1.200,00</div>
+            <span class="sbadge sb-pend" style="font-size:10px;margin-top:3px"><div class="dot"></div>Inadimplente</span>
+          </div>
+        </div>
+        <div class="inad-mini-row" style="background:var(--orb);border-radius:6px;margin-top:4px;border-bottom:none" onclick="goCobranca(&#39;seeb-pot&#39;)">
+          <div>
+            <div class="inad-mini-nome" style="color:var(--or)">SEEB</div>
+            <div class="inad-mini-det">Vencimento em 5 dias · 03/Jun/2026</div>
+          </div>
+          <div style="text-align:right">
+            <div class="inad-mini-val" style="color:var(--or)">R$ 1.200,00</div>
+            <span class="sbadge sb-pend" style="font-size:10px;margin-top:3px"><div class="dot"></div>Vence em breve</span>
+          </div>
+        </div>
+        <div style="flex:1"></div>
+        <button class="btn-primary" style="width:100%;margin-top:auto;padding:10px 16px;font-size:12px" onclick="switchTab(3);setTimeout(()=&gt;document.getElementById(&#39;t3-cobranca&#39;)?.scrollIntoView({behavior:&#39;smooth&#39;,block:&#39;start&#39;}),200)">Gerenciar cobrança →</button>
+      </div>
+    </div>
+
+    <!-- 5. KPIs + BANCO -->
+    <div class="kpi-banco-row">
+      <div class="kpi-grid-4">
+        <div class="kpi-card k-bx" onclick="kpiFilter(&#39;status&#39;,&#39;&#39;)">
+          <div class="kpi-lbl">Total a Receber</div>
+          <div class="kpi-val kv-bx" id="kv-total">R$ 592k</div>
+          <div class="kpi-sub" id="ks-total">Em 14 causas monitoradas</div>
+          <div class="kpi-filter-hint">Clique para ver todas</div>
+        </div>
+        <div class="kpi-card k-gn" onclick="kpiFilter(&#39;status&#39;,&#39;disponivel&#39;)">
+          <div class="kpi-lbl">Disponível para Levantamento</div>
+          <div class="kpi-val kv-gn" id="kv-disp">R$ 70k</div>
+          <div class="kpi-sub" id="ks-disp">3 causas liberadas</div>
+          <div class="kpi-filter-hint">Clique para filtrar</div>
+        </div>
+        <div class="kpi-card k-or" onclick="kpiFilter(&#39;status&#39;,&#39;pendente&#39;)">
+          <div class="kpi-lbl">Pendente / Em análise</div>
+          <div class="kpi-val kv-or" id="kv-pend">R$ 480k</div>
+          <div class="kpi-sub" id="ks-pend">8 causas · 3 vencidas</div>
+          <div class="kpi-filter-hint">Clique para filtrar</div>
+        </div>
+        <div class="kpi-card k-bl" onclick="kpiFilter(&#39;status&#39;,&#39;recebido&#39;)">
+          <div class="kpi-lbl">Recebido — Maio/2026</div>
+          <div class="kpi-val kv-bl" id="kv-rec">R$ 41k</div>
+          <div class="kpi-sub" id="ks-rec">3 processos recebidos</div>
+          <div class="kpi-filter-hint">Clique para filtrar</div>
+        </div>
+      </div>
+      <div class="banco-card">
+        <div class="chart-title">Distribuição por banco</div>
+        <div class="chart-sub" style="font-size:10px;color:var(--mu);margin-bottom:8px">Clique para filtrar</div>
+        <div class="bank-dist-layout">
+          <div style="position:relative;height:190px;width:190px"><canvas id="chartBank" width="237" height="237" style="display: block; box-sizing: border-box; height: 190px; width: 190px;"></canvas></div>
+          <div class="bank-legend" id="bank-legend"><div class="bl-row " onclick="bankFilter(&#39;BB&#39;)">
+      <div class="bl-dot" style="background:#7d5a00"></div>
+      <div class="bl-name">Banco do Brasil</div>
+      <div class="bl-bar-wrap"><div class="bl-bar" style="width:100%;background:#7d5a00"></div></div>
+      <div class="bl-val">R$ 363k</div>
+    </div><div class="bl-row " onclick="bankFilter(&#39;CEF&#39;)">
+      <div class="bl-dot" style="background:#1e4272"></div>
+      <div class="bl-name">Caixa Econômica Federal</div>
+      <div class="bl-bar-wrap"><div class="bl-bar" style="width:63%;background:#1e4272"></div></div>
+      <div class="bl-val">R$ 229k</div>
+    </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. FILTROS -->
+    <div class="filter-bar">
+      <label>Banco
+        <select id="f2-banco" onchange="applyP2Filters()">
+          <option value="">Todos</option>
+          <option value="CEF">Caixa Econômica Federal</option>
+          <option value="BB">Banco do Brasil</option>
+        </select>
+      </label>
+      <label>Status
+        <select id="f2-status" onchange="applyP2Filters()">
+          <option value="">Todos</option>
+          <option value="disponivel">Disponível</option>
+          <option value="pendente">Pendente</option>
+          <option value="recebido">Recebido</option>
+          <option value="arquivado">Arquivado</option>
+          <option value="pago">Pago</option>
+        </select>
+      </label>
+      <label>Sindicato
+        <select id="f2-sindic" onchange="applyP2Filters()">
+          <option value="">Todos</option>
+          <option value="SINDSEP">SINDSEP</option>
+          <option value="SINDPD">SINDPD</option>
+          <option value="SEEB">SEEB</option>
+          <option value="SINDIFISCO">SINDIFISCO</option>
+        </select>
+      </label>
+      <label>Tipo
+        <select id="f2-tipo" onchange="applyP2Filters()">
+          <option value="">Todos</option>
+          <option value="RPV">RPV</option>
+          <option value="Precatório">Precatório</option>
+        </select>
+      </label>
+      <label>De
+        <input type="date" id="f2-de" onchange="applyP2Filters()">
+      </label>
+      <label>Até
+        <input type="date" id="f2-ate" onchange="applyP2Filters()">
+      </label>
+      <button class="btn-clear-f" onclick="clearP2Filters()">✕ Limpar filtros</button>
+      <button class="btn-export" onclick="alert(&#39;Exportação disponível na versão contratada.&#39;)">⬇ Exportar Excel</button>
+      <button class="btn-export" onclick="alert(&#39;Exportação disponível na versão contratada.&#39;)" style="margin-left:0">⬇ Exportar PDF</button>
+    </div>
+    <div class="filter-chips" id="f2-chips" style="display:none"></div>
+
+    <!-- 7. CAUSAS MONITORADAS -->
+    <div class="table-card">
+      <div class="table-hdr">
+        <div>
+          <h3>Causas monitoradas</h3>
+          <p>Clique no status para editar · Vencidas (+ 60 dias da expedição) destacadas em laranja</p>
+        </div>
+        <div class="tbl-actions" style="display:flex;align-items:center;gap:10px">
+          <div style="font-size:12px;color:var(--mu)" id="p2-count-lbl">Exibindo 14 de 14 causas</div>
+          <button class="acc-toggle" onclick="toggleAcc('acc-p2','acc-icon-p2',this)" title="Expandir">
+            <span class="acc-icon" id="acc-icon-p2" style="transform:rotate(-90deg)">▾</span> Expandir registros
+          </button>
+        </div>
+      </div>
+      <div class="acc-body collapsed" id="acc-p2">
+      <div class="bulk-bar" id="p2-bulk" style="display:none">
+        <div class="bulk-info"><span id="p2-sel-n">0</span> causas selecionadas</div>
+        <div class="bulk-actions">
+          <label>Status:
+            <select class="bulk-select" id="p2-bulk-sel">
+              <option value="">—</option>
+              <option value="disponivel">Disponível</option>
+              <option value="pendente">Pendente</option>
+              <option value="recebido">Recebido</option>
+              <option value="arquivado">Arquivado</option>
+              <option value="pago">Pago</option>
+            </select></label>
+          <label>Banco:
+            <select class="bulk-select" id="p2-bulk-banco">
+              <option value="">—</option>
+              <option value="CEF">CEF</option>
+              <option value="BB">BB</option>
+            </select></label>
+          <label>Sindicato:
+            <select class="bulk-select" id="p2-bulk-sindic">
+              <option value="">—</option>
+              <option>SINDSEP</option><option>SINDPD</option><option>SEEB</option>
+              <option>SINDIFISCO</option><option>SINTETEL</option><option>SINIJUDE</option>
+            </select></label>
+          <label>Advogado:
+            <select class="bulk-select" id="p2-bulk-adv">
+              <option value="">—</option>
+              <option>Cláudio Estevão</option><option>Fred Pinheiro</option>
+              <option>Dra. Beatriz Cavalcanti</option><option>Dr. Marco A. Lins</option>
+              <option>Andrielly Gutierrez</option>
+            </select></label>
+          <button class="btn-bulk-apply" onclick="applyP2Bulk()">Aplicar</button>
+          <button class="btn-bulk-cancel" onclick="clearP2Sel()">Cancelar</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th class="chk-col"><input type="checkbox" id="p2-chk-all" onchange="selAllP2(this)"></th>
+              <th>Nº Processo</th><th>Descrição / Sindicato</th><th>Beneficiário</th>
+              <th>Banco</th><th>Tipo</th><th>Valor Bruto</th>
+              <th>Status <small style="font-weight:400;text-transform:none">(clique p/ editar)</small></th>
+              <th>Expedição</th><th>Advogado</th>
+            </tr>
+          </thead>
+          <tbody id="p2-tbody"><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(1,this)"></td>
+      <td><div class="proc-num">0001823-45.2022.5.06.0012</div></td>
+      <td><div class="causa-desc">Complemento salarial retroativo</div><div class="causa-sub">SINDSEP</div></td>
+      <td><div class="data-cell">João C. Ferreira</div></td>
+      <td><span class="fbadge fb-cef">CEF</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell val-pos">R$ 28.400,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-disp" onclick="editP2Status(1,this)"><div class="dot"></div>Disponível</span>
+        
+      </td>
+      <td><div class="data-cell">20/04/2026</div></td>
+      <td><div class="data-cell">Cláudio Estevão</div></td>
+    </tr><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(2,this)"></td>
+      <td><div class="proc-num">0003412-78.2021.5.06.0008</div></td>
+      <td><div class="causa-desc">Horas extras não pagas</div><div class="causa-sub">SINDPD</div></td>
+      <td><div class="data-cell">Maria L. Souza</div></td>
+      <td><span class="fbadge fb-cef">CEF</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell val-pos">R$ 20.020,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-disp" onclick="editP2Status(2,this)"><div class="dot"></div>Disponível</span>
+        
+      </td>
+      <td><div class="data-cell">18/04/2026</div></td>
+      <td><div class="data-cell">Fred Pinheiro</div></td>
+    </tr><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(3,this)"></td>
+      <td><div class="proc-num">0007291-33.2023.5.06.0001</div></td>
+      <td><div class="causa-desc">Adicional de insalubridade</div><div class="causa-sub">SEEB</div></td>
+      <td><div class="data-cell">Carlos A. Nunes</div></td>
+      <td><span class="fbadge fb-bb">BB</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell val-pos">R$ 21.900,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-disp" onclick="editP2Status(3,this)"><div class="dot"></div>Disponível</span>
+        
+      </td>
+      <td><div class="data-cell">22/04/2026</div></td>
+      <td><div class="data-cell">Cláudio Estevão</div></td>
+    </tr><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(4,this)"></td>
+      <td><div class="proc-num">0004521-12.2020.5.06.0034</div></td>
+      <td><div class="causa-desc">Equiparação salarial</div><div class="causa-sub">SINDIFISCO</div></td>
+      <td><div class="data-cell">Ana R. Lima</div></td>
+      <td><span class="fbadge fb-bb">BB</span></td>
+      <td><div class="data-cell">Precatório</div></td>
+      <td><div class="val-cell ">R$ 85.000,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-pend" onclick="editP2Status(4,this)"><div class="dot"></div>Pendente</span>
+        
+      </td>
+      <td><div class="data-cell">10/04/2026</div></td>
+      <td><div class="data-cell">Fred Pinheiro</div></td>
+    </tr><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(5,this)"></td>
+      <td><div class="proc-num">0009834-67.2022.5.15.0144</div></td>
+      <td><div class="causa-desc">Desvio de função</div><div class="causa-sub">SINDSEP</div></td>
+      <td><div class="data-cell">Paulo M. Costa</div></td>
+      <td><span class="fbadge fb-cef">CEF</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell ">R$ 43.750,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-pend" onclick="editP2Status(5,this)"><div class="dot"></div>Pendente</span>
+        
+      </td>
+      <td><div class="data-cell">20/04/2026</div></td>
+      <td><div class="data-cell">Dra. Beatriz Cavalcanti</div></td>
+    </tr><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(6,this)"></td>
+      <td><div class="proc-num">0002198-91.2021.5.06.0009</div></td>
+      <td><div class="causa-desc">FGTS não depositado</div><div class="causa-sub">SINDPD</div></td>
+      <td><div class="data-cell">Fernanda O.</div></td>
+      <td><span class="fbadge fb-cef">CEF</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell ">R$ 31.200,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-pend" onclick="editP2Status(6,this)"><div class="dot"></div>Pendente</span>
+        
+      </td>
+      <td><div class="data-cell">25/04/2026</div></td>
+      <td><div class="data-cell">Cláudio Estevão</div></td>
+    </tr><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(7,this)"></td>
+      <td><div class="proc-num">0006712-44.2019.5.06.0021</div></td>
+      <td><div class="causa-desc">Verbas rescisórias</div><div class="causa-sub">SEEB</div></td>
+      <td><div class="data-cell">Roberto S. Melo</div></td>
+      <td><span class="fbadge fb-bb">BB</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell val-pos">R$ 18.640,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-rec" onclick="editP2Status(7,this)"><div class="dot"></div>Recebido</span>
+        
+      </td>
+      <td><div class="data-cell">20/03/2026</div></td>
+      <td><div class="data-cell">Fred Pinheiro</div></td>
+    </tr><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(8,this)"></td>
+      <td><div class="proc-num">0011234-05.2022.5.06.0055</div></td>
+      <td><div class="causa-desc">Adicional noturno</div><div class="causa-sub">SINDSEP</div></td>
+      <td><div class="data-cell">Lucia B. Ramos</div></td>
+      <td><span class="fbadge fb-cef">CEF</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell val-pos">R$ 12.800,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-rec" onclick="editP2Status(8,this)"><div class="dot"></div>Recebido</span>
+        
+      </td>
+      <td><div class="data-cell">10/03/2026</div></td>
+      <td><div class="data-cell">Dr. Marco A. Lins</div></td>
+    </tr><tr class="overdue-row">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(9,this)"></td>
+      <td><div class="proc-num">0008991-22.2018.5.06.0003</div></td>
+      <td><div class="causa-desc">Diferenças salariais</div><div class="causa-sub">SINDIFISCO</div></td>
+      <td><div class="data-cell">Marcos V.</div></td>
+      <td><span class="fbadge fb-bb">BB</span></td>
+      <td><div class="data-cell">Precatório</div></td>
+      <td><div class="val-cell ">R$ 120.000,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-pend" onclick="editP2Status(9,this)"><div class="dot"></div>Pendente</span>
+        <span class="vencida-badge">⚠ Vencida</span>
+      </td>
+      <td><div class="data-cell">01/03/2026</div></td>
+      <td><div class="data-cell">Fred Pinheiro</div></td>
+    </tr><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(10,this)"></td>
+      <td><div class="proc-num">0004102-88.2023.5.15.0031</div></td>
+      <td><div class="causa-desc">Reintegração e salários</div><div class="causa-sub">SINDPD</div></td>
+      <td><div class="data-cell">Silvia M. Torres</div></td>
+      <td><span class="fbadge fb-cef">CEF</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell ">R$ 67.500,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-pend" onclick="editP2Status(10,this)"><div class="dot"></div>Pendente</span>
+        
+      </td>
+      <td><div class="data-cell">15/04/2026</div></td>
+      <td><div class="data-cell">Dra. Beatriz Cavalcanti</div></td>
+    </tr><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(11,this)"></td>
+      <td><div class="proc-num">0005567-13.2021.5.06.0018</div></td>
+      <td><div class="causa-desc">Horas in itinere</div><div class="causa-sub">SEEB</div></td>
+      <td><div class="data-cell">André L. Brito</div></td>
+      <td><span class="fbadge fb-cef">CEF</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell val-pos">R$ 9.870,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-rec" onclick="editP2Status(11,this)"><div class="dot"></div>Recebido</span>
+        
+      </td>
+      <td><div class="data-cell">05/03/2026</div></td>
+      <td><div class="data-cell">Cláudio Estevão</div></td>
+    </tr><tr class="">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(12,this)"></td>
+      <td><div class="proc-num">0013445-77.2020.5.06.0041</div></td>
+      <td><div class="causa-desc">Indenização por danos morais</div><div class="causa-sub">SINDSEP</div></td>
+      <td><div class="data-cell">Cristiane P.</div></td>
+      <td><span class="fbadge fb-bb">BB</span></td>
+      <td><div class="data-cell">Precatório</div></td>
+      <td><div class="val-cell ">R$ 95.000,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-pend" onclick="editP2Status(12,this)"><div class="dot"></div>Pendente</span>
+        
+      </td>
+      <td><div class="data-cell">05/04/2026</div></td>
+      <td><div class="data-cell">Fred Pinheiro</div></td>
+    </tr><tr class="overdue-row">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(13,this)"></td>
+      <td><div class="proc-num">0014221-09.2022.5.06.0017</div></td>
+      <td><div class="causa-desc">Diferença de gratificação</div><div class="causa-sub">SINDIFISCO</div></td>
+      <td><div class="data-cell">Lucas T. Oliveira</div></td>
+      <td><span class="fbadge fb-cef">CEF</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell ">R$ 15.400,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-pend" onclick="editP2Status(13,this)"><div class="dot"></div>Pendente</span>
+        <span class="vencida-badge">⚠ Vencida</span>
+      </td>
+      <td><div class="data-cell">01/03/2026</div></td>
+      <td><div class="data-cell">Dr. Marco A. Lins</div></td>
+    </tr><tr class="overdue-row">
+      <td class="chk-col"><input type="checkbox" onchange="toggleP2(14,this)"></td>
+      <td><div class="proc-num">0015830-22.2021.5.06.0034</div></td>
+      <td><div class="causa-desc">Adicional de periculosidade</div><div class="causa-sub">SEEB</div></td>
+      <td><div class="data-cell">Patricia M. Santos</div></td>
+      <td><span class="fbadge fb-bb">BB</span></td>
+      <td><div class="data-cell">RPV</div></td>
+      <td><div class="val-cell ">R$ 22.100,00</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge sb-pend" onclick="editP2Status(14,this)"><div class="dot"></div>Pendente</span>
+        <span class="vencida-badge">⚠ Vencida</span>
+      </td>
+      <td><div class="data-cell">10/03/2026</div></td>
+      <td><div class="data-cell">Dra. Beatriz Cavalcanti</div></td>
+    </tr></tbody>
+        </table>
+      </div>
+      </div><!-- /acc-body acc-p2 -->
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ TAB 3: COMUNICAÇÃO ═══ -->
+<div id="tab-3" class="tab-content">
+  <div class="pbadge-bar">
+    <div class="pbadge pb3">Fase 3</div>
+    <div class="pbadge-desc">Relatórios automáticos · Cobrança de sindicatos · Assinatura digital</div>
+  </div>
+  <div class="t3-main">
+    <div class="t3-grid">
+
+      <!-- RELATÓRIO WHATSAPP/EMAIL -->
+      <div class="t3-card automacao-card" id="t3-relatorio">
+        <div class="t3-card-hdr">
+          <div>
+            <div class="t3-card-title">Relatório de causas</div>
+            <div class="t3-card-sub">Gerado para o período selecionado · envio via WhatsApp e e-mail</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <span class="c-phase">Fase 3</span>
+            <span class="automacao-badge">+ Automação disponível</span>
+          </div>
+        </div>
+        <div class="period-radio">
+          <div class="prad active" onclick="setPrad(this)">Diário</div>
+          <div class="prad" onclick="setPrad(this)">Semanal</div>
+          <div class="prad" onclick="setPrad(this)">Mensal</div>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+          <label style="font-size:12px;color:var(--mu);display:flex;flex-direction:column;gap:3px">De <input type="date" value="2026-05-01" style="border:1px solid var(--bd);border-radius:6px;padding:6px 10px;font-size:12px;font-family:&#39;DM Sans&#39;,sans-serif;outline:none"></label>
+          <label style="font-size:12px;color:var(--mu);display:flex;flex-direction:column;gap:3px">Até <input type="date" value="2026-05-24" style="border:1px solid var(--bd);border-radius:6px;padding:6px 10px;font-size:12px;font-family:&#39;DM Sans&#39;,sans-serif;outline:none"></label>
+        </div>
+        <div class="wa-bubble">📊 *RELATÓRIO DE CAUSAS — 01/05 a 24/05/2026*
+━━━━━━━━━━━━━━━━━━━━━
+*SINDSEP* · 4 processos
+
+• 0001823-45: R$ 28.400 → líq. R$ 14.768
+• 0009834-67: R$ 43.750 → líq. R$ 22.750
+• 0011234-05: R$ 12.800 → líq. R$ 6.656
+• 0013445-77: R$ 95.000 (precatório · em fila)
+
+*SINDPD* · 3 processos
+
+• 0003412-78: R$ 20.020 → líq. R$ 10.410
+• 0002198-91: R$ 31.200 → líq. R$ 16.224
+• 0004102-88: R$ 67.500 → líq. R$ 35.100
+
+━━━━━━━━━━━━━━━━━━━━━
+*⚠ VENCIDOS (+ 60 dias):* 2 processos
+  → Levantamento urgente necessário
+
+*ACUM. TRIBUTOS Q2/2026:* R$ 32.391,00
+⚠ Recolher até: 31/07/2026
+
+_Gerado em 24/05/2026 às 08:00_</div>
+        <div class="wa-time">✓✓ Pronto para envio</div>
+        <div class="t3-btns">
+          <button class="btn-wa-off">📱 Enviar WhatsApp <span class="soon-tag">Em breve</span></button>
+          <button class="btn-em-off">✉ Enviar E-mail <span class="soon-tag">Em breve</span></button>
+        </div>
+        <div class="automacao-extra">
+          <h4>Possibilidade de Automação Extra</h4>
+          <p>Com integração à API WhatsApp Business e configuração de agenda:</p>
+          <ul>
+            <li>Relatório gerado e enviado automaticamente em horário programado</li>
+            <li>Disparo diário, semanal ou mensal — sem intervenção manual</li>
+            <li>Destinatários configuráveis por sindicato ou sócio</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- COBRANÇA SINDICATOS -->
+      <div class="t3-card automacao-card" id="t3-cobranca" style="display:flex;flex-direction:column">
+        <div class="t3-card-hdr">
+          <div>
+            <div class="t3-card-title">Cobrança de mensalidades</div>
+            <div class="t3-card-sub">Selecione os inadimplentes e envie a comunicação</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <span class="c-phase">Fase 3</span>
+            <span class="automacao-badge">+ Automação disponível</span>
+          </div>
+        </div>
+
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);margin-bottom:8px">Selecionar destinatários</div>
+        <div class="inad-list">
+          <label class="inad-item">
+            <input type="checkbox" id="chk-sinijude" class="inad-chk" checked="" onchange="updateCobTemplate()">
+            <div style="flex:1">
+              <div class="inad-nome">SINIJUDE</div>
+              <div class="inad-det">4 meses em atraso · R$ 4.800,00 total</div>
+            </div>
+            <span class="sbadge sb-pend"><div class="dot"></div>Inadimplente</span>
+          </label>
+          <label class="inad-item">
+            <input type="checkbox" id="chk-sintetel" class="inad-chk" onchange="updateCobTemplate()">
+            <div style="flex:1">
+              <div class="inad-nome">SINTETEL</div>
+              <div class="inad-det">2 meses em atraso · R$ 2.400,00 total</div>
+            </div>
+            <span class="sbadge sb-pend"><div class="dot"></div>Inadimplente</span>
+          </label>
+          <label class="inad-item">
+            <input type="checkbox" id="chk-sindpd-inad" class="inad-chk" onchange="updateCobTemplate()">
+            <div style="flex:1">
+              <div class="inad-nome">SINDPD</div>
+              <div class="inad-det">1 mês em atraso · R$ 1.200,00 total</div>
+            </div>
+            <span class="sbadge sb-pend"><div class="dot"></div>Inadimplente</span>
+          </label>
+        </div>
+
+        <div class="email-subject">Assunto: Mensalidades em Aberto — <span id="cob-subject-names">SINIJUDE</span></div>
+        <div class="email-template" id="cob-template" style="font-style: normal; color: var(--tx);">Prezados,
+
+Identificamos mensalidades em aberto referentes às seguintes representações:
+
+  • SINIJUDE: 4 mensalidades — R$ 4.800,00
+
+Total pendente: R$ 4.800,00
+
+Solicitamos a regularização até 05/06/2026 para manutenção dos serviços contratados.
+
+Atenciosamente,
+Estevão &amp; Pinheiro Advogados Associados
+contato@estevaoepinheiro.adv.br · (81) 3423-2494</div>
+        <div class="t3-btns">
+          <button class="btn-em-off">✉ Enviar e-mail <span class="soon-tag">Em breve</span></button>
+          <button class="btn-wa-off">📱 WhatsApp <span class="soon-tag">Em breve</span></button>
+          <button class="btn-secondary" style="font-size:12px" onclick="alert(&#39;Texto copiado.&#39;)">Copiar</button>
+        </div>
+
+        <div class="automacao-extra" style="margin-top:auto">
+          <h4>Possibilidade de Automação Extra</h4>
+          <p>Com integração à API do WhatsApp Business e configuração de régua de cobrança:</p>
+          <ul>
+            <li>Alerta automático após vencimento — sem intervenção manual</li>
+            <li>Escalonamento: 1ª cobrança por e-mail, 2ª via WhatsApp</li>
+            <li>Dashboard de inadimplência atualizado em tempo real</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECIBOS DE HONORÁRIOS — ASSINATURA DIGITAL -->
+    <div class="t3-card-full automacao-card" id="t3-assinatura">
+      <div class="t3-card-hdr">
+        <div>
+          <div class="t3-card-title">Recibos de honorários — Assinatura digital</div>
+          <div class="t3-card-sub">Após levantar um RPV, o sindicato recebe o recibo com os valores calculados e assina digitalmente pelo celular ou computador, com validade jurídica (ICP-Brasil)</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+          <span class="c-phase">Fase 3</span>
+          <span class="automacao-badge">+ Automação disponível</span>
+        </div>
+      </div>
+      <div class="pipe-grid">
+        <div class="pipe-step ps-done">
+          <div class="ps-num">Passo 1</div>
+          <div class="ps-icon">✅</div>
+          <div class="ps-label">RPV Levantado</div>
+          <div class="ps-desc">Waldir registra o recebimento e os valores são calculados automaticamente</div>
+        </div>
+        <div class="pipe-step ps-done">
+          <div class="ps-num">Passo 2</div>
+          <div class="ps-icon">📄</div>
+          <div class="ps-label">Gerar Recibo</div>
+          <div class="ps-desc">Recibo criado com bruto, honorários, tributos e líquido ao sindicato</div>
+        </div>
+        <div class="pipe-step ps-active">
+          <div class="ps-num">Passo 3</div>
+          <div class="ps-icon">📤</div>
+          <div class="ps-label">Enviar para Assinar</div>
+          <div class="ps-desc">O representante do sindicato recebe um link por e-mail ou WhatsApp</div>
+        </div>
+        <div class="pipe-step ps-wait">
+          <div class="ps-num">Passo 4</div>
+          <div class="ps-icon">✍️</div>
+          <div class="ps-label">Assinado</div>
+          <div class="ps-desc">Assinatura feita em 1 clique no celular — sem necessidade de impressão</div>
+        </div>
+        <div class="pipe-step ps-wait">
+          <div class="ps-num">Passo 5</div>
+          <div class="ps-icon">🗂️</div>
+          <div class="ps-label">Arquivado</div>
+          <div class="ps-desc">Documento salvo na nuvem, rastreável, com histórico completo</div>
+        </div>
+      </div>
+      <div class="automacao-extra" style="margin-top:16px">
+        <h4>Possibilidade de Automação Extra</h4>
+        <p>Com integração à DocSign ou plataforma similar (ex: Clicksign):</p>
+        <ul>
+          <li>Recibo gerado e enviado automaticamente após o lançamento do RPV</li>
+          <li>Representante do sindicato assina em 1 clique pelo celular — sem impressão</li>
+          <li>Documento arquivado na nuvem com validade jurídica (ICP-Brasil)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB 4: CONFIGURAÇÕES ═══ -->
+<div id="tab-4" class="tab-content">
+  <div class="pbadge-bar">
+    <div class="pbadge pb3">Fase 3</div>
+    <div class="pbadge-desc">Controle de acessos · permissões por perfil</div>
+  </div>
+  <div class="t4-main">
+    <div class="t4-card">
+      <div class="t4-card-hdr">
+        <div>
+          <div class="t4-card-title">Gestão de acessos</div>
+          <div class="t4-card-sub">Controle granular por perfil — o que cada usuário vê e pode fazer</div>
+        </div>
+        <span class="c-phase">Fase 3</span>
+      </div>
+      <div class="user-row">
+        <div class="user-info">
+          <div class="uavatar">WR</div>
+          <div><div class="uname">Waldir Rodrigues</div><div class="uemail">Administrador financeiro · entrada, relatórios e configurações</div></div>
+        </div>
+        <span class="rbadge rb-admin">Admin</span>
+      </div>
+      <div class="user-row">
+        <div class="user-info">
+          <div class="uavatar" style="background:#1e4272">AG</div>
+          <div><div class="uname">Andrielly Gutierrez</div><div class="uemail">Assistente administrativa · entrada e acompanhamento de causas</div></div>
+        </div>
+        <span class="rbadge rb-editor">Editor</span>
+      </div>
+      <div class="user-row">
+        <div class="user-info">
+          <div class="uavatar" style="background:#2c5940">CE</div>
+          <div><div class="uname">Cláudio Estevão</div><div class="uemail">Sócio · painel consolidado e causas próprias</div></div>
+        </div>
+        <span class="rbadge rb-viewer">Visualização</span>
+      </div>
+      <div class="user-row">
+        <div class="user-info">
+          <div class="uavatar" style="background:#6a1b9a">FP</div>
+          <div><div class="uname">Fred Pinheiro</div><div class="uemail">Sócio · painel consolidado e causas próprias</div></div>
+        </div>
+        <span class="rbadge rb-viewer">Visualização</span>
+      </div>
+      <div class="perm-note">
+        Sócios acessam painel resumido sem honorários individuais por advogado ou dados granulares de processos de terceiros. Administrador configura as permissões por módulo: lançamentos, painel, relatórios e configurações.
+      </div>
+    </div>
+
+    <!-- AGENDA DE CONTATOS -->
+    <div class="t4-card">
+      <div class="t4-card-hdr">
+        <div>
+          <div class="t4-card-title">Agenda de contatos — Sindicatos</div>
+          <div class="t4-card-sub">Contatos usados no envio automático de relatórios e cobranças · cadastrado uma vez, usado em todas as comunicações</div>
+        </div>
+        <span class="c-phase">Fase 3</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr><th>Sindicato</th><th>Responsável</th><th>E-mail</th><th>WhatsApp</th><th style="width:70px"></th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>SINDSEP</strong></td><td>Carlos Mendes</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">carlos@sindsep.org.br</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">(81) 99123-4567</td><td><button class="btn-secondary" style="padding:3px 10px;font-size:11px" onclick="alert(&#39;Edição disponível na versão contratada.&#39;)">Editar</button></td></tr>
+            <tr><td><strong>SINDPD</strong></td><td>Maria Oliveira</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">maria@sindpd.org.br</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">(81) 99234-5678</td><td><button class="btn-secondary" style="padding:3px 10px;font-size:11px" onclick="alert(&#39;Edição disponível na versão contratada.&#39;)">Editar</button></td></tr>
+            <tr><td><strong>SEEB</strong></td><td>João Santos</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">joao@seeb.org.br</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">(81) 99345-6789</td><td><button class="btn-secondary" style="padding:3px 10px;font-size:11px" onclick="alert(&#39;Edição disponível na versão contratada.&#39;)">Editar</button></td></tr>
+            <tr><td><strong>SINDIFISCO</strong></td><td>Ana Lima</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">ana@sindifisco.org.br</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">(81) 99456-7890</td><td><button class="btn-secondary" style="padding:3px 10px;font-size:11px" onclick="alert(&#39;Edição disponível na versão contratada.&#39;)">Editar</button></td></tr>
+            <tr style="background:rgba(192,112,0,.04)"><td><strong style="color:var(--rd)">SINIJUDE</strong> <span class="vencida-badge">Inadimplente</span></td><td>Roberto Braga</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">roberto@sinijude.org.br</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">(81) 99567-8901</td><td><button class="btn-secondary" style="padding:3px 10px;font-size:11px" onclick="alert(&#39;Edição disponível na versão contratada.&#39;)">Editar</button></td></tr>
+            <tr style="background:rgba(192,112,0,.04)"><td><strong style="color:var(--or)">SINTETEL</strong> <span class="vencida-badge">Inadimplente</span></td><td>Patricia Cruz</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">patricia@sintetel.org.br</td><td style="font-family:&#39;DM Mono&#39;,monospace;font-size:11px">(81) 99678-9012</td><td><button class="btn-secondary" style="padding:3px 10px;font-size:11px" onclick="alert(&#39;Edição disponível na versão contratada.&#39;)">Editar</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:12px;color:var(--mu)">6 contatos cadastrados · 2 inadimplentes</span>
+        <button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="alert(&#39;Formulário de novo contato disponível na versão contratada.&#39;)">+ Novo contato</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Demonstração desenvolvida por <span>Yasmin G. Lopes</span> · CNPJ <span>44.704.456/0001-08</span> · Dados fictícios para fins de apresentação · Estevão &amp; Pinheiro Advogados Associados © 2026
+</footer>
+
+<script>
+// ─── SETUP ───
+Chart.register(ChartDataLabels);
+document.getElementById('hdrDate').textContent = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+
+const TODAY = new Date('2026-05-24');
+const ACCUM_PREV = 3287;
+const BANK_COLORS = {CEF:'#1e4272', BB:'#7d5a00'};
+const BANK_NAMES  = {CEF:'Caixa Econômica Federal', BB:'Banco do Brasil'};
+const STATUS_CFG = {
+  'disponivel':{label:'Disponível',cls:'sb-disp'},
+  'pendente':  {label:'Pendente',  cls:'sb-pend'},
+  'recebido':  {label:'Recebido',  cls:'sb-rec'},
+  'arquivado': {label:'Arquivado', cls:'sb-arq'},
+  'pago':      {label:'Pago',      cls:'sb-pago'},
+};
+function fmt(v){return'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function fmtK(v){return'R$ '+(v/1000).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})+'k'}
+function fmtDate(iso){return iso?iso.split('-').reverse().join('/'):'—'}
+
+// ─── ACCORDION ───
+function toggleAcc(bodyId, iconId, btn) {
+  const body = document.getElementById(bodyId);
+  const icon = document.getElementById(iconId);
+  const isCollapsed = body.classList.toggle('collapsed');
+  icon.style.transform = isCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)';
+  btn.innerHTML = (isCollapsed ? '<span class="acc-icon" id="'+iconId+'" style="transform:rotate(-90deg)">▾</span> Expandir registros' : '<span class="acc-icon" id="'+iconId+'">▾</span> Recolher registros');
+  btn.title = isCollapsed ? 'Expandir registros' : 'Recolher registros';
+}
+
+// ─── TAB SWITCH ───
+let t2Init = false;
+function switchTab(n){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.ttab').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tab-'+n).classList.add('active');
+  document.querySelector('[data-tab="'+n+'"]').classList.add('active');
+  if(n===2 && !t2Init){initT2(); t2Init=true;}
+}
+
+// ─── TAB 1 ───
+const DESP_TIPOS = {
+  fixo:['Aluguel','Folha de pagamento','Contabilidade','Softwares jurídicos','Internet / Telefonia','Outros fixos'],
+  variavel:['Despesas processuais','Honorários periciais','Deslocamentos','Material de escritório','Outros variáveis']
+};
+let tipoLanc = 'entrada';
+function setTipoLanc(t){
+  tipoLanc = t;
+  document.getElementById('btn-entrada').className = t==='entrada' ? 'active-ent' : '';
+  document.getElementById('btn-despesa').className = t==='despesa' ? 'active-desp' : '';
+  document.getElementById('rpv-fields').style.display = t==='entrada' ? '' : 'none';
+  document.getElementById('desp-fields').style.display = t==='despesa' ? '' : 'none';
+  document.getElementById('calc-panel').style.display = t==='entrada' ? '' : 'none';
+  document.getElementById('nota-panel').style.display = t==='despesa' ? '' : 'none';
+}
+function onCatChange(){
+  const cat = document.getElementById('fd-categoria').value;
+  const hints = {
+    fixo:'Ex: Aluguel, folha de pagamento, contabilidade...',
+    variavel:'Ex: Despesas processuais, honorários periciais...'
+  };
+  const inp = document.getElementById('fd-tipo-desp');
+  if(inp){ inp.value=''; inp.placeholder = hints[cat]||'Descreva o tipo de despesa...'; }
+  updateNota();
+}
+function setOfxDespCat(cat, btn){
+  document.querySelectorAll('.ofx-cat-toggle button').forEach(b=>b.classList.remove('oct-active'));
+  btn.classList.add('oct-active');
+  const hints = {
+    fixo:'Ex: Aluguel, folha de pagamento, contabilidade...',
+    variavel:'Ex: Despesas processuais, honorários periciais...'
+  };
+  const inp = document.getElementById('t3-tipo-desp');
+  if(inp) inp.placeholder = hints[cat]||'Tipo de despesa...';
+}
+function updateNota(){
+  const cat = document.getElementById('fd-categoria')?.value;
+  const tipo = document.getElementById('fd-tipo-desp')?.value;
+  const forn = document.getElementById('fd-fornecedor')?.value;
+  const venc = document.getElementById('fd-vencimento')?.value;
+  const val = parseFloat(document.getElementById('fd-valor')?.value)||0;
+  const pag = document.getElementById('fd-pagamento')?.value;
+  document.getElementById('nota-cat').textContent = cat ? (cat==='fixo'?'Custo Fixo':'Custo Variável') : '—';
+  document.getElementById('nota-tipo').textContent = tipo||'—';
+  document.getElementById('nota-forn').textContent = forn||'—';
+  document.getElementById('nota-venc').textContent = venc ? fmtDate(venc) : '—';
+  document.getElementById('nota-val').textContent = val ? fmt(val) : 'R$ —';
+  document.getElementById('nota-pag').textContent = pag||'—';
+}
+function updateOfxTipo(){
+  const cat = document.getElementById('ofx-cat')?.value;
+  const tipos = DESP_TIPOS[cat]||[];
+  const sel = document.getElementById('ofx-tipo');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">Selecione...</option>'+tipos.map(t=>`<option>${t}</option>`).join('');
+}
+
+// ── OFX: toggle entrada / despesa por card ──
+function setOfxMode(id, mode){
+  const isDesp = mode==='desp';
+  const despEl = document.getElementById(id+'-desp-fields');
+  const entEl  = document.getElementById(id+'-ent-fields');
+  const btnD   = document.getElementById(id+'-btn-desp');
+  const btnE   = document.getElementById(id+'-btn-ent');
+  if(despEl) despEl.style.display = isDesp ? '' : 'none';
+  if(entEl)  entEl.style.display  = isDesp ? 'none' : '';
+  if(btnD)   btnD.className = isDesp ? 'ot-desp' : '';
+  if(btnE)   btnE.className = isDesp ? '' : 'ot-ent';
+}
+
+// ── OFX: sub-toggle causa / honorários ──
+function setOfxSubMode(id, mode){
+  const isCausa = mode==='causa';
+  const cEl = document.getElementById(id+'-causa-fields');
+  const hEl = document.getElementById(id+'-hon-fields');
+  const bC  = document.getElementById(id+'-btn-causa');
+  const bH  = document.getElementById(id+'-btn-hon');
+  if(cEl) cEl.style.display = isCausa ? '' : 'none';
+  if(hEl) hEl.style.display = isCausa ? 'none' : '';
+  if(bC)  bC.className = isCausa ? 'ost-active' : '';
+  if(bH)  bH.className = isCausa ? '' : 'ost-active';
+}
+
+// ── OFX: busca processo no dataset e auto-preenche ──
+function procSearch(id){
+  const q = (document.getElementById(id+'-proc')?.value||'').trim().toLowerCase();
+  if(!q) return;
+  const found = causasData.find(c=>
+    c.proc.toLowerCase().includes(q) ||
+    c.benef.toLowerCase().includes(q) ||
+    c.sindic.toLowerCase().includes(q)
+  );
+  const autofill  = document.getElementById(id+'-autofill');
+  const notFound  = document.getElementById(id+'-not-found');
+  const newProc   = document.getElementById(id+'-new-proc');
+  const btnVinc   = document.getElementById(id+'-btn-vincular');
+  if(found){
+    document.getElementById(id+'-af-sindic').textContent = found.sindic;
+    document.getElementById(id+'-af-benef').textContent  = found.benef;
+    document.getElementById(id+'-af-tipo').textContent   = found.tipo;
+    // Pré-seleciona advogado no select editável
+    const advSel = document.getElementById(id+'-adv-sel');
+    if(advSel){ Array.from(advSel.options).forEach((o,i)=>{ if(o.text===found.adv) advSel.selectedIndex=i; }); }
+    const advRow = document.getElementById(id+'-adv-row');
+    if(autofill) autofill.style.display = 'grid';
+    if(advRow)   advRow.style.display   = '';
+    if(notFound) notFound.style.display = 'none';
+    if(newProc)  newProc.style.display  = 'none';
+    if(btnVinc){ btnVinc.disabled=false; btnVinc.textContent='Vincular → '+found.proc.substring(0,14)+'…'; }
+  } else {
+    if(autofill) autofill.style.display = 'none';
+    if(notFound) notFound.style.display = '';
+    if(btnVinc){ btnVinc.disabled=true; btnVinc.textContent='Vincular causa →'; }
+  }
+}
+
+// ── OFX: expande campos de processo novo ──
+function showNewProc(id){
+  const newProc = document.getElementById(id+'-new-proc');
+  const notFound = document.getElementById(id+'-not-found');
+  const btnVinc  = document.getElementById(id+'-btn-vincular');
+  if(newProc)  newProc.style.display  = '';
+  if(notFound) notFound.style.display = 'none';
+  if(btnVinc){ btnVinc.disabled=false; btnVinc.textContent='Criar e vincular →'; }
+}
+
+// ── OFX: confirma vinculação ──
+function vincularCausa(id){
+  const proc = document.getElementById(id+'-proc')?.value||'';
+  const afSindic = document.getElementById(id+'-af-sindic')?.textContent;
+  const advSel = document.getElementById(id+'-adv-sel');
+  const adv = advSel && advSel.value ? ' · Adv: '+advSel.options[advSel.selectedIndex].text : '';
+  const det = afSindic && afSindic!=='—' ? proc+' · '+afSindic+adv : proc;
+  alert('Causa vinculada!\n\n'+det+'\n\nLançamento registrado como Recebido no painel financeiro.');
+  closeOfxRow(parseInt(id.replace(/\D/g,''))||2);
+}
+
+// ── OFX: accordion — abre/fecha row ──
+function toggleOfxRow(id){
+  const body = document.getElementById('ofxb-'+id);
+  const chv  = document.getElementById('chv-'+id);
+  if(!body) return;
+  const isOpen = body.style.display !== 'none';
+  // Fecha todos os outros
+  [2,3].forEach(n=>{
+    if(n===id) return;
+    const b = document.getElementById('ofxb-'+n);
+    const c = document.getElementById('chv-'+n);
+    if(b) b.style.display = 'none';
+    if(c) c.classList.remove('open');
+  });
+  body.style.display = isOpen ? 'none' : '';
+  if(chv){ isOpen ? chv.classList.remove('open') : chv.classList.add('open'); }
+}
+
+// ── OFX: fecha row específica ──
+function closeOfxRow(id){
+  const body = document.getElementById('ofxb-'+id);
+  const chv  = document.getElementById('chv-'+id);
+  if(body) body.style.display = 'none';
+  if(chv)  chv.classList.remove('open');
+}
+
+// ── OFX: filtrar por status ──
+function filterOfx(status, btn){
+  document.querySelectorAll('.ofx-filter-tabs button').forEach(b=>b.classList.remove('oft-active'));
+  btn.classList.add('oft-active');
+  document.querySelectorAll('.ofx-row').forEach(r=>{
+    const s = r.dataset.status;
+    if(status==='all')     r.style.display = '';
+    else if(status==='ok') r.style.display = s==='ok'      ? '' : 'none';
+    else                   r.style.display = s==='pending' ? '' : 'none';
+  });
+}
+
+function calcU(){
+  const br = parseFloat(document.getElementById('f-bruto').value)||0;
+  const hp = parseFloat(document.getElementById('f-hon').value)||0;
+  const tp = parseFloat(document.getElementById('f-trib').value)||0;
+  document.getElementById('c-hon-lbl').textContent = hp;
+  document.getElementById('c-trib-lbl').textContent = tp;
+  if(!br){['c-bruto','c-hon','c-trib','c-liq','c-accum'].forEach(id=>document.getElementById(id).textContent='R$ —');return;}
+  const hon=br*hp/100, trib=br*tp/100, liq=br-hon-trib;
+  document.getElementById('c-bruto').textContent = fmt(br);
+  document.getElementById('c-hon').textContent = '− '+fmt(hon);
+  document.getElementById('c-trib').textContent = '− '+fmt(trib);
+  document.getElementById('c-liq').textContent = fmt(liq);
+  document.getElementById('c-accum').textContent = fmt(ACCUM_PREV+trib);
+}
+
+// Unified dataset — same 14 records power both tabs
+const causasData = [
+  {id:1,  proc:'0001823-45.2022.5.06.0012', desc:'Complemento salarial retroativo',   sindic:'SINDSEP',    benef:'João C. Ferreira',   banco:'CEF', tipo:'RPV',       valor:28400,  status:'disponivel', data:'2026-05-24', dataExpedicao:'2026-04-20', adv:'Cláudio Estevão'},
+  {id:2,  proc:'0003412-78.2021.5.06.0008', desc:'Horas extras não pagas',             sindic:'SINDPD',     benef:'Maria L. Souza',     banco:'CEF', tipo:'RPV',       valor:20020,  status:'disponivel', data:'2026-05-24', dataExpedicao:'2026-04-18', adv:'Fred Pinheiro'},
+  {id:3,  proc:'0007291-33.2023.5.06.0001', desc:'Adicional de insalubridade',         sindic:'SEEB',       benef:'Carlos A. Nunes',    banco:'BB',  tipo:'RPV',       valor:21900,  status:'disponivel', data:'2026-05-24', dataExpedicao:'2026-04-22', adv:'Cláudio Estevão'},
+  {id:4,  proc:'0004521-12.2020.5.06.0034', desc:'Equiparação salarial',               sindic:'SINDIFISCO', benef:'Ana R. Lima',        banco:'BB',  tipo:'Precatório',valor:85000,  status:'pendente',    data:'2026-05-20', dataExpedicao:'2026-04-10', adv:'Fred Pinheiro'},
+  {id:5,  proc:'0009834-67.2022.5.15.0144', desc:'Desvio de função',                   sindic:'SINDSEP',    benef:'Paulo M. Costa',     banco:'CEF', tipo:'RPV',       valor:43750,  status:'pendente',   data:'2026-05-19', dataExpedicao:'2026-04-20', adv:'Dra. Beatriz Cavalcanti'},
+  {id:6,  proc:'0002198-91.2021.5.06.0009', desc:'FGTS não depositado',                sindic:'SINDPD',     benef:'Fernanda O.',        banco:'CEF', tipo:'RPV',       valor:31200,  status:'pendente',   data:'2026-05-18', dataExpedicao:'2026-04-25', adv:'Cláudio Estevão'},
+  {id:7,  proc:'0006712-44.2019.5.06.0021', desc:'Verbas rescisórias',                 sindic:'SEEB',       benef:'Roberto S. Melo',    banco:'BB',  tipo:'RPV',       valor:18640,  status:'recebido',   data:'2026-05-15', dataExpedicao:'2026-03-20', adv:'Fred Pinheiro'},
+  {id:8,  proc:'0011234-05.2022.5.06.0055', desc:'Adicional noturno',                  sindic:'SINDSEP',    benef:'Lucia B. Ramos',     banco:'CEF', tipo:'RPV',       valor:12800,  status:'recebido',   data:'2026-05-14', dataExpedicao:'2026-03-10', adv:'Dr. Marco A. Lins'},
+  {id:9,  proc:'0008991-22.2018.5.06.0003', desc:'Diferenças salariais',               sindic:'SINDIFISCO', benef:'Marcos V.',          banco:'BB',  tipo:'Precatório',valor:120000, status:'pendente',    data:'2026-05-13', dataExpedicao:'2026-03-01', adv:'Fred Pinheiro'},
+  {id:10, proc:'0004102-88.2023.5.15.0031', desc:'Reintegração e salários',            sindic:'SINDPD',     benef:'Silvia M. Torres',   banco:'CEF', tipo:'RPV',       valor:67500,  status:'pendente',   data:'2026-05-12', dataExpedicao:'2026-04-15', adv:'Dra. Beatriz Cavalcanti'},
+  {id:11, proc:'0005567-13.2021.5.06.0018', desc:'Horas in itinere',                   sindic:'SEEB',       benef:'André L. Brito',     banco:'CEF', tipo:'RPV',       valor:9870,   status:'recebido',   data:'2026-05-10', dataExpedicao:'2026-03-05', adv:'Cláudio Estevão'},
+  {id:12, proc:'0013445-77.2020.5.06.0041', desc:'Indenização por danos morais',       sindic:'SINDSEP',    benef:'Cristiane P.',       banco:'BB',  tipo:'Precatório',valor:95000,  status:'pendente',    data:'2026-05-08', dataExpedicao:'2026-04-05', adv:'Fred Pinheiro'},
+  {id:13, proc:'0014221-09.2022.5.06.0017', desc:'Diferença de gratificação',          sindic:'SINDIFISCO', benef:'Lucas T. Oliveira',  banco:'CEF', tipo:'RPV',       valor:15400,  status:'pendente',   data:'2026-04-10', dataExpedicao:'2026-03-01', adv:'Dr. Marco A. Lins'},
+  {id:14, proc:'0015830-22.2021.5.06.0034', desc:'Adicional de periculosidade',        sindic:'SEEB',       benef:'Patricia M. Santos', banco:'BB',  tipo:'RPV',       valor:22100,  status:'pendente',   data:'2026-04-15', dataExpedicao:'2026-03-10', adv:'Dra. Beatriz Cavalcanti'},
+];
+
+function isOverdue(c){
+  if(c.status !== 'pendente') return false;
+  return (TODAY - new Date(c.dataExpedicao)) / 86400000 > 60;
+}
+
+// Tab 1 uses causasData as source
+let t1NextId = 100;
+let t1Sel = new Set();
+
+function saveT1(){
+  if(tipoLanc==='despesa'){
+    const val=parseFloat(document.getElementById('fd-valor')?.value)||0;
+    if(!val){alert('Preencha o Valor.');return;}
+    const stamp=document.getElementById('nota-stamp');
+    if(stamp){stamp.style.display='block';setTimeout(()=>{stamp.style.display='none';clearT1();},1400);}
+    return;
+  }
+  const br=parseFloat(document.getElementById('f-bruto').value)||0;
+  if(!br){alert('Preencha o Valor Bruto.');return;}
+  causasData.unshift({
+    id:t1NextId++,
+    proc:document.getElementById('f-proc').value||'—',
+    desc:'RPV / Honorário',
+    sindic:document.getElementById('f-sindic').value||'—',
+    benef:document.getElementById('f-benef').value||'—',
+    banco:document.getElementById('f-banco').value||'—',
+    tipo:document.getElementById('f-tipo').value||'RPV',
+    valor:br,
+    status:document.getElementById('f-status')?.value||'disponivel',
+    data:new Date().toISOString().split('T')[0],
+    dataExpedicao:document.getElementById('f-expedicao').value||new Date().toISOString().split('T')[0],
+    adv:document.getElementById('f-adv').value||'—',
+  });
+  renderT1Table();
+  clearT1();
+}
+function clearT1(){
+  if(tipoLanc==='despesa'){
+    ['fd-categoria','fd-tipo-desp','fd-fornecedor','fd-pagamento'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    const fd=document.getElementById('fd-vencimento');if(fd)fd.value='';
+    const fv=document.getElementById('fd-valor');if(fv)fv.value='';
+    const fs=document.getElementById('fd-status');if(fs)fs.value='pago';
+    updateNota();return;
+  }
+  ['f-sindic','f-adv','f-proc','f-banco','f-benef'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-bruto').value='';
+  const fst=document.getElementById('f-status');if(fst)fst.value='disponivel';
+  document.getElementById('f-expedicao').value='';
+  document.getElementById('f-hon').value=30;
+  document.getElementById('f-trib').value=18;
+  document.getElementById('f-tipo').value='RPV';
+  calcU();
+}
+function editT1Cell(id,field,el){
+  if(el.querySelector('input,select'))return;
+  const e=causasData.find(x=>x.id===id);if(!e)return;
+  let inp;
+  const s='border:1px solid var(--bx);border-radius:4px;padding:3px 6px;font-size:12px;font-family:"DM Sans",sans-serif;outline:none;';
+  if(field==='status'){
+    inp=document.createElement('select');inp.className='status-select';
+    Object.entries(STATUS_CFG).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.label;if(k===e.status)o.selected=true;inp.appendChild(o);});
+  } else if(field==='banco'){
+    inp=document.createElement('select');inp.style.cssText=s;
+    ['CEF','BB'].forEach(b=>{const o=document.createElement('option');o.value=b;o.textContent=b;if(b===e.banco)o.selected=true;inp.appendChild(o);});
+  } else if(field==='valor'){
+    inp=document.createElement('input');inp.type='number';inp.value=e.valor;inp.style.cssText=s+'width:90px;';
+  } else if(field==='dataExpedicao'){
+    inp=document.createElement('input');inp.type='date';inp.value=e.dataExpedicao;inp.style.cssText=s;
+  } else {
+    inp=document.createElement('input');inp.type='text';inp.value=e[field]||'';inp.style.cssText=s+'width:130px;';
+  }
+  const save=()=>{e[field]=field==='valor'?parseFloat(inp.value)||0:inp.value;renderT1Table();};
+  inp.onchange=save;inp.onblur=save;
+  el.innerHTML='';el.appendChild(inp);inp.focus();
+}
+function renderT1Table(){
+  document.getElementById('t1-count').textContent = causasData.length+' registros';
+  const tip='title="Clique para editar" style="cursor:pointer"';
+  document.getElementById('t1-tbody').innerHTML = causasData.map(e=>{
+    const hon=e.valor*0.30, trib=e.valor*0.18, liq=e.valor-hon-trib;
+    const sc=STATUS_CFG[e.status]||STATUS_CFG['disponivel'];
+    const fbCls={CEF:'fb-cef',BB:'fb-bb'}[e.banco]||'';
+    return`<tr>
+      <td class="chk-col"><input type="checkbox" ${t1Sel.has(e.id)?'checked':''} onchange="toggleT1(${e.id},this)"></td>
+      <td ${tip} onclick="editT1Cell(${e.id},'dataExpedicao',this)"><div class="data-cell">${fmtDate(e.dataExpedicao)}</div></td>
+      <td ${tip} onclick="editT1Cell(${e.id},'proc',this)"><div class="proc-num">${e.proc}</div></td>
+      <td ${tip} onclick="editT1Cell(${e.id},'sindic',this)">${e.sindic}</td>
+      <td ${tip} onclick="editT1Cell(${e.id},'benef',this)"><div class="data-cell">${e.benef}</div></td>
+      <td ${tip} onclick="editT1Cell(${e.id},'banco',this)"><span class="fbadge ${fbCls}">${e.banco}</span></td>
+      <td ${tip} onclick="editT1Cell(${e.id},'valor',this)"><div class="val-cell">${fmt(e.valor)}</div></td>
+      <td><div class="val-cell val-neg">−${fmt(hon)}</div></td>
+      <td><div class="val-cell val-or">−${fmt(trib)}</div></td>
+      <td><div class="val-cell val-pos">${fmt(liq)}</div></td>
+      <td ${tip} onclick="editT1Cell(${e.id},'status',this)"><span class="sbadge ${sc.cls}"><div class="dot"></div>${sc.label}</span></td>
+      <td ${tip} onclick="editT1Cell(${e.id},'adv',this)"><div class="data-cell">${e.adv}</div></td>
+    </tr>`;
+  }).join('');
+}
+function toggleT1(id,chk){if(chk.checked)t1Sel.add(id);else t1Sel.delete(id);updateT1Bulk();}
+function selAllT1(chk){
+  const tbl=document.querySelector('#t1-tbody')?.closest('table');
+  if(chk.checked){
+    causasData.forEach(e=>t1Sel.add(e.id));
+    if(tbl) tbl.classList.add('sel-active');
+  } else {
+    t1Sel.clear();
+    if(tbl) tbl.classList.remove('sel-active');
+  }
+  renderT1Table();updateT1Bulk();
+}
+function updateT1Bulk(){
+  const bar=document.getElementById('t1-bulk');
+  if(t1Sel.size>0){bar.style.display='flex';document.getElementById('t1-sel-n').textContent=t1Sel.size;}
+  else bar.style.display='none';
+}
+function applyT1Bulk(){
+  const ns  = document.getElementById('t1-bulk-sel')?.value;
+  const nb  = document.getElementById('t1-bulk-banco')?.value;
+  const nsi = document.getElementById('t1-bulk-sindic')?.value;
+  const na  = document.getElementById('t1-bulk-adv')?.value;
+  if(!ns && !nb && !nsi && !na) return;
+  causasData.forEach(e=>{
+    if(t1Sel.has(e.id)){
+      if(ns)  e.status = ns;
+      if(nb)  e.banco  = nb;
+      if(nsi) e.sindic = nsi;
+      if(na)  e.adv    = na;
+    }
+  });
+  t1Sel.clear();
+  const tbl=document.querySelector('#t1-tbody')?.closest('table');
+  if(tbl) tbl.classList.remove('sel-active');
+  const chkAll=document.getElementById('t1-chk-all');
+  if(chkAll) chkAll.checked=false;
+  ['t1-bulk-sel','t1-bulk-banco','t1-bulk-sindic','t1-bulk-adv'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  renderT1Table();updateT1Bulk();
+}
+function clearT1Sel(){
+  t1Sel.clear();
+  const tbl=document.querySelector('#t1-tbody')?.closest('table');
+  if(tbl) tbl.classList.remove('sel-active');
+  const chkAll=document.getElementById('t1-chk-all');
+  if(chkAll) chkAll.checked=false;
+  renderT1Table();updateT1Bulk();
+}
+function editT1Status(id,span){
+  const e=causasData.find(x=>x.id===id);if(!e)return;
+  const sel=document.createElement('select');sel.className='status-select';
+  Object.entries(STATUS_CFG).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.label;if(k===e.status)o.selected=true;sel.appendChild(o);});
+  sel.onchange=()=>{e.status=sel.value;renderT1Table();};
+  sel.onblur=()=>renderT1Table();
+  span.parentNode.replaceChild(sel,span);sel.focus();
+}
+renderT1Table();
+
+// ─── TAB 2 ───
+let p2Filters = {banco:'',status:'',sindic:'',tipo:'',de:'',ate:'',adv:''};
+let p2Sel = new Set();
+let p2Charts = {};
+const ADV_COLORS = ['#6B1C2E','#7d5a00','#1e4272','#2c5940','#c9a84c'];
+const SINDIC_COLORS = ['#6B1C2E','#7d5a00','#1e4272','#2c5940'];
+const CUSTOS_FIXO = [
+  {label:'Folha de pagamento',val:45000},{label:'Aluguel',val:24000},
+  {label:'Contabilidade',val:15000},{label:'Softwares jurídicos',val:12000},
+  {label:'Internet / Telefonia',val:8000},{label:'Outros fixos',val:4000},
+];
+const CUSTOS_VAR = [
+  {label:'Despesas processuais',val:28000},{label:'Honorários periciais',val:18000},
+  {label:'Deslocamentos',val:9000},{label:'Material de escritório',val:5000},
+  {label:'Outros variáveis',val:4000},
+];
+const RH_COLS=['#2c5940','#888888','#c9a84c'];
+const RH_LABELS_DEFAULT=['Resultado líquido','Custos fixos','Custos variáveis'];
+const RH_DATA_DEFAULT=[103,108,64];
+let rhActive=-1;
+function rhKpiSelect(idx){
+  if(rhActive===idx && idx!==-1) idx=-1;
+  rhActive=idx;
+  const chart=p2Charts.resultado;
+  if(chart){
+    if(idx==='custos'){
+      chart.data.labels=['Resultado líquido','Total custos'];
+      chart.data.datasets[0].data=[103,172];
+      chart.data.datasets[0].backgroundColor=[RH_COLS[0]+'44','#888888'];
+    } else {
+      chart.data.labels=RH_LABELS_DEFAULT.slice();
+      chart.data.datasets[0].data=RH_DATA_DEFAULT.slice();
+      chart.data.datasets[0].backgroundColor=idx===-1
+        ? RH_COLS.slice()
+        : RH_COLS.map((c,i)=>i===idx?c:c+'44');
+    }
+    chart.update();
+  }
+  document.querySelectorAll('.rh-kpi').forEach((card,i)=>{
+    card.classList.toggle('rh-kpi-active',
+      (idx==='custos'&&i===1)||(idx===0&&i===2)
+    );
+  });
+}
+let costView = 'fixo';
+function setCostView(v,btn){
+  costView = v;
+  document.querySelectorAll('.ct-btn').forEach(b=>b.classList.remove('ct-active'));
+  if(btn) btn.classList.add('ct-active');
+  else document.querySelectorAll(`.ct-btn[data-view="${v}"]`).forEach(b=>b.classList.add('ct-active'));
+  renderCostBars();
+}
+function renderCostBars(){
+  const list = costView==='variavel' ? CUSTOS_VAR : CUSTOS_FIXO;
+  const max = list[0]?.val||1;
+  const color = costView==='variavel' ? '#c9a84c' : '#888';
+  document.getElementById('cost-bars').innerHTML = list.map(c=>{
+    const pct=Math.round(c.val/max*100);
+    return`<div class="cbr">
+      <div class="cbr-label" title="${c.label}">${c.label}</div>
+      <div class="cbr-track"><div class="cbr-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div class="cbr-val">R$${Math.round(c.val/1000)}k</div>
+    </div>`;
+  }).join('');
+}
+function goOverdue(){
+  p2Filters.status='pendente';
+  const el=document.getElementById('f2-status');if(el)el.value='pendente';
+  renderP2All();
+  setTimeout(()=>document.querySelector('.table-card')?.scrollIntoView({behavior:'smooth',block:'start'}),150);
+}
+function goRelatorio(){
+  switchTab(3);
+  setTimeout(()=>document.getElementById('t3-relatorio')?.scrollIntoView({behavior:'smooth',block:'start'}),200);
+}
+function goCobranca(sindic){
+  switchTab(3);
+  setTimeout(()=>{
+    document.getElementById('t3-cobranca')?.scrollIntoView({behavior:'smooth',block:'start'});
+    if(sindic){
+      const chk=document.getElementById('chk-'+sindic.replace(/[^a-z]/g,''));
+      if(chk){chk.checked=true;updateCobTemplate();}
+    }
+  },200);
+}
+function goAssinatura(){
+  switchTab(3);
+  setTimeout(()=>document.getElementById('t3-assinatura')?.scrollIntoView({behavior:'smooth',block:'start'}),200);
+}
+function markHoje(id,chk){
+  const item=document.getElementById(id);if(!item)return;
+  if(chk.checked)item.classList.add('hoje-done');
+  else item.classList.remove('hoje-done');
+  item.style.opacity=chk.checked?'0.55':'1';
+}
+
+function getFiltered(){
+  return causasData.filter(c=>{
+    if(p2Filters.banco  && c.banco  !== p2Filters.banco)  return false;
+    if(p2Filters.status && c.status !== p2Filters.status) return false;
+    if(p2Filters.sindic && c.sindic !== p2Filters.sindic) return false;
+    if(p2Filters.tipo   && c.tipo   !== p2Filters.tipo)   return false;
+    if(p2Filters.adv    && c.adv    !== p2Filters.adv)    return false;
+    if(p2Filters.de     && c.data   <  p2Filters.de)      return false;
+    if(p2Filters.ate    && c.data   >  p2Filters.ate)     return false;
+    return true;
+  });
+}
+function applyP2Filters(){
+  p2Filters.banco  = document.getElementById('f2-banco').value;
+  p2Filters.status = document.getElementById('f2-status').value;
+  p2Filters.sindic = document.getElementById('f2-sindic').value;
+  p2Filters.tipo   = document.getElementById('f2-tipo').value;
+  p2Filters.de     = document.getElementById('f2-de').value;
+  p2Filters.ate    = document.getElementById('f2-ate').value;
+  renderP2All();
+}
+function clearP2Filters(){
+  p2Filters = {banco:'',status:'',sindic:'',tipo:'',de:'',ate:'',adv:''};
+  ['f2-banco','f2-status','f2-sindic','f2-tipo'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f2-de').value='';
+  document.getElementById('f2-ate').value='';
+  document.querySelectorAll('.kpi-card').forEach(k=>k.classList.remove('kpi-active'));
+  updateAdvChart();updateSindicChart();
+  renderP2All();
+}
+function kpiFilter(type,val){
+  if(p2Filters[type]===val){p2Filters[type]='';document.querySelectorAll('.kpi-card').forEach(k=>k.classList.remove('kpi-active'));}
+  else{
+    p2Filters[type]=val;
+    document.querySelectorAll('.kpi-card').forEach(k=>k.classList.remove('kpi-active'));
+    if(val){const map={'disponivel':1,'pendente':2,'recebido':3};const idx=map[val];if(idx!==undefined)document.querySelectorAll('.kpi-card')[idx].classList.add('kpi-active');}
+  }
+  if(type==='status')document.getElementById('f2-status').value=val;
+  renderP2All();
+}
+function filterOverdue(){
+  p2Filters.status='pendente';
+  document.getElementById('f2-status').value='pendente';
+  renderP2All();
+  setTimeout(()=>document.getElementById('p2-tbody').scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+function renderP2All(){
+  const data = getFiltered();
+  renderP2KPIs();
+  renderP2Table(data);
+  renderFilterChips();
+  if(p2Charts.bank) updateP2Charts(data);
+  else renderBankLegend(data);
+}
+function renderP2KPIs(){
+  const all = causasData;
+  const total = all.reduce((a,c)=>a+c.valor,0);
+  const disp  = all.filter(c=>c.status==='disponivel');
+  const pend  = all.filter(c=>c.status==='pendente');
+  const rec   = all.filter(c=>c.status==='recebido');
+  document.getElementById('kv-total').textContent = fmtK(total);
+  document.getElementById('ks-total').textContent = 'Em '+all.length+' causas monitoradas';
+  document.getElementById('kv-disp').textContent  = fmtK(disp.reduce((a,c)=>a+c.valor,0));
+  document.getElementById('ks-disp').textContent  = disp.length+' causas liberadas';
+  document.getElementById('kv-pend').textContent  = fmtK(pend.reduce((a,c)=>a+c.valor,0));
+  document.getElementById('ks-pend').textContent  = pend.length+' causas · '+pend.filter(isOverdue).length+' vencidas';
+  document.getElementById('kv-rec').textContent   = fmtK(rec.reduce((a,c)=>a+c.valor,0));
+  document.getElementById('ks-rec').textContent   = rec.length+' processos recebidos';
+}
+function renderP2Table(data){
+  document.getElementById('p2-count-lbl').textContent = 'Exibindo '+data.length+' de '+causasData.length+' causas';
+  document.getElementById('p2-tbody').innerHTML = data.map(c=>{
+    const sc = STATUS_CFG[c.status]||STATUS_CFG['pendente'];
+    const ov = isOverdue(c);
+    const fbCls = {CEF:'fb-cef',BB:'fb-bb'}[c.banco]||'';
+    return`<tr class="${ov?'overdue-row':''}">
+      <td class="chk-col"><input type="checkbox" ${p2Sel.has(c.id)?'checked':''} onchange="toggleP2(${c.id},this)"></td>
+      <td><div class="proc-num">${c.proc}</div></td>
+      <td><div class="causa-desc">${c.desc}</div><div class="causa-sub">${c.sindic}</div></td>
+      <td><div class="data-cell">${c.benef}</div></td>
+      <td><span class="fbadge ${fbCls}">${c.banco}</span></td>
+      <td><div class="data-cell">${c.tipo}</div></td>
+      <td><div class="val-cell ${c.status==='disponivel'||c.status==='recebido'?'val-pos':''}">${fmt(c.valor)}</div></td>
+      <td style="white-space:nowrap">
+        <span class="sbadge ${sc.cls}" onclick="editP2Status(${c.id},this)"><div class="dot"></div>${sc.label}</span>
+        ${ov?'<span class="vencida-badge">⚠ Vencida</span>':''}
+      </td>
+      <td><div class="data-cell">${fmtDate(c.dataExpedicao)}</div></td>
+      <td><div class="data-cell">${c.adv}</div></td>
+    </tr>`;
+  }).join('');
+}
+function renderBankLegend(data){
+  const totals={};
+  data.forEach(c=>totals[c.banco]=(totals[c.banco]||0)+c.valor);
+  const total=Object.values(totals).reduce((a,b)=>a+b,0)||1;
+  const sorted=Object.entries(totals).sort((a,b)=>b[1]-a[1]);
+  const maxVal=sorted[0]?sorted[0][1]:1;
+  document.getElementById('bank-legend').innerHTML=sorted.map(([bank,val])=>{
+    const pct=((val/total)*100).toFixed(1);
+    const barW=((val/maxVal)*100).toFixed(0);
+    const active=p2Filters.banco===bank;
+    return`<div class="bl-row ${active?'bl-active':''}" onclick="bankFilter('${bank}')">
+      <div class="bl-dot" style="background:${BANK_COLORS[bank]||'#888'}"></div>
+      <div class="bl-name">${BANK_NAMES[bank]||bank}</div>
+      <div class="bl-bar-wrap"><div class="bl-bar" style="width:${barW}%;background:${BANK_COLORS[bank]||'#888'}"></div></div>
+      <div class="bl-val">${fmtK(val)}</div>
+    </div>`;
+  }).join('');
+}
+function bankFilter(bank){
+  if(p2Filters.banco===bank)p2Filters.banco='';else p2Filters.banco=bank;
+  document.getElementById('f2-banco').value=p2Filters.banco;
+  renderP2All();
+}
+function renderFilterChips(){
+  const chips=[];
+  const labels={banco:'Banco',status:'Status',sindic:'Sindicato',tipo:'Tipo',de:'De',ate:'Até',adv:'Advogado'};
+  Object.entries(p2Filters).forEach(([k,v])=>{
+    if(v)chips.push(`<div class="chip">${labels[k]||k}: ${v} <span class="chip-x" onclick="removeChip('${k}')">×</span></div>`);
+  });
+  const el=document.getElementById('f2-chips');
+  if(chips.length){el.style.display='flex';el.innerHTML=chips.join('')+'<button class="btn-clear-all" onclick="clearP2Filters()">Limpar todos</button>';}
+  else el.style.display='none';
+}
+function removeChip(key){
+  p2Filters[key]='';
+  const el=document.getElementById('f2-'+key);
+  if(el)el.value='';
+  if(key==='adv') updateAdvChart();
+  if(key==='sindic') updateSindicChart();
+  renderP2All();
+}
+function toggleP2(id,chk){
+  if(chk.checked)p2Sel.add(id);else p2Sel.delete(id);
+  const tbl=document.getElementById('p2-tbody')?.closest('table');
+  if(tbl) tbl.classList.toggle('sel-active', p2Sel.size>0);
+  updateP2Bulk();
+}
+function selAllP2(chk){
+  const data=getFiltered();
+  data.forEach(c=>{if(chk.checked)p2Sel.add(c.id);else p2Sel.delete(c.id);});
+  const tbl=document.getElementById('p2-tbody')?.closest('table');
+  if(tbl) tbl.classList.toggle('sel-active', chk.checked);
+  renderP2Table(data);updateP2Bulk();
+}
+function updateP2Bulk(){
+  const bar=document.getElementById('p2-bulk');
+  if(p2Sel.size>0){bar.style.display='flex';document.getElementById('p2-sel-n').textContent=p2Sel.size;}
+  else bar.style.display='none';
+}
+function applyP2Bulk(){
+  const ns  = document.getElementById('p2-bulk-sel')?.value;
+  const nb  = document.getElementById('p2-bulk-banco')?.value;
+  const nsi = document.getElementById('p2-bulk-sindic')?.value;
+  const na  = document.getElementById('p2-bulk-adv')?.value;
+  if(!ns && !nb && !nsi && !na) return;
+  causasData.forEach(c=>{
+    if(p2Sel.has(c.id)){
+      if(ns)  c.status = ns;
+      if(nb)  c.banco  = nb;
+      if(nsi) c.sindic = nsi;
+      if(na)  c.adv    = na;
+    }
+  });
+  p2Sel.clear();
+  const tbl=document.getElementById('p2-tbody')?.closest('table');
+  if(tbl) tbl.classList.remove('sel-active');
+  const chkAll=document.getElementById('p2-chk-all');
+  if(chkAll) chkAll.checked=false;
+  ['p2-bulk-sel','p2-bulk-banco','p2-bulk-sindic','p2-bulk-adv'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  renderP2All();updateP2Bulk();
+}
+function clearP2Sel(){
+  p2Sel.clear();
+  const tbl=document.getElementById('p2-tbody')?.closest('table');
+  if(tbl) tbl.classList.remove('sel-active');
+  renderP2All();updateP2Bulk();
+}
+function editP2Status(id,span){
+  const c=causasData.find(x=>x.id===id);if(!c)return;
+  const sel=document.createElement('select');sel.className='status-select';
+  Object.entries(STATUS_CFG).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.label;if(k===c.status)o.selected=true;sel.appendChild(o);});
+  sel.onchange=()=>{c.status=sel.value;renderP2All();};
+  sel.onblur=()=>renderP2All();
+  span.parentNode.replaceChild(sel,span);sel.focus();
+}
+
+function updateAdvChart(){
+  if(!p2Charts.adv) return;
+  p2Charts.adv.data.datasets[0].backgroundColor = p2Charts.adv.data.labels.map((lbl,i)=>
+    !p2Filters.adv || p2Filters.adv===lbl ? ADV_COLORS[i%ADV_COLORS.length] : ADV_COLORS[i%ADV_COLORS.length]+'44'
+  );
+  p2Charts.adv.update();
+}
+function updateSindicChart(){
+  if(!p2Charts.sindic) return;
+  p2Charts.sindic.data.datasets[0].backgroundColor = p2Charts.sindic.data.labels.map((lbl,i)=>
+    !p2Filters.sindic || p2Filters.sindic===lbl ? SINDIC_COLORS[i%SINDIC_COLORS.length] : SINDIC_COLORS[i%SINDIC_COLORS.length]+'44'
+  );
+  p2Charts.sindic.update();
+}
+
+function initT2(){
+  renderP2KPIs();
+  const filtered = getFiltered();
+  renderP2Table(filtered);
+  renderBankLegend(filtered);
+  costView = 'fixo';
+  renderCostBars();
+
+  // Chart 1: Honorários por advogado (interactive — click filters table)
+  const advMap = {};
+  causasData.forEach(c=>{ advMap[c.adv] = (advMap[c.adv]||0) + c.valor*0.30; });
+  const advLabels = Object.keys(advMap);
+  const advVals = advLabels.map(k=>+(advMap[k]/1000).toFixed(1));
+  p2Charts.adv = new Chart(document.getElementById('chartAdv'),{
+    type:'bar',
+    data:{labels:advLabels,datasets:[{data:advVals,backgroundColor:ADV_COLORS.slice(0,advLabels.length),borderRadius:5}]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      onClick:(e,els)=>{
+        if(!els.length)return;
+        const lbl=advLabels[els[0].index];
+        p2Filters.adv = p2Filters.adv===lbl ? '' : lbl;
+        updateAdvChart(); renderP2All();
+      },
+      plugins:{
+        legend:{display:false},
+        datalabels:{anchor:'end',align:'top',formatter:v=>'R$'+v+'k',font:{size:10,weight:'700'},color:'#333'}
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10}}},
+        y:{grid:{color:'#f0ece8'},ticks:{callback:v=>'R$'+v+'k'},beginAtZero:true}
+      }
+    }
+  });
+
+  // Chart 2: Banco donut (CEF vs BB) — legend below
+  const bankTotals={};
+  filtered.forEach(c=>bankTotals[c.banco]=(bankTotals[c.banco]||0)+c.valor);
+  const bKeys = Object.keys(bankTotals);
+  p2Charts.bank = new Chart(document.getElementById('chartBank'),{
+    type:'doughnut',
+    data:{labels:bKeys.map(k=>BANK_NAMES[k]||k),datasets:[{data:bKeys.map(k=>bankTotals[k]),backgroundColor:bKeys.map(k=>BANK_COLORS[k]||'#888'),borderWidth:2,borderColor:'#fff',hoverOffset:6}]},
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'60%',
+      onClick:(e,els)=>{if(els.length){bankFilter(bKeys[els[0].index]);}},
+      plugins:{
+        legend:{display:false},
+        datalabels:{
+          display:true,
+          formatter:(val,ctx)=>{
+            const total=ctx.dataset.data.reduce((a,b)=>a+b,0);
+            return Math.round(val/total*100)+'%';
+          },
+          color:'#fff',
+          font:{size:13,weight:'700'},
+          textShadowColor:'rgba(0,0,0,.3)',
+          textShadowBlur:3
+        },
+        tooltip:{callbacks:{label:ctx=>{
+          const total=ctx.dataset.data.reduce((a,b)=>a+b,0);
+          const pct=Math.round(ctx.parsed/total*100);
+          return ' '+ctx.label+': '+fmtK(ctx.parsed)+' ('+pct+'%)';
+        }}}
+      }
+    }
+  });
+
+  // Chart 3: Volume por sindicato (interactive — click filters table)
+  const sindicMap={};
+  causasData.forEach(c=>sindicMap[c.sindic]=(sindicMap[c.sindic]||0)+c.valor);
+  const sLabels=Object.keys(sindicMap);
+  const sVals=sLabels.map(k=>Math.round(sindicMap[k]/1000));
+  p2Charts.sindic = new Chart(document.getElementById('chartSindic'),{
+    type:'bar',
+    data:{labels:sLabels,datasets:[{data:sVals,backgroundColor:SINDIC_COLORS,borderRadius:4}]},
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      onClick:(e,els)=>{
+        if(!els.length)return;
+        const lbl=sLabels[els[0].index];
+        p2Filters.sindic = p2Filters.sindic===lbl ? '' : lbl;
+        if(document.getElementById('f2-sindic'))document.getElementById('f2-sindic').value=p2Filters.sindic;
+        updateSindicChart(); renderP2All();
+      },
+      plugins:{
+        legend:{display:false},
+        datalabels:{anchor:'end',align:'right',formatter:v=>'R$'+v+'k',font:{size:10,weight:'700'},color:'#333'}
+      },
+      scales:{
+        x:{grid:{color:'#f0ece8'},ticks:{callback:v=>'R$'+v+'k'},beginAtZero:true},
+        y:{grid:{display:false},ticks:{font:{size:11}}}
+      }
+    }
+  });
+
+  // Chart 4: Resultado donut — clique filtra custos
+  p2Charts.resultado = new Chart(document.getElementById('chartResultado'),{
+    type:'doughnut',
+    data:{
+      labels:['Resultado líquido','Custos fixos','Custos variáveis'],
+      datasets:[{data:[103,108,64],backgroundColor:['#2c5940','#888','#c9a84c'],borderWidth:2,borderColor:'#fff',hoverOffset:6}]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'55%',
+      onClick:(e,els)=>{
+        if(!els.length)return;
+        const si=els[0].index;
+        if(si===1) setCostView('fixo',null);
+        else if(si===2) setCostView('variavel',null);
+      },
+      plugins:{
+        legend:{display:false},
+        datalabels:{
+          display:true,
+          color:'#fff',
+          font:{size:11,weight:'700'},
+          formatter:(v,ctx)=>{
+            const total=ctx.dataset.data.reduce((a,b)=>a+b,0);
+            return Math.round(v/total*100)+'%';
+          }
+        },
+        tooltip:{callbacks:{label:ctx=>{
+          const total=ctx.dataset.data.reduce((a,b)=>a+b,0);
+          const pct=Math.round(ctx.parsed/total*100);
+          return ' '+ctx.label+': R$'+ctx.parsed+'k ('+pct+'%)';
+        }}}
+      },
+      animation:{onComplete:()=>{
+        const ds=p2Charts.resultado?.data;
+        if(!ds)return;
+        const total=ds.datasets[0].data.reduce((a,b)=>a+b,0);
+        const el=document.getElementById('resultado-legend');
+        if(!el)return;
+        el.innerHTML=ds.labels.map((lbl,i)=>{
+          const pct=Math.round(ds.datasets[0].data[i]/total*100);
+          const col=ds.datasets[0].backgroundColor[i];
+          return`<span style="display:flex;align-items:center;gap:5px;font-size:10px;color:#444;white-space:nowrap">
+            <span style="width:8px;height:8px;border-radius:50%;background:${col};flex-shrink:0;display:inline-block"></span>
+            ${lbl} <strong style="color:#1a1a1a">${pct}%</strong></span>`;
+        }).join('');
+      }}
+    }
+  });
+}
+
+function updateP2Charts(data){
+  if(!p2Charts.bank) return;
+  const bankTotals={};
+  data.forEach(c=>bankTotals[c.banco]=(bankTotals[c.banco]||0)+c.valor);
+  const bKeys=Object.keys(bankTotals);
+  p2Charts.bank.data.labels=bKeys.map(k=>BANK_NAMES[k]||k);
+  p2Charts.bank.data.datasets[0].data=bKeys.map(k=>bankTotals[k]);
+  p2Charts.bank.data.datasets[0].backgroundColor=bKeys.map(k=>BANK_COLORS[k]||'#888');
+  p2Charts.bank.update();
+  renderBankLegend(data);
+}
+
+// ─── TAB 3 ───
+function setPrad(el){
+  document.querySelectorAll('.prad').forEach(r=>r.classList.remove('active'));
+  el.classList.add('active');
+}
+function updateCobTemplate(){
+  const sel=[];
+  if(document.getElementById('chk-sinijude')?.checked) sel.push({nome:'SINIJUDE',meses:4,total:4800});
+  if(document.getElementById('chk-sintetel')?.checked) sel.push({nome:'SINTETEL',meses:2,total:2400});
+  if(document.getElementById('chk-sindpd-inad')?.checked) sel.push({nome:'SINDPD',meses:1,total:1200});
+  const subEl=document.getElementById('cob-subject-names');
+  const tmpl=document.getElementById('cob-template');
+  if(!tmpl) return;
+  if(!sel.length){
+    if(subEl) subEl.textContent='selecione acima';
+    tmpl.style.fontStyle='italic'; tmpl.style.color='var(--mu)';
+    tmpl.textContent='Selecione os destinatários acima para gerar a mensagem.'; return;
+  }
+  if(subEl) subEl.textContent=sel.map(s=>s.nome).join(', ');
+  const lista=sel.map(s=>`  • ${s.nome}: ${s.meses} mensalidade${s.meses>1?'s':''} — R$ ${s.total.toLocaleString('pt-BR')},00`).join('\n');
+  const total=sel.reduce((a,s)=>a+s.total,0);
+  tmpl.style.fontStyle='normal'; tmpl.style.color='var(--tx)';
+  tmpl.textContent=`Prezados,\n\nIdentificamos mensalidades em aberto referentes às seguintes representações:\n\n${lista}\n\nTotal pendente: R$ ${total.toLocaleString('pt-BR')},00\n\nSolicitamos a regularização até 05/06/2026 para manutenção dos serviços contratados.\n\nAtenciosamente,\nEstevão & Pinheiro Advogados Associados\ncontato@estevaoepinheiro.adv.br · (81) 3423-2494`;
+}
+updateCobTemplate();
+</script>
+
+
+</body></html>
