@@ -25,3 +25,6 @@ node_modules/
 # Drop zone do usuário (só o README vai versionado)
 dados/*
 !dados/README.md
+
+# Diagnósticos e contexto de reuniões — dados sensíveis de cliente, apenas local
+diagnóstico/
