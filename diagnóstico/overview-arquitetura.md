@@ -56,12 +56,12 @@ Claude (Anthropic) é necessário para:
 
 | Uso | Impacto |
 |-----|---------|
-| Categorizar transações desconhecidas | Identifica sindicato/processo pelo contexto (valor, data, histórico) |
-| Fuzzy matching com contexto | PIX "MARIA J SILVA" → "MARIA JOSE SILVA DOS SANTOS" com confirmação de contexto |
+| Categorizar transações desconhecidas | Identifica sindicato/processo pelo contexto (valor, data, histórico) quando nenhum padrão algorítmico resolve |
+| Processar comprovante enviado por Tiago | Tiago responde com foto do comprovante da Caixa — Claude lê a imagem e extrai processo, valor e data sem ação de Waldir |
 | Gerar relatório semanal | Mesmo formato que Waldir já envia para Ricardo Estevam, automaticamente |
 | Parsear PDFs irregulares | Extratos em PDF sem estrutura limpa — Claude extrai mesmo assim |
 | Rascunhar e-mails de cobrança | Tom institucional do escritório, para sindicatos inadimplentes |
-| Respostas em linguagem natural | Waldir digita "o Sinijude pagou esse mês?" — recebe resposta direta |
+| Respostas em linguagem natural (Fase 2) | Waldir digita "o Sinijude pagou esse mês?" — recebe resposta direta |
 
 ---
 
@@ -120,8 +120,9 @@ Waldir sobe OFX/CSV (ou futuramente Pluggy traz automático)
   → Cruzar CNPJ/nome com cadastro de 15 sindicatos → automático
          │
   É PIX de pessoa física?
-  → rapidfuzz + Claude → fuzzy match com base ADV Box (FUNDEF, IPCEP, Bom Jardim)
-  → score > 90: aceitar | 70–90: confirmar com Waldir | < 70: manual
+  → rapidfuzz → fuzzy match algorítmico com base ADV Box (FUNDEF, IPCEP, Bom Jardim)
+  → score > 90: aceitar | 70–90: exibe sugestão para Waldir confirmar | < 70: manual
+  (Claude NÃO é chamado aqui — o matching é puramente algorítmico; Gray zone vai para Waldir)
          │
   É depósito judicial (BB)?
   → Bot Python consulta portal público BB com protocolo → identifica processo → automático
@@ -132,6 +133,22 @@ Waldir sobe OFX/CSV (ou futuramente Pluggy traz automático)
          │
   Não identificado → Waldir classifica → sistema aprende para próxima vez
 ```
+
+---
+
+## Decisão 7 — Fuzzy matching com rapidfuzz, sem IA
+
+PIX de pessoa física traz nome truncado pelo banco (ex.: "JOSE M SILVA"). O matching contra a base de beneficiários (FUNDEF, IPCEP, Bom Jardim, Sirinhaém) é feito com **rapidfuzz** (biblioteca Python — sem chamada à API Claude).
+
+| Score | Ação |
+|-------|------|
+| > 90% | Aceita automaticamente |
+| 70–90% | Exibe sugestão; Waldir confirma com 1 clique |
+| < 70% | Classificação manual; sistema aprende para próxima vez |
+
+Claude **não é chamado** neste passo. Isso reduz o volume de requisições à API em ~40% e elimina latência desnecessária para uma operação que é puramente algorítmica.
+
+> **Impacto no custo:** estimativa de Claude API cai de R$100–300/mês para R$60–180/mês na Fase 1 (dependendo do volume de transações desconhecidas e comprovantes do Tiago).
 
 ---
 
