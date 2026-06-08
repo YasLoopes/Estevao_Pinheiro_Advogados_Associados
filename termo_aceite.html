@@ -84,12 +84,16 @@
   .sig-cpfcnpj{font-family:'DM Mono',monospace;font-size:.625rem;color:var(--mu)}
   .sig-date{border:1px solid var(--bd);border-radius:6px;padding:.5rem .75rem;font-size:clamp(.875rem,2vw,.9375rem);color:var(--mu);text-align:center;background:#faf8f5;margin-bottom:1rem}
 
-  /* ── ROI / JUSTIFICATIVA ────────────────────────────────── */
-  .roi-box{margin-bottom:1.25rem;padding:.875rem 1rem .875rem 1.125rem;background:#fff;border:1px solid var(--bd);border-left:3px solid var(--bx);border-radius:0 8px 8px 0}
-  .roi-title{font-size:.5625rem;font-weight:700;color:var(--bx);text-transform:uppercase;letter-spacing:.1em;font-family:'DM Mono',monospace;margin-bottom:.5rem}
-  .roi-list{display:flex;flex-direction:column;gap:.3125rem}
-  .roi-item{display:flex;align-items:flex-start;gap:.5rem;font-size:clamp(.8125rem,1.8vw,.875rem);color:#3a3a3a;line-height:1.45}
-  .roi-icon{flex-shrink:0;color:var(--bx);font-weight:700;width:14px;text-align:center;margin-top:1px}
+  /* ── ROI STRIP ───────────────────────────────────────────── */
+  .roi-strip{display:grid;grid-template-columns:1fr;margin-bottom:.875rem;border:1px solid var(--bd);border-radius:12px;overflow:hidden;background:#fff}
+  @media(min-width:520px){.roi-strip{grid-template-columns:1fr 1fr 1fr}}
+  .roi-stat{padding:1rem 1.125rem;display:flex;flex-direction:column;gap:.25rem;border-bottom:1px solid var(--bd)}
+  @media(min-width:520px){.roi-stat{border-bottom:none;border-right:1px solid var(--bd)}}
+  .roi-stat:last-child{border:none}
+  .roi-stat-top{display:flex;align-items:center;gap:.375rem}
+  .roi-stat-icon{font-size:.875rem;color:var(--bx);line-height:1}
+  .roi-stat-num{font-family:'DM Serif Display',serif;font-size:clamp(1rem,2.5vw,1.125rem);color:var(--bxd);line-height:1.15}
+  .roi-stat-lbl{font-size:clamp(.75rem,1.8vw,.8125rem);color:var(--mu);line-height:1.4}
 
   /* ── MARCO À VISTA ───────────────────────────────────────── */
   .marco-avista{display:flex;justify-content:space-between;align-items:center;padding:.625rem 1.125rem;background:#f5edd8;border-top:1px solid rgba(201,168,76,.35)}
@@ -143,19 +147,35 @@
     </div>
   </div>
 
+  <!-- ROI STRIP -->
+  <div class="roi-strip">
+    <div class="roi-stat">
+      <div class="roi-stat-top">
+        <span class="roi-stat-icon">↑</span>
+        <span class="roi-stat-num">8–10h por semana</span>
+      </div>
+      <div class="roi-stat-lbl">de Waldir liberadas da conciliação manual, consultas a portais e montagem de relatórios</div>
+    </div>
+    <div class="roi-stat">
+      <div class="roi-stat-top">
+        <span class="roi-stat-icon">↗</span>
+        <span class="roi-stat-num">R$9k–14k em 3 anos</span>
+      </div>
+      <div class="roi-stat-lbl">custo de sistemas genéricos do mercado (R$250–400/mês) — sem código, sem propriedade, sem personalização</div>
+    </div>
+    <div class="roi-stat">
+      <div class="roi-stat-top">
+        <span class="roi-stat-icon">✓</span>
+        <span class="roi-stat-num">Código entregue</span>
+      </div>
+      <div class="roi-stat-lbl">após quitação o sistema pertence ao escritório — sem dependência de fornecedor externo</div>
+    </div>
+  </div>
+
   <!-- 02 MARCOS DE ENTREGA -->
   <div class="ta-section">
     <div class="ta-section-title">02 · Escopo e Marcos de Entrega</div>
     <p style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;margin-bottom:1.25rem;line-height:1.65">Desenvolvimento organizado em marcos vinculados a entregas concretas. O pagamento de cada marco ocorre após entrega e validação pelo Contratante — exceto o Marco 1, devido na assinatura deste Termo.</p>
-
-    <div class="roi-box">
-      <div class="roi-title">Por que faz sentido financeiramente</div>
-      <div class="roi-list">
-        <div class="roi-item"><span class="roi-icon">↑</span><span><strong>8 a 10 horas semanais</strong> de Waldir liberadas — tempo hoje consumido em conciliação manual, consultas a portais bancários e montagem de relatórios para Ricardo</span></div>
-        <div class="roi-item"><span class="roi-icon">↗</span><span>Sistemas de gestão financeira jurídica disponíveis no mercado custam <strong>R$250–400/mês</strong>, sem personalização para as regras e processos do escritório. Em 3 anos: R$9.000 a R$14.400 pagos a terceiros, sem código e sem propriedade sobre o sistema</span></div>
-        <div class="roi-item"><span class="roi-icon">✓</span><span>Sistema desenvolvido para o escritório: código entregue após quitação, sem dependência de fornecedor externo e sem mensalidade obrigatória</span></div>
-      </div>
-    </div>
 
     <div class="marco-list">
 
@@ -182,7 +202,6 @@
           <div class="marco-num-badge">2</div>
           <div>
             <div class="marco-titulo">Sistema base operacional</div>
-            <div class="marco-quando">Pagamento após validação</div>
           </div>
         </div>
         <div class="marco-entregas">
@@ -204,7 +223,6 @@
           <div class="marco-num-badge">3</div>
           <div>
             <div class="marco-titulo">Automações e integrações</div>
-            <div class="marco-quando">Pagamento após validação</div>
           </div>
         </div>
         <div class="marco-entregas">
@@ -259,7 +277,7 @@
         </div>
         <div class="manut-valor">R$1.200/mês</div>
       </div>
-      <div class="manut-desc">Inclui até 3 melhorias por mês. <strong>Melhoria:</strong> ajuste ou refinamento de funcionalidade já existente — uma regra ajustada, um campo novo em tela existente, uma mudança de comportamento do sistema. <strong>Novo escopo:</strong> qualquer funcionalidade não descrita neste Termo (nova integração, módulo inédito, produto adicional) — sempre orçado separadamente. Manutenção corretiva de erros está sempre incluída, sem limite de quantidade.</div>
+      <div class="manut-desc">Inclui até 3 melhorias por mês. <strong>Melhoria:</strong> ajuste ou refinamento de funcionalidade já existente — uma regra ajustada, um campo novo em tela existente, uma mudança de comportamento do sistema. <strong>Novo escopo:</strong> qualquer funcionalidade não descrita neste Termo (nova integração, módulo inédito, produto adicional) — sempre orçado separadamente. Correção de erros no código entregue está incluída. Indisponibilidade causada por mudança de API de terceiros, alteração de serviços externos ou infraestrutura é orçada separadamente.</div>
     </div>
 
     <!-- MÓDULOS SOB DEMANDA -->
@@ -270,7 +288,7 @@
       </div>
       <div style="padding:.875rem 1rem;background:var(--bg);border:1px solid var(--bd);border-radius:8px">
         <div style="font-size:.5625rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.375rem;font-family:'DM Mono',monospace">Open Finance (Open Banking) — disponível sob demanda</div>
-        <div style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;line-height:1.55">Sincronização automática de transações bancárias — extrato aparece no sistema em tempo real, sem download ou upload de arquivo por Waldir. Disponível para instituições participantes do Open Finance Brasil. Orçado conforme escopo da integração.</div>
+        <div style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;line-height:1.55">Sincronização automática de transações bancárias — extrato aparece no sistema em tempo real, sem download ou upload de arquivo por Waldir. Orçado conforme escopo da integração.</div>
       </div>
     </div>
 
@@ -328,7 +346,7 @@
       <div class="clause"><div class="clause-num">§1</div><div><strong>Sigilo:</strong> Ambas as partes comprometem-se a manter confidencialidade sobre informações, dados e processos compartilhados durante e após a vigência deste Termo, por prazo indeterminado.</div></div>
       <div class="clause"><div class="clause-num">§2</div><div><strong>Propriedade intelectual:</strong> O código-fonte, repositório GitHub, documentação técnica e todas as interfaces produzidas passam à propriedade integral do Contratante após a quitação total do valor contratado. A Contratada disponibilizará acesso ao repositório e entregará documentação de uso ao Contratante.</div></div>
       <div class="clause"><div class="clause-num">§3</div><div><strong>Escopo:</strong> Funcionalidades solicitadas após o início do desenvolvimento que excedam o definido neste Termo serão orçadas separadamente em nova proposta.</div></div>
-      <div class="clause"><div class="clause-num">§4</div><div><strong>Rescisão:</strong> Qualquer das partes pode rescindir mediante aviso prévio de 30 dias. Marcos concluídos são devidos integralmente. Marcos em andamento serão cobrados proporcionalmente ao trabalho realizado, comprovado por relatório de horas.</div></div>
+      <div class="clause"><div class="clause-num">§4</div><div><strong>Rescisão:</strong> Qualquer das partes pode rescindir mediante aviso prévio de 30 dias. Marcos concluídos são devidos integralmente. Marcos em andamento na data de rescisão são devidos em 50% do valor. Marcos não iniciados não são cobrados.</div></div>
       <div class="clause"><div class="clause-num">§5</div><div><strong>Foro:</strong> Fica eleito o foro da Comarca de Recife/PE para dirimir quaisquer controvérsias, com renúncia a qualquer outro por mais privilegiado que seja.</div></div>
     </div>
   </div>
