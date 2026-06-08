@@ -18,9 +18,8 @@ Desenvolvimento de sistema financeiro sob medida para gestão de honorários, me
 |---|---|
 | Jornada do sistema | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/jornada-sistema.html) |
 | Overview de arquitetura | [ver arquivo](https://github.com/YasLoopes/Estevao_Pinheiro_Advogados_Associados/blob/main/diagn%C3%B3stico/overview-arquitetura.md) |
-| Proposta comercial | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/proposta_ep.html) |
-| Termo de aceite | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/termo_aceite.html) |
 | Demo do sistema | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/demo_v2.html) |
+| Termo de aceite | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/termo_aceite.html) |
 
 ---
 
