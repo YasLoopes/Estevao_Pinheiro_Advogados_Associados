@@ -38,18 +38,29 @@
   .ta-field .val{font-size:clamp(.875rem,2vw,.9375rem);font-weight:600;color:var(--tx);border-bottom:1.5px solid var(--bd);padding-bottom:4px}
   .ta-field .val.blank{color:var(--mu);font-weight:400}
 
-  /* ── PLAN SELECTOR ──────────────────────────────────────── */
-  .plan-grid{display:grid;grid-template-columns:1fr;gap:.625rem}
-  @media(min-width:480px){.plan-grid{grid-template-columns:1fr 1fr}}
-  @media(min-width:680px){.plan-grid{grid-template-columns:repeat(3,1fr)}}
-  .plan-card{border:2px solid var(--bd);border-radius:8px;padding:clamp(.75rem,2vw,.875rem) clamp(.75rem,2vw,.875rem);cursor:pointer;transition:border-color .15s}
-  .plan-card.selected{border-color:var(--bx);background:rgba(107,28,46,.04)}
-  .plan-name{font-size:clamp(.875rem,2vw,.9375rem);font-weight:700;color:var(--tx);margin-bottom:2px}
-  .plan-phases{font-size:.625rem;color:var(--mu);margin-bottom:.375rem}
-  .plan-price{font-family:'DM Serif Display',serif;font-size:clamp(1.125rem,3vw,1.3125rem);color:var(--bx)}
-  .plan-parcel{font-size:.625rem;color:var(--mu);margin-top:1px}
-  .plan-check{width:16px;height:16px;border:2px solid var(--bd);border-radius:50%;margin-top:.5rem;display:flex;align-items:center;justify-content:center;font-size:.5625rem;color:#fff}
-  .plan-card.selected .plan-check{background:var(--bx);border-color:var(--bx)}
+  /* ── MARCOS ─────────────────────────────────────────────── */
+  .marco-list{border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+  .marco-item{display:grid;grid-template-columns:1fr;gap:.75rem;padding:1rem 1.125rem;border-bottom:1px solid var(--bd);background:#fff}
+  @media(min-width:600px){.marco-item{grid-template-columns:10.5rem 1fr auto;gap:1rem;align-items:start}}
+  .marco-left{display:flex;align-items:flex-start;gap:.625rem}
+  .marco-num-badge{width:28px;height:28px;min-width:28px;border-radius:6px;background:var(--bx);color:#fff;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+  .marco-titulo{font-weight:700;font-size:clamp(.875rem,2vw,.9375rem);color:var(--bxd);margin-bottom:2px}
+  .marco-quando{font-size:.5625rem;color:var(--mu);font-family:'DM Mono',monospace;line-height:1.4}
+  .marco-entregas ul{list-style:none;display:flex;flex-direction:column;gap:.3125rem}
+  .marco-entregas li{display:flex;align-items:flex-start;gap:.375rem;font-size:clamp(.8125rem,1.8vw,.875rem);color:#3a3a3a;line-height:1.45}
+  .marco-entregas li::before{content:'✓';color:var(--gn);font-size:.5625rem;font-weight:700;flex-shrink:0;margin-top:3px}
+  .marco-valor{font-family:'DM Serif Display',serif;font-size:clamp(1rem,2.5vw,1.125rem);color:var(--bx);white-space:nowrap}
+  .marco-total{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.125rem;background:var(--bxd)}
+  .marco-total-lbl{font-size:.875rem;font-weight:700;color:rgba(255,255,255,.8)}
+  .marco-total-val{font-family:'DM Serif Display',serif;font-size:1.375rem;color:var(--gold)}
+
+  /* ── MANUTENÇÃO ──────────────────────────────────────────── */
+  .manut-box{margin-top:.625rem;border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+  .manut-header{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.125rem;background:#fff;border-bottom:1px solid var(--bd);gap:1rem;flex-wrap:wrap}
+  .manut-titulo{font-weight:700;font-size:clamp(.875rem,2vw,.9375rem);color:var(--tx);margin-bottom:2px}
+  .manut-sub{font-size:.5625rem;color:var(--mu);font-family:'DM Mono',monospace}
+  .manut-valor{font-family:'DM Serif Display',serif;font-size:1.125rem;color:var(--bx);white-space:nowrap}
+  .manut-desc{padding:.75rem 1.125rem;font-size:clamp(.8125rem,1.8vw,.875rem);color:#3a3a3a;line-height:1.6;background:#faf8f5}
 
   /* ── CLÁUSULAS ──────────────────────────────────────────── */
   .clause-list{display:flex;flex-direction:column;gap:.5rem}
@@ -81,7 +92,8 @@
     .doc{padding:0}
     .ta-header{border-radius:0 0 14px 14px;margin-bottom:20px}
     .ta-section{break-inside:avoid;margin-bottom:10px}
-    .plan-card{break-inside:avoid}
+    .marco-item{break-inside:avoid}
+    .marco-total{break-inside:avoid}
   }
 </style>
 </head>
@@ -94,13 +106,13 @@
     <div class="ta-title">Sistema de Gestão Financeira</div>
     <div class="ta-sub">Estevão & Pinheiro Advogados Associados</div>
     <div class="ta-meta">
-      <div class="ta-meta-item"><div class="lbl">Data</div><div class="val">Recife, 29 de Maio de 2026</div></div>
-      <div class="ta-meta-item"><div class="lbl">Referência</div><div class="val">Proposta Técnica · Maio 2026</div></div>
-      <div class="ta-meta-item"><div class="lbl">Validade da proposta</div><div class="val">30 dias a partir da data</div></div>
+      <div class="ta-meta-item"><div class="lbl">Data</div><div class="val">Recife, Junho de 2026</div></div>
+      <div class="ta-meta-item"><div class="lbl">Referência</div><div class="val">Jornada do Sistema · Junho 2026</div></div>
+      <div class="ta-meta-item"><div class="lbl">Validade</div><div class="val">30 dias a partir da data</div></div>
     </div>
   </div>
 
-  <!-- PARTES -->
+  <!-- 01 PARTES -->
   <div class="ta-section">
     <div class="ta-section-title">01 · Partes</div>
     <div class="ta-grid">
@@ -119,55 +131,141 @@
     </div>
   </div>
 
-  <!-- OBJETO E PLANO -->
+  <!-- 02 MARCOS DE ENTREGA -->
   <div class="ta-section">
-    <div class="ta-section-title">02 · Objeto — Plano Contratado</div>
-    <p style="font-size:12px;color:#3a3a3a;margin-bottom:16px">O Contratante seleciona abaixo o plano de desenvolvimento conforme Proposta Técnica e Comercial de Maio/2026, que integra este Termo como Anexo I.</p>
-    <div class="plan-grid">
-      <div class="plan-card">
-        <div class="plan-name">Essencial — Lançamentos</div>
-        <div class="plan-phases">Apenas Fase 1 · Semanas 1–3</div>
-        <div class="plan-price">R$ 6.500</div>
-        <div class="plan-parcel">ou 2× R$ 3.400</div>
-        <div class="plan-check">✓</div>
+    <div class="ta-section-title">02 · Escopo e Marcos de Entrega</div>
+    <p style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;margin-bottom:1.25rem;line-height:1.65">Desenvolvimento organizado em marcos vinculados a entregas concretas. O pagamento de cada marco ocorre após entrega e validação pelo Contratante — exceto o Marco 1, devido na assinatura deste Termo.</p>
+
+    <div class="marco-list">
+
+      <div class="marco-item">
+        <div class="marco-left">
+          <div class="marco-num-badge">1</div>
+          <div>
+            <div class="marco-titulo">Assinatura do contrato</div>
+            <div class="marco-quando">Pagamento na assinatura</div>
+          </div>
+        </div>
+        <div class="marco-entregas">
+          <ul>
+            <li>Início oficial do projeto</li>
+            <li>Alinhamento das regras de negócio, percentuais de repasse e fluxos do escritório</li>
+            <li>Acesso às planilhas e dados históricos para referência no desenvolvimento</li>
+          </ul>
+        </div>
+        <div class="marco-valor">R$4.000</div>
       </div>
-      <div class="plan-card">
-        <div class="plan-name">Integrado — Análise de Dados</div>
-        <div class="plan-phases">Fases 1 + 2 · Semanas 1–6</div>
-        <div class="plan-price">R$ 8.500</div>
-        <div class="plan-parcel">ou 3× R$ 2.950</div>
-        <div class="plan-check">✓</div>
+
+      <div class="marco-item">
+        <div class="marco-left">
+          <div class="marco-num-badge">2</div>
+          <div>
+            <div class="marco-titulo">Sistema base operacional</div>
+            <div class="marco-quando">Pagamento após validação</div>
+          </div>
+        </div>
+        <div class="marco-entregas">
+          <ul>
+            <li>Login com Google Workspace — sem criar nova senha</li>
+            <li>Importação de extrato bancário OFX, CSV ou PDF — BB e Caixa</li>
+            <li>Cadastro dos sindicatos com regras de repasse individuais por percentual</li>
+            <li>Cálculo automático de honorários e tributos por lançamento</li>
+            <li>Painel financeiro em tempo real: receita, saldo e inadimplência por sindicato</li>
+            <li>Alerta automático de sindicatos inadimplentes</li>
+            <li>Exportação para Excel a qualquer momento</li>
+          </ul>
+        </div>
+        <div class="marco-valor">R$5.000</div>
       </div>
-      <div class="plan-card">
-        <div class="plan-name">Completo — Com. Automatizadas</div>
-        <div class="plan-phases">Fases 1 + 2 + 3 · Semanas 1–11</div>
-        <div class="plan-price">R$ 10.000</div>
-        <div class="plan-parcel">ou 4× R$ 2.650</div>
-        <div class="plan-check">✓</div>
+
+      <div class="marco-item">
+        <div class="marco-left">
+          <div class="marco-num-badge">3</div>
+          <div>
+            <div class="marco-titulo">Automações e integrações</div>
+            <div class="marco-quando">Pagamento após validação</div>
+          </div>
+        </div>
+        <div class="marco-entregas">
+          <ul>
+            <li>Reconhecimento automático de lançamentos por padrão — aprende com cada confirmação</li>
+            <li>Identificação de depósitos judiciais do Banco do Brasil via portal público (automático, sem ação de Waldir)</li>
+            <li>E-mail automático para Tiago (Caixa) com processamento da resposta por inteligência artificial</li>
+            <li>Integração com ADV Box — base de processos e beneficiários</li>
+            <li>Relatório semanal gerado e enviado automaticamente para Ricardo toda sexta-feira</li>
+          </ul>
+        </div>
+        <div class="marco-valor">R$5.000</div>
       </div>
+
+      <div class="marco-item" style="border-bottom:none">
+        <div class="marco-left">
+          <div class="marco-num-badge">4</div>
+          <div>
+            <div class="marco-titulo">Entrega final e refinamentos</div>
+            <div class="marco-quando">Pagamento na conclusão</div>
+          </div>
+        </div>
+        <div class="marco-entregas">
+          <ul>
+            <li>Assistente com IA — Waldir digita perguntas em linguagem natural e recebe resposta com dados reais do sistema</li>
+            <li>Ajuste 1 — interface e usabilidade: correções visuais identificadas por Waldir durante uso real</li>
+            <li>Ajuste 2 — regras de negócio: calibração de percentuais e parâmetros com base nos dados reais do escritório</li>
+            <li>Ajuste 3 — relatório para Ricardo: formato e conteúdo validados após primeiros envios</li>
+            <li>Ajuste 4 — fluxo de identificação: refinamento do reconhecimento automático após as primeiras semanas de operação</li>
+            <li>Deploy final em produção na conta Google do escritório</li>
+            <li>Acesso ao repositório de código e documentação técnica entregues ao Contratante</li>
+          </ul>
+        </div>
+        <div class="marco-valor">R$2.000</div>
+      </div>
+
+      <div class="marco-total">
+        <div class="marco-total-lbl">Total do projeto</div>
+        <div class="marco-total-val">R$16.000</div>
+      </div>
+
     </div>
+
+    <!-- MANUTENÇÃO -->
+    <div class="manut-box">
+      <div class="manut-header">
+        <div>
+          <div class="manut-titulo">Manutenção mensal — opcional</div>
+          <div class="manut-sub">Sem fidelidade mínima · cancelamento com 30 dias de aviso prévio</div>
+        </div>
+        <div class="manut-valor">R$1.200/mês</div>
+      </div>
+      <div class="manut-desc">Inclui até 3 mudanças ou melhorias por mês, cada uma com escopo de até 4 horas de desenvolvimento. Manutenção corretiva de erros não conta no limite e está sempre incluída. Solicitações adicionais acima de 3 por mês, ou que excedam 4 horas de trabalho, são orçadas separadamente em nova proposta.</div>
+    </div>
+
+    <!-- MÓDULO FUTURO -->
+    <div style="margin-top:.625rem;padding:.875rem 1rem;background:var(--bg);border:1px solid var(--bd);border-radius:8px">
+      <div style="font-size:.5625rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.375rem;font-family:'DM Mono',monospace">Módulo de documentos automáticos — disponível sob demanda, sem prazo definido</div>
+      <div style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;line-height:1.55">Assinatura digital de recibos de honorários (ZapSign), cobrança automática de sindicatos inadimplentes e envio de relatório para Ricardo via WhatsApp. Orçado em <strong style="color:var(--bxd)">R$6.500</strong> — contratado à parte quando o escritório quiser ativar.</div>
+    </div>
+
   </div>
 
-  <!-- PAGAMENTO -->
+  <!-- 03 PAGAMENTO -->
   <div class="ta-section">
-    <div class="ta-section-title">03 · Valor e Forma de Pagamento</div>
+    <div class="ta-section-title">03 · Dados de Pagamento</div>
     <div class="ta-grid">
       <div>
-        <div class="ta-field"><label>Valor total contratado</label><div class="val blank">R$ ___________________</div></div>
-        <div class="ta-field"><label>Forma de pagamento</label><div class="val blank">________________________</div></div>
+        <div class="ta-field"><label>Chave Pix — Contratada</label><div class="val">yasmingonca99@gmail.com</div></div>
+        <div class="ta-field"><label>Titular</label><div class="val">Yasmin Gonçalves Lopes · CNPJ 44.704.456/0001-08</div></div>
       </div>
       <div>
-        <div class="ta-field"><label>Chave Pix (Contratada)</label><div class="val">yasmingonca99@gmail.com</div></div>
-        <div class="ta-field"><label>Data de início</label><div class="val blank">____/____/2026</div></div>
+        <div class="ta-field"><label>Data de início do projeto</label><div class="val blank">____/____/2026</div></div>
+        <div class="ta-field"><label>Previsão de entrega do Marco 2</label><div class="val blank">____/____/2026</div></div>
       </div>
     </div>
-    <div class="ta-grid" style="margin-top:4px">
-      <div class="ta-field"><label>Quantidade de parcelas</label><div class="val blank">________________________</div></div>
-      <div class="ta-field"><label>Data de pagamento fixo mensal</label><div class="val blank">Todo dia ______ de cada mês</div></div>
+    <div style="margin-top:.625rem;padding:.625rem .875rem;background:var(--bg);border:1px solid var(--bd);border-radius:6px;font-size:clamp(.75rem,1.8vw,.8125rem);color:var(--mu);line-height:1.55">
+      Cada marco é pago após entrega e validação pelo Contratante. O Marco 1 (R$4.000) é devido na assinatura deste Termo. Em caso de atraso no pagamento superior a 10 dias corridos, o desenvolvimento é suspenso até regularização.
     </div>
   </div>
 
-  <!-- OBRIGAÇÕES -->
+  <!-- 04 OBRIGAÇÕES -->
   <div class="ta-section">
     <div class="ta-section-title">04 · Obrigações das Partes</div>
     <div class="obr-grid">
@@ -175,38 +273,38 @@
         <div class="obr-col-title">Contratante</div>
         <ul class="obr-list">
           <li>Fornecer acesso às planilhas e dados históricos</li>
-          <li>Responder alinhamentos pendentes em até 3 dias úteis</li>
-          <li>Nomear responsável para validação e testes de cada fase</li>
-          <li>Efetuar pagamentos nas datas acordadas</li>
-          <li>Não compartilhar o sistema com terceiros sem autorização</li>
+          <li>Responder alinhamentos em até 3 dias úteis</li>
+          <li>Nomear responsável para validação de cada entrega</li>
+          <li>Disponibilizar conta Google do escritório para deploy da infraestrutura</li>
+          <li>Efetuar pagamentos nas datas acordadas por marco</li>
         </ul>
       </div>
       <div>
         <div class="obr-col-title">Contratada</div>
         <ul class="obr-list">
-          <li>Desenvolver o sistema conforme escopo da Proposta</li>
-          <li>Entregar cada fase no prazo do cronograma acordado</li>
-          <li>Realizar até 2 rodadas de ajustes por fase entregue</li>
+          <li>Desenvolver o sistema conforme escopo definido neste Termo</li>
+          <li>Entregar cada marco com qualidade e dentro do prazo acordado</li>
+          <li>Realizar os 4 ajustes incluídos no Marco 4 após validação do sistema completo</li>
           <li>Manter sigilo sobre dados e informações do Contratante</li>
-          <li>Transferir o código-fonte após quitação integral</li>
+          <li>Disponibilizar acesso ao repositório de código e documentação técnica após quitação integral</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- CLÁUSULAS -->
+  <!-- 05 CLÁUSULAS -->
   <div class="ta-section">
     <div class="ta-section-title">05 · Cláusulas Essenciais</div>
     <div class="clause-list">
       <div class="clause"><div class="clause-num">§1</div><div><strong>Sigilo:</strong> Ambas as partes comprometem-se a manter confidencialidade sobre informações, dados e processos compartilhados durante e após a vigência deste Termo, por prazo indeterminado.</div></div>
-      <div class="clause"><div class="clause-num">§2</div><div><strong>Propriedade intelectual:</strong> O código-fonte, interfaces e toda a documentação produzida passam à propriedade do Contratante após a quitação integral do valor contratado.</div></div>
-      <div class="clause"><div class="clause-num">§3</div><div><strong>Escopo:</strong> Alterações de escopo solicitadas após o início do desenvolvimento que excedam o definido na Proposta serão orçadas separadamente em nova proposta.</div></div>
-      <div class="clause"><div class="clause-num">§4</div><div><strong>Rescisão:</strong> Qualquer das partes pode rescindir mediante aviso prévio de 30 dias. Fases concluídas são devidas integralmente. Fases em andamento serão cobradas proporcionalmente ao trabalho realizado.</div></div>
+      <div class="clause"><div class="clause-num">§2</div><div><strong>Propriedade intelectual:</strong> O código-fonte, repositório GitHub, documentação técnica e todas as interfaces produzidas passam à propriedade integral do Contratante após a quitação total do valor contratado. A Contratada disponibilizará acesso ao repositório e entregará documentação de uso ao Contratante.</div></div>
+      <div class="clause"><div class="clause-num">§3</div><div><strong>Escopo:</strong> Funcionalidades solicitadas após o início do desenvolvimento que excedam o definido neste Termo serão orçadas separadamente em nova proposta.</div></div>
+      <div class="clause"><div class="clause-num">§4</div><div><strong>Rescisão:</strong> Qualquer das partes pode rescindir mediante aviso prévio de 30 dias. Marcos concluídos são devidos integralmente. Marcos em andamento serão cobrados proporcionalmente ao trabalho realizado, comprovado por relatório de horas.</div></div>
       <div class="clause"><div class="clause-num">§5</div><div><strong>Foro:</strong> Fica eleito o foro da Comarca de Recife/PE para dirimir quaisquer controvérsias, com renúncia a qualquer outro por mais privilegiado que seja.</div></div>
     </div>
   </div>
 
-  <!-- ASSINATURAS -->
+  <!-- 06 ASSINATURAS -->
   <div class="ta-section">
     <div class="ta-section-title">06 · Assinaturas</div>
     <div class="sig-date">Recife (PE), _____ de _________________ de 2026</div>
@@ -227,7 +325,7 @@
       </div>
     </div>
     <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--bd);font-size:10.5px;color:var(--mu);line-height:1.6">
-      Este documento constitui o acordo integral entre as partes para o objeto descrito, prevalecendo sobre qualquer comunicação anterior. A assinatura digital via Gov.br, ClickSign ou outro método com validade eletrônica tem o mesmo valor jurídico da assinatura manuscrita, nos termos da Lei nº 14.063/2020 e MP 2.200-2/2001.
+      Este documento constitui o acordo integral entre as partes para o objeto descrito, prevalecendo sobre qualquer comunicação anterior. A assinatura digital via Gov.br, ZapSign ou outro método com validade eletrônica tem o mesmo valor jurídico da assinatura manuscrita, nos termos da Lei nº 14.063/2020 e MP 2.200-2/2001.
     </div>
   </div>
 
