@@ -84,6 +84,18 @@
   .sig-cpfcnpj{font-family:'DM Mono',monospace;font-size:.625rem;color:var(--mu)}
   .sig-date{border:1px solid var(--bd);border-radius:6px;padding:.5rem .75rem;font-size:clamp(.875rem,2vw,.9375rem);color:var(--mu);text-align:center;background:#faf8f5;margin-bottom:1rem}
 
+  /* ── ROI / JUSTIFICATIVA ────────────────────────────────── */
+  .roi-box{margin-bottom:1.25rem;padding:.875rem 1rem .875rem 1.125rem;background:#fff;border:1px solid var(--bd);border-left:3px solid var(--bx);border-radius:0 8px 8px 0}
+  .roi-title{font-size:.5625rem;font-weight:700;color:var(--bx);text-transform:uppercase;letter-spacing:.1em;font-family:'DM Mono',monospace;margin-bottom:.5rem}
+  .roi-list{display:flex;flex-direction:column;gap:.3125rem}
+  .roi-item{display:flex;align-items:flex-start;gap:.5rem;font-size:clamp(.8125rem,1.8vw,.875rem);color:#3a3a3a;line-height:1.45}
+  .roi-icon{flex-shrink:0;color:var(--bx);font-weight:700;width:14px;text-align:center;margin-top:1px}
+
+  /* ── MARCO À VISTA ───────────────────────────────────────── */
+  .marco-avista{display:flex;justify-content:space-between;align-items:center;padding:.625rem 1.125rem;background:#f5edd8;border-top:1px solid rgba(201,168,76,.35)}
+  .marco-avista-lbl{font-size:.75rem;color:var(--bxd);font-weight:600}
+  .marco-avista-val{font-family:'DM Serif Display',serif;font-size:1.125rem;color:var(--bxd)}
+
   /* ── PRINT ──────────────────────────────────────────────── */
   @media print{
     @page{margin:12mm 14mm;size:A4 portrait}
@@ -135,6 +147,15 @@
   <div class="ta-section">
     <div class="ta-section-title">02 · Escopo e Marcos de Entrega</div>
     <p style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;margin-bottom:1.25rem;line-height:1.65">Desenvolvimento organizado em marcos vinculados a entregas concretas. O pagamento de cada marco ocorre após entrega e validação pelo Contratante — exceto o Marco 1, devido na assinatura deste Termo.</p>
+
+    <div class="roi-box">
+      <div class="roi-title">Por que faz sentido financeiramente</div>
+      <div class="roi-list">
+        <div class="roi-item"><span class="roi-icon">↑</span><span><strong>8 a 10 horas semanais</strong> de Waldir liberadas — tempo hoje consumido em conciliação manual, consultas a portais bancários e montagem de relatórios para Ricardo</span></div>
+        <div class="roi-item"><span class="roi-icon">↗</span><span>Sistemas de gestão financeira jurídica disponíveis no mercado custam <strong>R$250–400/mês</strong>, sem personalização para as regras e processos do escritório. Em 3 anos: R$9.000 a R$14.400 pagos a terceiros, sem código e sem propriedade sobre o sistema</span></div>
+        <div class="roi-item"><span class="roi-icon">✓</span><span>Sistema desenvolvido para o escritório: código entregue após quitação, sem dependência de fornecedor externo e sem mensalidade obrigatória</span></div>
+      </div>
+    </div>
 
     <div class="marco-list">
 
@@ -209,20 +230,22 @@
         <div class="marco-entregas">
           <ul>
             <li>Assistente com IA — Waldir digita perguntas em linguagem natural e recebe resposta com dados reais do sistema</li>
-            <li>Ajuste 1 — interface e usabilidade: correções visuais identificadas por Waldir durante uso real</li>
-            <li>Ajuste 2 — regras de negócio: calibração de percentuais e parâmetros com base nos dados reais do escritório</li>
-            <li>Ajuste 3 — relatório para Ricardo: formato e conteúdo validados após primeiros envios</li>
-            <li>Ajuste 4 — fluxo de identificação: refinamento do reconhecimento automático após as primeiras semanas de operação</li>
+            <li>4 rodadas de ajustes pós-teste — correções e calibrações identificadas por Waldir durante uso real do sistema completo, sem custo adicional</li>
             <li>Deploy final em produção na conta Google do escritório</li>
             <li>Acesso ao repositório de código e documentação técnica entregues ao Contratante</li>
+            <li style="color:var(--mu)">Opcional: Open Finance — sincronização automática de transações bancárias sem upload de extrato (orçado separadamente se ativado)</li>
           </ul>
         </div>
         <div class="marco-valor">R$2.000</div>
       </div>
 
       <div class="marco-total">
-        <div class="marco-total-lbl">Total do projeto</div>
+        <div class="marco-total-lbl">Total por marcos <span style="font-size:.5625rem;font-weight:400;font-family:'DM Mono',monospace;opacity:.6">· pagamento conforme cada entrega</span></div>
         <div class="marco-total-val">R$16.000</div>
+      </div>
+      <div class="marco-avista">
+        <div class="marco-avista-lbl">Pagamento à vista na assinatura <span style="font-size:.5625rem;font-weight:400;font-family:'DM Mono',monospace;opacity:.7">· 6% de desconto</span></div>
+        <div class="marco-avista-val">R$15.000</div>
       </div>
 
     </div>
@@ -236,13 +259,19 @@
         </div>
         <div class="manut-valor">R$1.200/mês</div>
       </div>
-      <div class="manut-desc">Inclui até 3 mudanças ou melhorias por mês, cada uma com escopo de até 4 horas de desenvolvimento. Manutenção corretiva de erros não conta no limite e está sempre incluída. Solicitações adicionais acima de 3 por mês, ou que excedam 4 horas de trabalho, são orçadas separadamente em nova proposta.</div>
+      <div class="manut-desc">Inclui até 3 melhorias por mês. <strong>Melhoria:</strong> ajuste ou refinamento de funcionalidade já existente — uma regra ajustada, um campo novo em tela existente, uma mudança de comportamento do sistema. <strong>Novo escopo:</strong> qualquer funcionalidade não descrita neste Termo (nova integração, módulo inédito, produto adicional) — sempre orçado separadamente. Manutenção corretiva de erros está sempre incluída, sem limite de quantidade.</div>
     </div>
 
-    <!-- MÓDULO FUTURO -->
-    <div style="margin-top:.625rem;padding:.875rem 1rem;background:var(--bg);border:1px solid var(--bd);border-radius:8px">
-      <div style="font-size:.5625rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.375rem;font-family:'DM Mono',monospace">Módulo de documentos automáticos — disponível sob demanda, sem prazo definido</div>
-      <div style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;line-height:1.55">Assinatura digital de recibos de honorários (ZapSign), cobrança automática de sindicatos inadimplentes e envio de relatório para Ricardo via WhatsApp. Orçado em <strong style="color:var(--bxd)">R$6.500</strong> — contratado à parte quando o escritório quiser ativar.</div>
+    <!-- MÓDULOS SOB DEMANDA -->
+    <div style="margin-top:.625rem;display:flex;flex-direction:column;gap:.375rem">
+      <div style="padding:.875rem 1rem;background:var(--bg);border:1px solid var(--bd);border-radius:8px">
+        <div style="font-size:.5625rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.375rem;font-family:'DM Mono',monospace">Módulo de documentos automáticos — disponível sob demanda</div>
+        <div style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;line-height:1.55">Assinatura digital de recibos de honorários (ZapSign), cobrança automática de sindicatos inadimplentes e envio de relatório para Ricardo via WhatsApp. Orçado em <strong style="color:var(--bxd)">R$6.500</strong> — contratado à parte quando o escritório quiser ativar.</div>
+      </div>
+      <div style="padding:.875rem 1rem;background:var(--bg);border:1px solid var(--bd);border-radius:8px">
+        <div style="font-size:.5625rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.375rem;font-family:'DM Mono',monospace">Open Finance (Open Banking) — disponível sob demanda</div>
+        <div style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;line-height:1.55">Sincronização automática de transações bancárias — extrato aparece no sistema em tempo real, sem download ou upload de arquivo por Waldir. Disponível para instituições participantes do Open Finance Brasil. Orçado conforme escopo da integração.</div>
+      </div>
     </div>
 
   </div>
