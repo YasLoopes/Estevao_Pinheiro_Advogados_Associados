@@ -6,7 +6,7 @@ Repositório do projeto de automação financeira e operacional do escritório E
 
 ## Sobre o projeto
 
-Desenvolvimento de sistema financeiro sob medida para gestão de honorários, mensalidades de sindicatos, depósitos judiciais e relatórios para a direção. Construído em Python com integração ao ADV Box, bancos BB e Caixa Econômica Federal, e Google Workspace.
+Desenvolvimento de sistema financeiro sob medida para gestão de honorários, mensalidades de sindicatos, depósitos judiciais e relatórios para a direção. Construído em Python com integração ao ADV Box, Banco do Brasil e Caixa Econômica Federal, e Google Workspace.
 
 **Status atual:** Termo de aceite enviado — aguardando assinatura para início do desenvolvimento.
 
