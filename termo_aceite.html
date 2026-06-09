@@ -55,7 +55,7 @@
   .marco-total-val{font-family:'DM Serif Display',serif;font-size:1.375rem;color:var(--gold)}
 
   /* ── MANUTENÇÃO ──────────────────────────────────────────── */
-  .manut-box{margin-top:.625rem;border:1px solid var(--bd);border-left:3px solid var(--gold);border-radius:10px;overflow:hidden;background:#fff}
+  .manut-box{border:1px solid var(--bd);border-left:3px solid var(--gold);border-radius:10px;overflow:hidden;background:#fff}
   .manut-header{display:flex;justify-content:space-between;align-items:baseline;padding:.75rem 1rem;gap:1rem;flex-wrap:wrap;border-bottom:1px dashed var(--bd)}
   .manut-titulo{font-weight:700;font-size:clamp(.875rem,2vw,.9375rem);color:var(--tx);display:flex;align-items:center;gap:.375rem}
   .manut-opt{font-size:.5rem;font-family:'DM Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);border:1px solid var(--bd);border-radius:3px;padding:1px 4px;line-height:1.6}
@@ -124,7 +124,7 @@
     <div class="ta-title">Sistema de Gestão Financeira</div>
     <div class="ta-sub">Estevão & Pinheiro Advogados Associados</div>
     <div class="ta-meta">
-      <div class="ta-meta-item"><div class="lbl">Data</div><div class="val">Recife, _____ de 2026</div></div>
+      <div class="ta-meta-item"><div class="lbl">Data</div><div class="val">Recife, _____ de junho de 2026</div></div>
       <div class="ta-meta-item"><div class="lbl">Referência</div><div class="val">Jornada do Sistema</div></div>
       <div class="ta-meta-item"><div class="lbl">Validade</div><div class="val">30 dias a partir da data</div></div>
     </div>
@@ -158,8 +158,8 @@
         <div class="roi-stat-lbl">de Waldir liberadas da conciliação manual, consultas a portais e montagem de relatórios</div>
       </div>
       <div class="roi-stat">
-        <div class="roi-stat-num">R$9k–14k em 3 anos</div>
-        <div class="roi-stat-lbl">custo de sistemas do mercado (R$250–400/mês) — sem código, sem propriedade, sem personalização</div>
+        <div class="roi-stat-num">R$250–400/mês</div>
+        <div class="roi-stat-lbl">custo recorrente de sistemas do mercado — sem código, sem propriedade, pagamento indefinido</div>
       </div>
       <div class="roi-stat">
         <div class="roi-stat-num">Código entregue</div>
@@ -171,7 +171,7 @@
   <!-- 02 MARCOS DE ENTREGA -->
   <div class="ta-section">
     <div class="ta-section-title">02 · Escopo e Marcos de Entrega</div>
-    <p style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;margin-bottom:1.25rem;line-height:1.65">Desenvolvimento organizado em marcos de entrega. O Marco 1 é pago na assinatura. Cada marco subsequente é pago pelo Contratante antes do início da etapa correspondente — sem confirmação do pagamento, o desenvolvimento não avança.</p>
+    <p style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;margin-bottom:1.25rem;line-height:1.65">Desenvolvimento organizado em marcos de entrega. O Marco 1 é pago na assinatura. Cada marco subsequente é pago pelo Contratante antes do início da etapa correspondente.</p>
 
     <div class="marco-list">
 
@@ -264,35 +264,40 @@
 
     </div>
 
-    <!-- MANUTENÇÃO -->
-    <div class="manut-box">
-      <div class="manut-header">
-        <div>
-          <div class="manut-titulo">Manutenção mensal <span class="manut-opt">opcional</span></div>
-          <div class="manut-sub">cancelamento com 30 dias de aviso · sem fidelidade mínima</div>
-        </div>
-        <div class="manut-valor">R$1.200/mês</div>
-      </div>
-      <div class="manut-desc">Até 3 melhorias/mês incluídas. <strong>Melhoria:</strong> ajuste em funcionalidade existente. <strong>Novo escopo:</strong> integração nova, módulo inédito ou produto adicional — orçado à parte. Bugs no código entregue: correção incluída. Falhas causadas por serviços de terceiros: orçadas separadamente.</div>
-    </div>
-
-    <!-- MÓDULOS SOB DEMANDA -->
-    <div style="margin-top:.625rem;display:flex;flex-direction:column;gap:.375rem">
-      <div style="padding:.875rem 1rem;background:var(--bg);border:1px solid var(--bd);border-radius:8px">
-        <div style="font-size:.5625rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.375rem;font-family:'DM Mono',monospace">Módulo de documentos automáticos — disponível sob demanda</div>
-        <div style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;line-height:1.55">Assinatura digital de recibos de honorários (ZapSign), cobrança automática de sindicatos inadimplentes e envio de relatório para Ricardo via WhatsApp. Orçado em <strong style="color:var(--bxd)">R$6.500</strong> — contratado à parte quando o escritório quiser ativar.</div>
-      </div>
-      <div style="padding:.875rem 1rem;background:var(--bg);border:1px solid var(--bd);border-radius:8px">
-        <div style="font-size:.5625rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.375rem;font-family:'DM Mono',monospace">Open Finance (Open Banking) — disponível sob demanda</div>
-        <div style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;line-height:1.55">Sincronização automática de transações bancárias — extrato aparece no sistema em tempo real, sem download ou upload de arquivo por Waldir. Orçado conforme escopo da integração.</div>
-      </div>
-    </div>
-
   </div>
 
-  <!-- 03 PAGAMENTO -->
+  <!-- 03 OPCIONAIS -->
   <div class="ta-section">
-    <div class="ta-section-title">03 · Dados de Pagamento</div>
+    <div class="ta-section-title">03 · Serviços e Módulos Opcionais</div>
+    <div style="display:flex;flex-direction:column;gap:.5rem">
+
+      <div class="manut-box">
+        <div class="manut-header">
+          <div>
+            <div class="manut-titulo">Manutenção mensal <span class="manut-opt">opcional</span></div>
+            <div class="manut-sub">cancelamento com 30 dias de aviso · sem fidelidade mínima</div>
+          </div>
+          <div class="manut-valor">R$1.200/mês</div>
+        </div>
+        <div class="manut-desc">Até 3 melhorias/mês incluídas. <strong>Melhoria:</strong> ajuste em funcionalidade existente. <strong>Novo escopo:</strong> integração nova, módulo inédito ou produto adicional — orçado à parte. Bugs no código entregue: correção incluída. Falhas causadas por serviços de terceiros: orçadas separadamente.</div>
+      </div>
+
+      <div style="padding:.875rem 1rem;background:var(--bg);border:1px solid var(--bd);border-radius:8px">
+        <div style="font-size:.5625rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.375rem;font-family:'DM Mono',monospace">Módulo de documentos automáticos</div>
+        <div style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;line-height:1.55">Assinatura digital de recibos de honorários (ZapSign), cobrança automática de sindicatos inadimplentes e envio de relatório para Ricardo via WhatsApp. Orçado em <strong style="color:var(--bxd)">R$6.500</strong> — contratado à parte quando o escritório quiser ativar.</div>
+      </div>
+
+      <div style="padding:.875rem 1rem;background:var(--bg);border:1px solid var(--bd);border-radius:8px">
+        <div style="font-size:.5625rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.375rem;font-family:'DM Mono',monospace">Open Finance (Open Banking)</div>
+        <div style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;line-height:1.55">Sincronização automática de transações bancárias — extrato aparece no sistema em tempo real, sem download ou upload de arquivo por Waldir. Orçado conforme escopo da integração.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 04 PAGAMENTO -->
+  <div class="ta-section">
+    <div class="ta-section-title">04 · Dados de Pagamento</div>
     <div class="ta-grid">
       <div>
         <div class="ta-field"><label>Chave Pix — Contratada</label><div class="val">yasmingonca99@gmail.com</div></div>
@@ -310,7 +315,7 @@
 
   <!-- 04 OBRIGAÇÕES -->
   <div class="ta-section">
-    <div class="ta-section-title">04 · Obrigações das Partes</div>
+    <div class="ta-section-title">05 · Obrigações das Partes</div>
     <div class="obr-grid">
       <div>
         <div class="obr-col-title">Contratante</div>
@@ -337,7 +342,7 @@
 
   <!-- 05 CLÁUSULAS -->
   <div class="ta-section">
-    <div class="ta-section-title">05 · Cláusulas Essenciais</div>
+    <div class="ta-section-title">06 · Cláusulas Essenciais</div>
     <div class="clause-list">
       <div class="clause"><div class="clause-num">§1</div><div><strong>Sigilo:</strong> Ambas as partes comprometem-se a manter confidencialidade sobre informações, dados e processos compartilhados durante e após a vigência deste Termo, por prazo indeterminado.</div></div>
       <div class="clause"><div class="clause-num">§2</div><div><strong>Propriedade intelectual:</strong> O código-fonte, repositório GitHub, documentação técnica e todas as interfaces produzidas passam à propriedade integral do Contratante após a quitação total do valor contratado. A Contratada disponibilizará acesso ao repositório e entregará documentação de uso ao Contratante.</div></div>
@@ -349,7 +354,7 @@
 
   <!-- 06 ASSINATURAS -->
   <div class="ta-section">
-    <div class="ta-section-title">06 · Assinaturas</div>
+    <div class="ta-section-title">07 · Assinaturas</div>
     <div class="sig-date">Recife (PE), _____ de _________________ de 2026</div>
     <div class="sig-grid">
       <div class="sig-block">
