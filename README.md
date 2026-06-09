@@ -8,7 +8,7 @@ Repositório do projeto de automação financeira e operacional do escritório E
 
 Desenvolvimento de sistema financeiro sob medida para gestão de honorários, mensalidades de sindicatos, depósitos judiciais e relatórios para a direção. Construído em Python com integração ao ADV Box, bancos BB e Caixa Econômica Federal, e Google Workspace.
 
-**Status atual:** Fase de diagnóstico e validação — aguardando informações de regras de negócio para iniciar o desenvolvimento.
+**Status atual:** Termo de aceite enviado — aguardando assinatura para início do desenvolvimento.
 
 ---
 
@@ -16,10 +16,10 @@ Desenvolvimento de sistema financeiro sob medida para gestão de honorários, me
 
 | Documento | Link |
 |---|---|
-| Jornada do sistema | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/jornada-sistema.html) |
-| Overview de arquitetura | [ver arquivo](https://github.com/YasLoopes/Estevao_Pinheiro_Advogados_Associados/blob/main/diagn%C3%B3stico/overview-arquitetura.md) |
-| Demo do sistema | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/demo_v2.html) |
-| Termo de aceite | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/termo_aceite.html) |
+| Jornada do sistema | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/Publica%C3%A7%C3%B5es/jornada-sistema.html) |
+| Overview de arquitetura | [ver arquivo](https://github.com/YasLoopes/Estevao_Pinheiro_Advogados_Associados/blob/main/docs/overview-arquitetura.md) |
+| Demo do sistema | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/Publica%C3%A7%C3%B5es/demo_v2.html) |
+| Termo de aceite | [ver página](https://yasloopes.github.io/Estevao_Pinheiro_Advogados_Associados/Publica%C3%A7%C3%B5es/termo_aceite.html) |
 
 ---
 
@@ -27,7 +27,8 @@ Desenvolvimento de sistema financeiro sob medida para gestão de honorários, me
 
 ```
 _memoria/          contexto do cliente, estratégia e aprendizados
-diagnóstico/       arquivos das reuniões e overview de arquitetura
+docs/              documentação técnica do sistema
+Publicações/       páginas HTML publicadas (demos, proposta, termo)
 identidade/        design guide e assets visuais do escritório
 dados/             bases de dados (sindicatos, beneficiários, processos)
 scripts/           automações e utilitários
