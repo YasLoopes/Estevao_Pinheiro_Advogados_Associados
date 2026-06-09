@@ -55,12 +55,13 @@
   .marco-total-val{font-family:'DM Serif Display',serif;font-size:1.375rem;color:var(--gold)}
 
   /* ── MANUTENÇÃO ──────────────────────────────────────────── */
-  .manut-box{margin-top:.625rem;border:1px solid var(--bd);border-radius:10px;overflow:hidden}
-  .manut-header{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1.125rem;background:#fff;border-bottom:1px solid var(--bd);gap:1rem;flex-wrap:wrap}
-  .manut-titulo{font-weight:700;font-size:clamp(.875rem,2vw,.9375rem);color:var(--tx);margin-bottom:2px}
-  .manut-sub{font-size:.5625rem;color:var(--mu);font-family:'DM Mono',monospace}
-  .manut-valor{font-family:'DM Serif Display',serif;font-size:1.125rem;color:var(--bx);white-space:nowrap}
-  .manut-desc{padding:.75rem 1.125rem;font-size:clamp(.8125rem,1.8vw,.875rem);color:#3a3a3a;line-height:1.6;background:#faf8f5}
+  .manut-box{margin-top:.625rem;border:1px solid var(--bd);border-left:3px solid var(--gold);border-radius:10px;overflow:hidden;background:#fff}
+  .manut-header{display:flex;justify-content:space-between;align-items:baseline;padding:.75rem 1rem;gap:1rem;flex-wrap:wrap;border-bottom:1px dashed var(--bd)}
+  .manut-titulo{font-weight:700;font-size:clamp(.875rem,2vw,.9375rem);color:var(--tx);display:flex;align-items:center;gap:.375rem}
+  .manut-opt{font-size:.5rem;font-family:'DM Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);border:1px solid var(--bd);border-radius:3px;padding:1px 4px;line-height:1.6}
+  .manut-sub{font-size:.5625rem;color:var(--mu);font-family:'DM Mono',monospace;margin-top:2px}
+  .manut-valor{font-family:'DM Serif Display',serif;font-size:1.125rem;color:var(--bx);white-space:nowrap;flex-shrink:0}
+  .manut-desc{padding:.5rem 1rem .625rem;font-size:clamp(.75rem,1.7vw,.8125rem);color:#3a3a3a;line-height:1.55}
 
   /* ── CLÁUSULAS ──────────────────────────────────────────── */
   .clause-list{display:flex;flex-direction:column;gap:.5rem}
@@ -85,14 +86,15 @@
   .sig-date{border:1px solid var(--bd);border-radius:6px;padding:.5rem .75rem;font-size:clamp(.875rem,2vw,.9375rem);color:var(--mu);text-align:center;background:#faf8f5;margin-bottom:1rem}
 
   /* ── ROI STRIP ───────────────────────────────────────────── */
-  .roi-strip{display:grid;grid-template-columns:1fr;margin-bottom:.875rem;border:1px solid var(--bd);border-radius:12px;overflow:hidden;background:#fff}
+  .roi-strip-wrap{margin-bottom:.875rem}
+  .roi-strip-lbl{font-size:.5625rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.12em;font-family:'DM Mono',monospace;margin-bottom:.375rem;padding-left:2px}
+  .roi-strip{display:grid;grid-template-columns:1fr;border:1px solid var(--bd);border-radius:12px;overflow:hidden;background:#fff}
   @media(min-width:520px){.roi-strip{grid-template-columns:1fr 1fr 1fr}}
-  .roi-stat{padding:1rem 1.125rem;display:flex;flex-direction:column;gap:.25rem;border-bottom:1px solid var(--bd)}
+  .roi-stat{padding:1rem 1.125rem;display:flex;flex-direction:column;gap:.3125rem;border-bottom:1px solid var(--bd)}
   @media(min-width:520px){.roi-stat{border-bottom:none;border-right:1px solid var(--bd)}}
   .roi-stat:last-child{border:none}
-  .roi-stat-top{display:flex;align-items:center;gap:.375rem}
-  .roi-stat-icon{font-size:.875rem;color:var(--bx);line-height:1}
-  .roi-stat-num{font-family:'DM Serif Display',serif;font-size:clamp(1rem,2.5vw,1.125rem);color:var(--bxd);line-height:1.15}
+  .roi-stat::before{content:'';display:block;width:18px;height:2px;background:var(--bx);border-radius:1px;margin-bottom:.25rem}
+  .roi-stat-num{font-family:'DM Serif Display',serif;font-size:clamp(1rem,2.5vw,1.0625rem);color:var(--bxd);line-height:1.2}
   .roi-stat-lbl{font-size:clamp(.75rem,1.8vw,.8125rem);color:var(--mu);line-height:1.4}
 
   /* ── MARCO À VISTA ───────────────────────────────────────── */
@@ -122,8 +124,8 @@
     <div class="ta-title">Sistema de Gestão Financeira</div>
     <div class="ta-sub">Estevão & Pinheiro Advogados Associados</div>
     <div class="ta-meta">
-      <div class="ta-meta-item"><div class="lbl">Data</div><div class="val">Recife, Junho de 2026</div></div>
-      <div class="ta-meta-item"><div class="lbl">Referência</div><div class="val">Jornada do Sistema · Junho 2026</div></div>
+      <div class="ta-meta-item"><div class="lbl">Data</div><div class="val">Recife, _____ de 2026</div></div>
+      <div class="ta-meta-item"><div class="lbl">Referência</div><div class="val">Jornada do Sistema</div></div>
       <div class="ta-meta-item"><div class="lbl">Validade</div><div class="val">30 dias a partir da data</div></div>
     </div>
   </div>
@@ -148,34 +150,28 @@
   </div>
 
   <!-- ROI STRIP -->
-  <div class="roi-strip">
-    <div class="roi-stat">
-      <div class="roi-stat-top">
-        <span class="roi-stat-icon">↑</span>
-        <span class="roi-stat-num">8–10h por semana</span>
+  <div class="roi-strip-wrap">
+    <div class="roi-strip-lbl">Contexto do investimento</div>
+    <div class="roi-strip">
+      <div class="roi-stat">
+        <div class="roi-stat-num">8–10h por semana</div>
+        <div class="roi-stat-lbl">de Waldir liberadas da conciliação manual, consultas a portais e montagem de relatórios</div>
       </div>
-      <div class="roi-stat-lbl">de Waldir liberadas da conciliação manual, consultas a portais e montagem de relatórios</div>
-    </div>
-    <div class="roi-stat">
-      <div class="roi-stat-top">
-        <span class="roi-stat-icon">↗</span>
-        <span class="roi-stat-num">R$9k–14k em 3 anos</span>
+      <div class="roi-stat">
+        <div class="roi-stat-num">R$9k–14k em 3 anos</div>
+        <div class="roi-stat-lbl">custo de sistemas do mercado (R$250–400/mês) — sem código, sem propriedade, sem personalização</div>
       </div>
-      <div class="roi-stat-lbl">custo de sistemas genéricos do mercado (R$250–400/mês) — sem código, sem propriedade, sem personalização</div>
-    </div>
-    <div class="roi-stat">
-      <div class="roi-stat-top">
-        <span class="roi-stat-icon">✓</span>
-        <span class="roi-stat-num">Código entregue</span>
+      <div class="roi-stat">
+        <div class="roi-stat-num">Código entregue</div>
+        <div class="roi-stat-lbl">após quitação o sistema pertence ao escritório — sem dependência de fornecedor externo</div>
       </div>
-      <div class="roi-stat-lbl">após quitação o sistema pertence ao escritório — sem dependência de fornecedor externo</div>
     </div>
   </div>
 
   <!-- 02 MARCOS DE ENTREGA -->
   <div class="ta-section">
     <div class="ta-section-title">02 · Escopo e Marcos de Entrega</div>
-    <p style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;margin-bottom:1.25rem;line-height:1.65">Desenvolvimento organizado em marcos vinculados a entregas concretas. O pagamento de cada marco ocorre após entrega e validação pelo Contratante — exceto o Marco 1, devido na assinatura deste Termo.</p>
+    <p style="font-size:clamp(.8125rem,2vw,.875rem);color:#3a3a3a;margin-bottom:1.25rem;line-height:1.65">Desenvolvimento organizado em marcos de entrega. O Marco 1 é pago na assinatura. Cada marco subsequente é pago pelo Contratante antes do início da etapa correspondente — sem confirmação do pagamento, o desenvolvimento não avança.</p>
 
     <div class="marco-list">
 
@@ -272,12 +268,12 @@
     <div class="manut-box">
       <div class="manut-header">
         <div>
-          <div class="manut-titulo">Manutenção mensal — opcional</div>
-          <div class="manut-sub">Sem fidelidade mínima · cancelamento com 30 dias de aviso prévio</div>
+          <div class="manut-titulo">Manutenção mensal <span class="manut-opt">opcional</span></div>
+          <div class="manut-sub">cancelamento com 30 dias de aviso · sem fidelidade mínima</div>
         </div>
         <div class="manut-valor">R$1.200/mês</div>
       </div>
-      <div class="manut-desc">Inclui até 3 melhorias por mês. <strong>Melhoria:</strong> ajuste ou refinamento de funcionalidade já existente — uma regra ajustada, um campo novo em tela existente, uma mudança de comportamento do sistema. <strong>Novo escopo:</strong> qualquer funcionalidade não descrita neste Termo (nova integração, módulo inédito, produto adicional) — sempre orçado separadamente. Correção de erros no código entregue está incluída. Indisponibilidade causada por mudança de API de terceiros, alteração de serviços externos ou infraestrutura é orçada separadamente.</div>
+      <div class="manut-desc">Até 3 melhorias/mês incluídas. <strong>Melhoria:</strong> ajuste em funcionalidade existente. <strong>Novo escopo:</strong> integração nova, módulo inédito ou produto adicional — orçado à parte. Bugs no código entregue: correção incluída. Falhas causadas por serviços de terceiros: orçadas separadamente.</div>
     </div>
 
     <!-- MÓDULOS SOB DEMANDA -->
@@ -308,7 +304,7 @@
       </div>
     </div>
     <div style="margin-top:.625rem;padding:.625rem .875rem;background:var(--bg);border:1px solid var(--bd);border-radius:6px;font-size:clamp(.75rem,1.8vw,.8125rem);color:var(--mu);line-height:1.55">
-      Cada marco é pago após entrega e validação pelo Contratante. O Marco 1 (R$4.000) é devido na assinatura deste Termo. Em caso de atraso no pagamento superior a 10 dias corridos, o desenvolvimento é suspenso até regularização.
+      O Marco 1 (R$4.000) é pago na assinatura. Os marcos 2, 3 e 4 são pagos antes do início de cada etapa. Atraso superior a 10 dias corridos suspende o desenvolvimento até regularização.
     </div>
   </div>
 
