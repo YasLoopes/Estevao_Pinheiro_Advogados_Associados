@@ -152,11 +152,11 @@
 
   /* ── FASES ─────────────────────────────────────────────────── */
   .fases { display:grid; grid-template-columns:1fr; gap:.875rem; align-items:stretch }
-  @media(min-width:768px){ .fases { grid-template-columns:repeat(3,1fr) } }
+  @media(min-width:768px){ .fases { grid-template-columns:repeat(2,1fr) } }
 
   .fase-card { border-radius:10px; overflow:hidden; border:1px solid var(--bd); display:flex; flex-direction:column }
   .fase-header { padding:clamp(.875rem,2.5vw,1rem) clamp(1rem,2.5vw,1.0625rem); flex-shrink:0 }
-  .fase-header.f1 { background:var(--bx) } .fase-header.f2 { background:var(--bl) } .fase-header.f3 { background:var(--gn) }
+  .fase-header.f1 { background:var(--bx) } .fase-header.f2 { background:var(--bxd) } .fase-header.f3 { background:var(--bl) } .fase-header.f4 { background:var(--gn) }
   .fase-num { font-family:'DM Mono',monospace; font-size:.5625rem; text-transform:uppercase; letter-spacing:.15em; color:rgba(255,255,255,.55); margin-bottom:3px }
   .fase-titulo { font-weight:700; font-size:clamp(.875rem,2vw,.9375rem); color:#fff; margin-bottom:2px }
   .fase-prazo { font-size:.6875rem; color:rgba(255,255,255,.55) }
@@ -209,6 +209,7 @@
   .fp1 { background:rgba(107,28,46,.1); color:var(--bx) }
   .fp2 { background:var(--blb); color:var(--bl) }
   .fp3 { background:var(--gnb); color:var(--gn) }
+  .fp-opt { background:var(--goldb); color:#7a5c0a; border:1px solid rgba(201,168,76,.3) }
 
   /* ── SEGURANÇA ─────────────────────────────────────────────── */
   .seg-grid { display:grid; grid-template-columns:1fr; gap:.625rem }
@@ -457,58 +458,71 @@
   <!-- ⑤ FASES -->
   <div class="secao">
     <div class="secao-label">Cronograma</div>
-    <h2 class="secao-titulo">O que fica pronto em cada fase</h2>
-    <p class="secao-desc">O sistema é entregue em etapas para que o escritório comece a ganhar tempo o mais rápido possível.</p>
+    <h2 class="secao-titulo">O que fica pronto em cada marco</h2>
+    <p class="secao-desc">O sistema é entregue em marcos de entrega. Cada marco é pago antes do início da etapa — o escritório acompanha o progresso a cada entrega.</p>
     <div class="fases">
 
       <div class="fase-card">
         <div class="fase-header f1">
-          <div class="fase-num">Fase 1 · MVP</div>
-          <div class="fase-titulo">Operacional</div>
+          <div class="fase-num">Marco 1 · Kick-off</div>
+          <div class="fase-titulo">Alinhamento e início</div>
+          <div class="fase-prazo">Na assinatura</div>
+        </div>
+        <div class="fase-body">
+          <div class="fase-item"><span class="fase-check">✓</span>Início oficial do projeto</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Alinhamento das regras de negócio, percentuais de repasse e fluxos do escritório</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Acesso às planilhas e dados históricos para referência no desenvolvimento</div>
+          <div class="fase-entrega">O desenvolvimento começa.</div>
+        </div>
+      </div>
+
+      <div class="fase-card">
+        <div class="fase-header f2">
+          <div class="fase-num">Marco 2</div>
+          <div class="fase-titulo">Sistema base operacional</div>
           <div class="fase-prazo">6–8 semanas</div>
         </div>
         <div class="fase-body">
-          <div class="fase-item"><span class="fase-check">✓</span>Login com Google Workspace</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Importação de extrato OFX/CSV do BB e Caixa</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Reconhecimento automático de lançamentos (aprende com o uso)</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Cadastro dos sindicatos com regras de repasse</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Cálculo automático de honorários e tributos</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Painel financeiro em tempo real</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Alerta de inadimplência de sindicatos</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Identificação automática — depósitos judiciais BB (portal público) e Caixa (e-mail automático para Tiago + IA processa resposta)</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Relatório semanal por e-mail para Ricardo</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Base de processos via ADV Box (CSV exportado ou API direta se inclusa no plano atual)</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Login com Google Workspace — sem criar nova senha</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Importação de extrato bancário OFX, CSV ou PDF — BB e Caixa</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Cadastro dos sindicatos com regras de repasse individuais por percentual</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Cálculo automático de honorários e tributos por lançamento</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Painel financeiro em tempo real: receita, saldo e inadimplência por sindicato</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Alerta automático de sindicatos inadimplentes</div>
           <div class="fase-item"><span class="fase-check">✓</span>Exportação para Excel a qualquer momento</div>
           <div class="fase-entrega">Waldir para de usar as 3 planilhas.</div>
         </div>
       </div>
 
       <div class="fase-card">
-        <div class="fase-header f2">
-          <div class="fase-num">Fase 2</div>
-          <div class="fase-titulo">Automação bancária</div>
+        <div class="fase-header f3">
+          <div class="fase-num">Marco 3</div>
+          <div class="fase-titulo">Automações e integrações</div>
           <div class="fase-prazo">+4–6 semanas</div>
         </div>
         <div class="fase-body">
-          <div class="fase-item"><span class="fase-check">✓</span>Open Finance: BB e Caixa conectados diretamente — sem upload manual de extrato</div>
-          <div class="fase-item"><span class="fase-check">✓</span>API ADV Box em tempo real (se não inclusa na Fase 1)</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Identificação de beneficiários FUNDEF/IPCEP com sugestão por IA</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Assistente com IA dentro do sistema — Waldir pergunta, sistema responde com dados reais (ver detalhes abaixo)</div>
-          <div class="fase-entrega">Waldir não precisa mais abrir os apps dos bancos.</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Reconhecimento automático de lançamentos por padrão — aprende com cada confirmação</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Identificação de depósitos judiciais do BB via portal público — automático, sem ação de Waldir</div>
+          <div class="fase-item"><span class="fase-check">✓</span>E-mail automático para Tiago (Caixa) com processamento da resposta por inteligência artificial</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Integração com ADV Box — base de processos e beneficiários</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Relatório semanal gerado e enviado automaticamente para Ricardo toda sexta-feira</div>
+          <div class="fase-entrega">Sistema em uso real — Waldir para de fazer acompanhamento manual.</div>
         </div>
       </div>
 
       <div class="fase-card">
-        <div class="fase-header f3">
-          <div class="fase-num">Fase 3</div>
-          <div class="fase-titulo">Documentos automáticos</div>
+        <div class="fase-header f4">
+          <div class="fase-num">Marco 4</div>
+          <div class="fase-titulo">Entrega final e refinamentos</div>
           <div class="fase-prazo">+3–4 semanas</div>
         </div>
         <div class="fase-body">
-          <div class="fase-item"><span class="fase-check">✓</span>Recibos de honorários com assinatura digital (ZapSign)</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Cobrança automática para sindicatos inadimplentes</div>
-          <div class="fase-item"><span class="fase-check">✓</span>Relatório para Ricardo via WhatsApp (se preferirem ao e-mail)</div>
-          <div class="fase-entrega">Ciclo financeiro completo sem documentos manuais.</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Assistente com IA — Waldir digita perguntas em linguagem natural e recebe respostas com dados reais do sistema</div>
+          <div class="fase-item"><span class="fase-check">✓</span>4 rodadas de ajustes pós-teste — correções identificadas por Waldir durante uso real, sem custo adicional</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Deploy final em produção na conta Google do escritório</div>
+          <div class="fase-item"><span class="fase-check">✓</span>Acesso ao repositório de código e documentação técnica entregues ao escritório</div>
+          <div class="fase-item" style="color:var(--mu)"><span style="color:var(--mu);font-size:.6875rem;margin-top:3px;flex-shrink:0">+</span>Opcional: Open Finance — sincronização automática de transações bancárias sem upload de extrato (orçado separadamente)</div>
+          <div class="fase-entrega">Ciclo financeiro completo em produção.</div>
         </div>
       </div>
 
@@ -537,49 +551,49 @@
         <tr>
           <td><div class="ferr-nome">Google Workspace</div><div class="ferr-sub">Login · E-mail · Drive</div></td>
           <td class="ferr-desc">Login seguro com o e-mail do escritório. Envio de relatórios, cobranças e comunicados automáticos. Armazenamento dos arquivos.</td>
-          <td><span class="fase-pill fp1">Fase 1</span></td>
+          <td><span class="fase-pill fp1">Marco 2</span></td>
           <td><div class="ferr-custo gratis">Incluso no plano atual</div></td>
         </tr>
         <tr>
           <td><div class="ferr-nome">Google Cloud Run</div><div class="ferr-sub">Servidor no Brasil</div></td>
           <td class="ferr-desc">Onde o sistema fica hospedado e roda. Dentro da infraestrutura Google — os dados ficam no Brasil.</td>
-          <td><span class="fase-pill fp1">Fase 1</span></td>
+          <td><span class="fase-pill fp1">Marco 2</span></td>
           <td><div class="ferr-custo">~R$50–100/mês</div></td>
         </tr>
         <tr>
           <td><div class="ferr-nome">Supabase</div><div class="ferr-sub">Banco de dados</div></td>
           <td class="ferr-desc">Onde ficam todos os lançamentos, processos, sindicatos e beneficiários. Exporta para Excel a qualquer momento. O plano gratuito comporta o volume do escritório por cerca de 2 anos; após isso, o custo passa a ser de R$130/mês.</td>
-          <td><span class="fase-pill fp1">Fase 1</span></td>
+          <td><span class="fase-pill fp1">Marco 2</span></td>
           <td><div class="ferr-custo gratis">Grátis (~2 anos)</div><div class="ferr-custo" style="margin-top:3px">R$130/mês após</div></td>
         </tr>
         <tr>
           <td><div class="ferr-nome">Inteligência Artificial</div><div class="ferr-sub">Claude · Anthropic</div></td>
-          <td class="ferr-desc">Identifica transações desconhecidas, cruza nomes de beneficiários, processa documentos enviados por Tiago, gera os relatórios para Ricardo e responde perguntas do assistente (Fase 2).</td>
-          <td><span class="fase-pill fp1">Fase 1</span></td>
+          <td class="ferr-desc">Identifica transações desconhecidas, cruza nomes de beneficiários, processa documentos enviados por Tiago, gera os relatórios para Ricardo e responde perguntas do assistente (Marco 4).</td>
+          <td><span class="fase-pill fp1">Marco 2</span></td>
           <td><div class="ferr-custo">~R$100–300/mês</div></td>
         </tr>
         <tr>
           <td><div class="ferr-nome">ADV Box</div><div class="ferr-sub">Sistema jurídico</div></td>
-          <td class="ferr-desc">Base de processos e beneficiários. Na Fase 1, via exportação de arquivo CSV (mensal). Se a API já estiver inclusa no plano do escritório, passa a ser automático desde o início.</td>
-          <td><span class="fase-pill fp1">Fase 1</span></td>
+          <td class="ferr-desc">Base de processos e beneficiários. No Marco 3, via exportação de arquivo CSV (mensal). Se a API já estiver inclusa no plano do escritório, passa a ser automático desde o início.</td>
+          <td><span class="fase-pill fp2">Marco 3</span></td>
           <td><div class="ferr-custo">Verificar plano atual</div><div style="font-size:11px;color:var(--mu);margin-top:2px">API: +R$280/mês se não inclusa</div></td>
         </tr>
         <tr>
           <td><div class="ferr-nome">Open Finance</div><div class="ferr-sub">Pluggy · integração bancária</div></td>
-          <td class="ferr-desc">Conecta diretamente ao BB e Caixa — elimina o upload manual de extrato. Avaliado após a Fase 1 estar funcionando e com base no uso real.</td>
-          <td><span class="fase-pill fp2">Fase 2</span></td>
+          <td class="ferr-desc">Conecta diretamente ao BB e Caixa — elimina o upload manual de extrato. Módulo opcional, avaliado após o Marco 4 com base no uso real.</td>
+          <td><span class="fase-pill fp-opt">Opcional</span></td>
           <td><div class="ferr-custo">R$2.500/mês</div></td>
         </tr>
         <tr>
           <td><div class="ferr-nome">ZapSign</div><div class="ferr-sub">Assinatura digital</div></td>
-          <td class="ferr-desc">Assinatura digital dos recibos de honorários. O advogado recebe o link no celular e assina sem precisar imprimir nada.</td>
-          <td><span class="fase-pill fp3">Fase 3</span></td>
+          <td class="ferr-desc">Assinatura digital dos recibos de honorários. O advogado recebe o link no celular e assina sem precisar imprimir nada. Módulo opcional de documentos.</td>
+          <td><span class="fase-pill fp-opt">Opcional</span></td>
           <td><div class="ferr-custo">~R$150/mês</div></td>
         </tr>
         <tr>
           <td><div class="ferr-nome">WhatsApp Business</div><div class="ferr-sub">Relatórios e cobranças</div></td>
-          <td class="ferr-desc">Alternativa ao e-mail para o relatório de Ricardo e cobranças de sindicatos. A Fase 1 usa Gmail (grátis, já incluso no Workspace) no lugar.</td>
-          <td><span class="fase-pill fp3">Fase 3</span></td>
+          <td class="ferr-desc">Alternativa ao e-mail para o relatório de Ricardo e cobranças de sindicatos. Os marcos principais usam Gmail (grátis, já incluso no Workspace). Módulo opcional de documentos.</td>
+          <td><span class="fase-pill fp-opt">Opcional</span></td>
           <td><div class="ferr-custo">~R$50–100/mês infra</div><div style="font-size:11px;color:var(--mu);margin-top:2px">+ ~R$0,08 por mensagem</div></td>
         </tr>
       </tbody>
@@ -587,10 +601,10 @@
     </div>
 
     <div style="margin-top:14px;padding:14px 17px;background:var(--goldb);border:1px solid rgba(201,168,76,.4);border-radius:8px;font-size:13px;color:#7a5c0a;line-height:1.65">
-      <strong>Fase 1 (MVP):</strong> R$280–530/mês &nbsp;·&nbsp;
-      <strong>Fase 2 (com Open Finance):</strong> +R$2.500/mês &nbsp;·&nbsp;
-      <strong>Fase 3 (completo):</strong> R$3.000–3.500/mês &nbsp;·&nbsp;
-      O Pluggy (Fase 2) é opcional — avaliado com ROI comprovado após a Fase 1.
+      <strong>Marcos 2–4 (base):</strong> R$280–530/mês &nbsp;·&nbsp;
+      <strong>Com Open Finance (opcional):</strong> +R$2.500/mês &nbsp;·&nbsp;
+      <strong>Com todos os opcionais:</strong> R$3.000–3.500/mês &nbsp;·&nbsp;
+      Open Finance e módulo de documentos são opcionais — avaliados após o Marco 4 com ROI comprovado.
     </div>
   </div>
 
@@ -598,14 +612,14 @@
 
   <!-- ⑦ ASSISTENTE IA (PLUS) -->
   <div class="secao">
-    <div class="secao-label">Recurso adicional · Fase 2</div>
-    <h2 class="secao-titulo">Assistente com IA — opcional</h2>
+    <div class="secao-label">Recurso adicional · Marco 4</div>
+    <h2 class="secao-titulo">Assistente com IA</h2>
 
     <div class="plus-banner">
       <div class="plus-icon">💬</div>
       <div>
-        <div class="plus-titulo">Disponível a partir da Fase 2, caso o escritório queira ativar</div>
-        <div class="plus-desc">Além do painel financeiro, o sistema pode contar com uma janela de conversa com inteligência artificial. Waldir digita uma pergunta como se estivesse mandando uma mensagem e recebe a resposta com os dados reais — sem precisar navegar por telas ou montar relatório manualmente, aproveitando o plano já pago da Anthropic.</div>
+        <div class="plus-titulo">Incluído no Marco 4 — disponível após validação do sistema completo</div>
+        <div class="plus-desc">Além do painel financeiro, o sistema conta com uma janela de conversa com inteligência artificial. Waldir digita uma pergunta como se estivesse mandando uma mensagem e recebe a resposta com os dados reais — sem precisar navegar por telas ou montar relatório manualmente.</div>
       </div>
     </div>
 
