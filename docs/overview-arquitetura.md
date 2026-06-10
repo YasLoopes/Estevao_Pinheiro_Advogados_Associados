@@ -207,7 +207,7 @@ PIX de pessoa física traz nome truncado pelo banco (ex.: "JOSE M SILVA"). O mat
 
 ## Marcos de entrega
 
-### Marco 1 — Assinatura do contrato · R$4.000
+### Marco 1 — Assinatura do contrato
 **Pago na assinatura. Início oficial do projeto.**
 
 - [ ] Alinhamento das regras de negócio, percentuais de repasse e fluxos do escritório
@@ -215,7 +215,7 @@ PIX de pessoa física traz nome truncado pelo banco (ex.: "JOSE M SILVA"). O mat
 
 ---
 
-### Marco 2 — Sistema base operacional · R$5.000
+### Marco 2 — Sistema base operacional
 **Pago antes do início desta etapa. Waldir para de usar planilhas no dia a dia.**
 
 - [ ] Login com Google Workspace — sem criar nova senha
@@ -228,7 +228,7 @@ PIX de pessoa física traz nome truncado pelo banco (ex.: "JOSE M SILVA"). O mat
 
 ---
 
-### Marco 3 — Automações e integrações · R$5.000
+### Marco 3 — Automações e integrações
 **Pago antes do início desta etapa. Elimina ações manuais de identificação e comunicação.**
 
 - [ ] Reconhecimento automático de lançamentos por padrão — aprende com cada confirmação
@@ -239,7 +239,7 @@ PIX de pessoa física traz nome truncado pelo banco (ex.: "JOSE M SILVA"). O mat
 
 ---
 
-### Marco 4 — Entrega final e refinamentos · R$2.000
+### Marco 4 — Entrega final e refinamentos
 **Pago antes do início desta etapa. Sistema completo em produção.**
 
 - [ ] Assistente com IA — Waldir digita perguntas em linguagem natural e recebe resposta com dados reais do sistema
