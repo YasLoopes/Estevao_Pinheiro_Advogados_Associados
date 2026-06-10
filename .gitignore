@@ -24,6 +24,8 @@ node_modules/
 
 # Documentos privados — existem localmente, não vão ao repo público
 Publicações/termo_aceite.html
+Publicações/proposta_ep.html
+Publicações/proposta_testes.html
 
 # Drop zone de dados — fora do versionamento público
 dados/
