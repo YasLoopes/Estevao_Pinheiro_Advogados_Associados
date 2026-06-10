@@ -22,9 +22,14 @@ node_modules/
 *.log
 *.tmp
 
-# Drop zone do usuário (só o README vai versionado)
-dados/*
-!dados/README.md
+# Documentos privados — existem localmente, não vão ao repo público
+Publicações/termo_aceite.html
+
+# Drop zone de dados — fora do versionamento público
+dados/
+
+# Memória interna do projeto — estratégia e contexto de cliente, apenas local
+_memoria/
 
 # Diagnósticos e contexto de reuniões — dados sensíveis de cliente, apenas local
 diagnóstico/
